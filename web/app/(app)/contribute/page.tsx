@@ -34,24 +34,25 @@ import {
 } from '@/components/ui/dialog'
 import { CRYPTO_ADDRESSES } from '@/lib/constants'
 import Image from 'next/image'
+import { useTranslations } from 'next-intl'
 
 export default function ContributePage() {
   const { toast } = useToast()
+  const t = useTranslations('contribute')
 
   const handleCopy = (text: string, type: string) => {
     navigator.clipboard.writeText(text)
     toast({
-      title: `${type} address copied to clipboard`,
+      title: t('addressCopied', { type }),
     })
   }
 
   return (
     <div className='min-h-screen p-4 md:p-8 space-y-8'>
       <div className='text-center space-y-4'>
-        <h1 className='text-4xl font-bold'>Support TextBee</h1>
+        <h1 className='text-4xl font-bold'>{t('title')}</h1>
         <p className='text-muted-foreground max-w-2xl mx-auto'>
-          Your contribution, whether financial or through code, helps keep this
-          project alive and growing.
+          {t('subtitle')}
         </p>
       </div>
 
@@ -60,11 +61,10 @@ export default function ContributePage() {
           <CardHeader>
             <CardTitle className='flex items-center gap-2'>
               <CircleDollarSign className='h-5 w-5' />
-              Financial Support
+              {t('financialSupport')}
             </CardTitle>
             <CardDescription>
-              Help sustain TextBee&apos;s development through financial
-              contributions
+              {t('financialDesc')}
             </CardDescription>
           </CardHeader>
           <CardContent>
@@ -72,16 +72,16 @@ export default function ContributePage() {
               <div className='space-y-6'>
                 <Card className='overflow-hidden'>
                   <CardHeader>
-                    <CardTitle className='text-lg'>Monthly Support</CardTitle>
+                    <CardTitle className='text-lg'>{t('monthlySupport')}</CardTitle>
                     <CardDescription>
-                      Become a patron and support us monthly
+                      {t('monthlyDesc')}
                     </CardDescription>
                   </CardHeader>
                   <CardContent>
                     <Button className='w-full' asChild>
                       <Link href={ExternalLinks.patreon} target='_blank'>
                         <Heart className='mr-2 h-4 w-4' />
-                        Support on Patreon
+                        {t('supportPatreon')}
                       </Link>
                     </Button>
                   </CardContent>
@@ -90,16 +90,16 @@ export default function ContributePage() {
               <div className='space-y-6'>
                 <Card className='overflow-hidden'>
                   <CardHeader>
-                    <CardTitle className='text-lg'>One-time Support</CardTitle>
+                    <CardTitle className='text-lg'>{t('oneTimeSupport')}</CardTitle>
                     <CardDescription>
-                      Make a one-time contribution
+                      {t('oneTimeDesc')}
                     </CardDescription>
                   </CardHeader>
                   <CardContent>
                     <Button variant='outline' className='w-full' asChild>
                       <Link href={ExternalLinks.polar} target='_blank'>
                         <Heart className='mr-2 h-4 w-4' />
-                        Donate on Polar
+                        {t('donatePolar')}
                       </Link>
                     </Button>
                   </CardContent>
@@ -108,9 +108,9 @@ export default function ContributePage() {
 
               <Card className='h-full overflow-hidden'>
                 <CardHeader>
-                  <CardTitle className='text-lg'>Crypto Donations</CardTitle>
+                  <CardTitle className='text-lg'>{t('cryptoDonations')}</CardTitle>
                   <CardDescription>
-                    Support us with cryptocurrency
+                    {t('cryptoDesc')}
                   </CardDescription>
                 </CardHeader>
                 <CardContent>
@@ -118,13 +118,13 @@ export default function ContributePage() {
                     <DialogTrigger asChild>
                       <Button className='w-full' variant='outline'>
                         <Wallet className='mr-2 h-4 w-4' />
-                        View Crypto Addresses
+                        {t('viewCrypto')}
                       </Button>
                     </DialogTrigger>
                     <DialogContent className='max-w-md'>
                       <DialogHeader>
                         <DialogTitle>
-                          Cryptocurrency Donation Addresses
+                          {t('cryptoTitle')}
                         </DialogTitle>
                       </DialogHeader>
                       <div className='space-y-4'>
@@ -154,7 +154,7 @@ export default function ContributePage() {
                               {wallet.address}
                             </code>
                             <p className='text-xs text-muted-foreground'>
-                              Network: {wallet.network}
+                              {t('network')} {wallet.network}
                             </p>
                           </div>
                         ))}
@@ -171,26 +171,26 @@ export default function ContributePage() {
           <CardHeader>
             <CardTitle className='flex items-center gap-2'>
               <Github className='h-5 w-5' />
-              Code Contributions
+              {t('codeContrib')}
             </CardTitle>
             <CardDescription>
-              Help improve TextBee by contributing to the codebase
+              {t('codeDesc')}
             </CardDescription>
           </CardHeader>
           <CardContent>
             <div className='grid gap-6 md:grid-cols-3'>
               <Card className='overflow-hidden'>
                 <CardHeader>
-                  <CardTitle className='text-lg'>Star the Project</CardTitle>
+                  <CardTitle className='text-lg'>{t('starProject')}</CardTitle>
                   <CardDescription>
-                    Show your support by starring the repository
+                    {t('starDesc')}
                   </CardDescription>
                 </CardHeader>
                 <CardContent>
                   <Button className='w-full' asChild>
                     <Link href={ExternalLinks.github} target='_blank'>
                       <Star className='mr-2 h-4 w-4' />
-                      Star on GitHub
+                      {t('starGithub')}
                     </Link>
                   </Button>
                 </CardContent>
@@ -198,9 +198,9 @@ export default function ContributePage() {
 
               <Card className='overflow-hidden'>
                 <CardHeader>
-                  <CardTitle className='text-lg'>Report Issues</CardTitle>
+                  <CardTitle className='text-lg'>{t('reportIssues')}</CardTitle>
                   <CardDescription>
-                    Help us improve by reporting bugs and suggesting features
+                    {t('reportDesc')}
                   </CardDescription>
                 </CardHeader>
                 <CardContent>
@@ -210,7 +210,7 @@ export default function ContributePage() {
                       target='_blank'
                     >
                       <MessageSquare className='mr-2 h-4 w-4' />
-                      Create Issue
+                      {t('createIssue')}
                     </Link>
                   </Button>
                 </CardContent>
@@ -218,9 +218,9 @@ export default function ContributePage() {
 
               <Card className='overflow-hidden'>
                 <CardHeader>
-                  <CardTitle className='text-lg'>Security Reports</CardTitle>
+                  <CardTitle className='text-lg'>{t('securityReports')}</CardTitle>
                   <CardDescription>
-                    Report security vulnerabilities privately to{' '}
+                    {t('securityDesc')}{' '}
                     <a href='mailto:security@textbee.dev'>
                       security@textbee.dev
                     </a>
@@ -230,7 +230,7 @@ export default function ContributePage() {
                   <Button className='w-full' variant='outline' asChild>
                     <Link href='mailto:security@textbee.dev'>
                       <Shield className='mr-2 h-4 w-4' />
-                      Report Vulnerability
+                      {t('reportVuln')}
                     </Link>
                   </Button>
                 </CardContent>
@@ -243,11 +243,10 @@ export default function ContributePage() {
           <CardHeader>
             <CardTitle className='flex items-center gap-2'>
               <MessageSquare className='h-5 w-5' />
-              Join the Community
+              {t('joinCommunity')}
             </CardTitle>
             <CardDescription>
-              Follow our socials and connect with other contributors to get
-              early access to new features and updates.
+              {t('joinDesc')}
             </CardDescription>
           </CardHeader>
           <CardContent>
@@ -255,19 +254,19 @@ export default function ContributePage() {
               <Button variant='outline' asChild>
                 <Link href={ExternalLinks.discord} target='_blank'>
                   <MessageSquare className='mr-2 h-4 w-4' />
-                  Join Discord
+                  {t('joinDiscord')}
                 </Link>
               </Button>
               <Button variant='outline' asChild>
                 <Link href={ExternalLinks.twitter} target='_blank'>
                   <Twitter className='mr-2 h-4 w-4' />
-                  Follow us on X (Twitter)
+                  {t('followX')}
                 </Link>
               </Button>
               <Button variant='outline' asChild>
                 <Link href={ExternalLinks.linkedin} target='_blank'>
                   <Linkedin className='mr-2 h-4 w-4' />
-                  Connect on LinkedIn
+                  {t('connectLinkedin')}
                 </Link>
               </Button>
             </div>
