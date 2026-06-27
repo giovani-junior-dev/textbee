@@ -27,8 +27,10 @@ import {
   summarizeOutdatedDeviceNames,
   useUpdatePromptSnooze,
 } from './update-app-helpers'
+import { useTranslations } from 'next-intl'
 
 export default function UpdateAppModal() {
+  const t = useTranslations('updateApp')
   const [isOpen, setIsOpen] = useState(false)
   const ignoreNextOpenChangeRef = useRef(false)
   const { isSnoozed } = useUpdatePromptSnooze()
@@ -103,12 +105,11 @@ export default function UpdateAppModal() {
             <Smartphone className='h-6 w-6' />
           </div>
           <DialogTitle className='text-center text-2xl'>
-            You are using an older version of the textbee mobile app
+            {t('title')}
           </DialogTitle>
           <DialogDescription className='text-center text-sm sm:text-base'>
             <span className='font-medium text-foreground'>{deviceSummary}</span>{' '}
-            is ready for an update. Install version {latestAppVersionCode} to get
-            improved reliability, bug fixes, and more.
+            {t('desc', { version: latestAppVersionCode })}
           </DialogDescription>
         </DialogHeader>
 
@@ -116,22 +117,22 @@ export default function UpdateAppModal() {
           <div className='flex items-start gap-3'>
             <Sparkles className='mt-0.5 h-4 w-4 text-brand-500' />
             <div className='space-y-1 text-sm text-muted-foreground'>
-              <p className='font-medium text-foreground'>Update highlights</p>
-              <p>Improved reliability, bug fixes, and more.</p>
+              <p className='font-medium text-foreground'>{t('highlights')}</p>
+              <p>{t('highlightsDesc')}</p>
             </div>
           </div>
           <div className='flex items-start gap-3'>
             <Download className='mt-0.5 h-4 w-4 text-brand-500' />
             <div className='space-y-1 text-sm text-muted-foreground'>
-              <p className='font-medium text-foreground'>Recommended action</p>
-              <p>Download the latest Android app build and update your device.</p>
+              <p className='font-medium text-foreground'>{t('recommended')}</p>
+              <p>{t('recommendedDesc')}</p>
             </div>
           </div>
         </div>
 
         <DialogFooter className='flex-col gap-2 sm:flex-col'>
           <Button asChild className='w-full'>
-            <Link href={Routes.downloadAndroidApp}>Update now</Link>
+            <Link href={Routes.downloadAndroidApp}>{t('updateNow')}</Link>
           </Button>
           <div className='flex w-full items-center justify-between gap-2'>
             <Button
@@ -141,7 +142,7 @@ export default function UpdateAppModal() {
               onClick={() => closeWithSnooze(UPDATE_APP_REMIND_LATER_MS)}
               className='text-muted-foreground'
             >
-              Remind later
+              {t('remindLater')}
             </Button>
             <Button
               type='button'
@@ -150,7 +151,7 @@ export default function UpdateAppModal() {
               onClick={() => closeWithSnooze(UPDATE_APP_DONT_ASK_AGAIN_MS)}
               className='text-muted-foreground hover:text-destructive'
             >
-              Don&apos;t ask again
+              {t('dontAsk')}
             </Button>
           </div>
         </DialogFooter>
