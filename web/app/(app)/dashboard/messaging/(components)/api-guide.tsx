@@ -10,8 +10,10 @@ import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '../../../..
 import SyntaxHighlighter from 'react-syntax-highlighter'
 import { dark } from 'react-syntax-highlighter/dist/esm/styles/prism'
 import Link from 'next/link'
+import { useTranslations } from 'next-intl'
 
 export default function ApiGuide() {
+  const t = useTranslations('apiGuide')
   const [activeTab, setActiveTab] = useState('send-sms')
   const [activeLangTab, setActiveLangTab] = useState('node')
   const [copiedIndex, setCopiedIndex] = useState(-1)
@@ -26,8 +28,8 @@ export default function ApiGuide() {
   const apiEndpoints = [
     {
       id: 'send-sms',
-      title: 'Send SMS',
-      description: 'Send SMS messages to one or more recipients',
+      title: t('sendSmsTitle'),
+      description: t('sendSmsDesc'),
       endpoint: '/api/v1/gateway/devices/:id/send-sms',
       badge: { color: 'green', text: 'POST' },
       request: {
@@ -95,8 +97,8 @@ print(response.json())`
     },
     {
       id: 'get-sms',
-      title: 'Get SMS by ID',
-      description: 'Retrieve details and status of a specific SMS message',
+      title: t('getSmsTitle'),
+      description: t('getSmsDesc'),
       endpoint: '/api/v1/gateway/devices/:id/sms/:smsId',
       badge: { color: 'blue', text: 'GET' },
       request: {
@@ -154,8 +156,8 @@ print(response.json())`
     },
     {
       id: 'get-batch',
-      title: 'Get SMS Batch',
-      description: 'Retrieve details and status of a batch of SMS messages',
+      title: t('getBatchTitle'),
+      description: t('getBatchDesc'),
       endpoint: '/api/v1/gateway/devices/:id/sms-batch/:batchId',
       badge: { color: 'blue', text: 'GET' },
       request: {
@@ -247,7 +249,7 @@ print(response.json())`
           <div className="flex items-center justify-between cursor-pointer">
             <div className="flex items-center gap-2">
               <Code className="h-5 w-5 text-primary" />
-              <h3 className="text-xl font-semibold">API Documentation</h3>
+              <h3 className="text-xl font-semibold">{t('docTitle')}</h3>
             </div>
             <Button variant="ghost" size="sm" className="h-8 w-8 p-0">
               {isOpen ? <ChevronUp className="h-4 w-4" /> : <ChevronDown className="h-4 w-4" />}
@@ -257,11 +259,11 @@ print(response.json())`
         
         <CollapsibleContent className="mt-4">
           <div className="flex items-center justify-between mb-4">
-            <p className="text-sm text-muted-foreground">Integrate SMS capabilities into your applications</p>
+            <p className="text-sm text-muted-foreground">{t('docSubtitle')}</p>
             <Link href="https://api.textbee.dev/" target="_blank">
               <Button variant="outline" size="sm" className="flex items-center gap-1">
                 <ExternalLink className="h-4 w-4" />
-                <span>Full API Docs</span>
+                <span>{t('fullDocs')}</span>
               </Button>
             </Link>
           </div>
@@ -301,7 +303,7 @@ print(response.json())`
                     {/* Request Examples */}
                     <div className="space-y-2">
                       <div className="flex items-center">
-                        <h4 className="text-sm font-medium">Request</h4>
+                        <h4 className="text-sm font-medium">{t('request')}</h4>
                         <div className="ml-auto">
                           <Tabs value={activeLangTab} onValueChange={setActiveLangTab}>
                             <TabsList>
@@ -365,7 +367,7 @@ print(response.json())`
 
                     {/* Response Example */}
                     <div className="space-y-2">
-                      <h4 className="text-sm font-medium">Response</h4>
+                      <h4 className="text-sm font-medium">{t('response')}</h4>
                       <div className="relative">
                         <div className="absolute top-2 right-2 z-10">
                           <Button
@@ -400,11 +402,11 @@ print(response.json())`
                   </CardContent>
                   <CardFooter className="border-t pt-6 flex justify-between">
                     <p className="text-sm text-muted-foreground">
-                      For more details, see the full API documentation.
+                      {t('moreDetails')}
                     </p>
                     <Link href={`https://api.textbee.dev/#${endpoint.id}`} target="_blank">
                       <Button size="sm" variant="outline">
-                        View Details
+                        {t('viewDetails')}
                         <ArrowRight className="ml-2 h-4 w-4" />
                       </Button>
                     </Link>
