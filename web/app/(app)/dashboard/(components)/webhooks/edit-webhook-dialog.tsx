@@ -42,16 +42,7 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
 
-const formSchema = z.object({
-  name: z
-    .string()
-    .max(64, { message: 'Name must be 64 characters or fewer' })
-    .optional(),
-  deliveryUrl: z.string().url({ message: 'Please enter a valid URL' }),
-  events: z.array(z.string()).min(1, { message: 'Select at least one event' }),
-  isActive: z.boolean().default(true),
-  signingSecret: z.string().min(1, { message: 'Signing secret is required' }),
-})
+import { useTranslations } from 'next-intl'
 
 interface EditWebhookDialogProps {
   open: boolean
@@ -66,6 +57,15 @@ export function EditWebhookDialog({
 }: EditWebhookDialogProps) {
   const queryClient = useQueryClient()
   const { toast } = useToast()
+  const t = useTranslations('webhooks')
+
+  const formSchema = z.object({
+    name: z.string().max(64, { message: t('formNameMax') }).optional(),
+    deliveryUrl: z.string().url({ message: t('formUrlInvalid') }),
+    events: z.array(z.string()).min(1, { message: t('formEventsMin') }),
+    isActive: z.boolean().default(true),
+    signingSecret: z.string().min(1, { message: t('formSecretRequired') }),
+  })
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -91,8 +91,8 @@ export function EditWebhookDialog({
     },
     onSuccess: () => {
       toast({
-        title: 'Success',
-        description: 'Webhook updated successfully',
+        title: t('successTitle'),
+        description: t('updatedSuccess'),
       })
       // Invalidate and refetch webhooks list
       queryClient.invalidateQueries({ queryKey: ['webhooks'] })
@@ -100,9 +100,9 @@ export function EditWebhookDialog({
     },
     onError: (error: any) => {
       toast({
-        title: 'Error',
+        title: t('errorTitle'),
         description:
-          error?.response?.data?.message || 'Failed to update webhook',
+          error?.response?.data?.message || t('updateFailed'),
         variant: 'destructive',
       })
     },
@@ -127,9 +127,9 @@ export function EditWebhookDialog({
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className='sm:max-w-[500px]'>
         <DialogHeader>
-          <DialogTitle>Edit Webhook</DialogTitle>
+          <DialogTitle>{t('editTitle')}</DialogTitle>
           <DialogDescription>
-            Update your webhook configuration.
+            {t('editDialogDesc')}
           </DialogDescription>
         </DialogHeader>
         <Form {...form}>
@@ -139,16 +139,16 @@ export function EditWebhookDialog({
               name='name'
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Name (optional)</FormLabel>
+                  <FormLabel>{t('nameOptional')}</FormLabel>
                   <FormControl>
                     <Input
-                      placeholder='e.g. Production CRM'
+                      placeholder={t('namePlaceholder')}
                       {...field}
                       value={field.value ?? ''}
                     />
                   </FormControl>
                   <FormDescription>
-                    A short label to help you tell your webhooks apart
+                    {t('nameDesc')}
                   </FormDescription>
                   <FormMessage />
                 </FormItem>
@@ -159,7 +159,7 @@ export function EditWebhookDialog({
               name='deliveryUrl'
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Delivery URL</FormLabel>
+                  <FormLabel>{t('deliveryUrl')}</FormLabel>
                   <FormControl>
                     <Input
                       placeholder='https://api.example.com/webhooks'
@@ -167,8 +167,7 @@ export function EditWebhookDialog({
                     />
                   </FormControl>
                   <FormDescription>
-                    The URL where webhook notifications will be sent via POST
-                    requests
+                    {t('urlDesc')}
                   </FormDescription>
                   <FormMessage />
                 </FormItem>
@@ -179,7 +178,7 @@ export function EditWebhookDialog({
               name='signingSecret'
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Signing Secret</FormLabel>
+                  <FormLabel>{t('signingSecret')}</FormLabel>
                   <FormControl>
                     <div className='flex space-x-2'>
                       <Input {...field} type='text' />
@@ -188,12 +187,12 @@ export function EditWebhookDialog({
                         variant='outline'
                         onClick={() => field.onChange(uuidv4())}
                       >
-                        Generate
+                        {t('generate')}
                       </Button>
                     </div>
                   </FormControl>
                   <FormDescription>
-                    Used to verify webhook payload authenticity
+                    {t('secretDesc')}
                   </FormDescription>
                   <FormMessage />
                 </FormItem>
@@ -204,7 +203,7 @@ export function EditWebhookDialog({
               name='events'
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Events</FormLabel>
+                  <FormLabel>{t('events')}</FormLabel>
                   <DropdownMenu>
                     <DropdownMenuTrigger asChild>
                       <FormControl>
@@ -213,8 +212,8 @@ export function EditWebhookDialog({
                           className='w-full justify-between'
                         >
                           {field.value && field.value.length > 0
-                            ? `${field.value.length} events selected`
-                            : 'Select events to subscribe to'}
+                            ? t('eventsSelected', { count: field.value.length })
+                            : t('selectEvents')}
                         </Button>
                       </FormControl>
                     </DropdownMenuTrigger>
@@ -239,7 +238,7 @@ export function EditWebhookDialog({
                     </DropdownMenuContent>
                   </DropdownMenu>
                   <FormDescription>
-                    Choose the events you want to receive notifications for
+                    {t('eventsDesc')}
                   </FormDescription>
                   <FormMessage />
                 </FormItem>
@@ -251,10 +250,10 @@ export function EditWebhookDialog({
                 variant='outline'
                 onClick={() => onOpenChange(false)}
               >
-                Cancel
+                {t('cancel')}
               </Button>
               <Button type='submit' disabled={isPending}>
-                {isPending ? 'Updating...' : 'Update'}
+                {isPending ? t('updating') : t('update')}
               </Button>
             </div>
           </form>

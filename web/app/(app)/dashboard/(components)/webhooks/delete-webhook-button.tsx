@@ -18,6 +18,7 @@ import { useMutation, useQueryClient } from '@tanstack/react-query'
 import httpBrowserClient from '@/lib/httpBrowserClient'
 import { ApiEndpoints } from '@/config/api'
 import { useToast } from '@/hooks/use-toast'
+import { useTranslations } from 'next-intl'
 
 interface DeleteWebhookButtonProps {
   webhookId: string
@@ -33,16 +34,17 @@ export function DeleteWebhookButton({
   const [open, setOpen] = useState(false)
   const queryClient = useQueryClient()
   const { toast } = useToast()
+  const t = useTranslations('webhooks')
 
   const { mutate: deleteWebhook, isPending } = useMutation({
     mutationFn: () =>
       httpBrowserClient.delete(ApiEndpoints.gateway.deleteWebhook(webhookId)),
     onSuccess: () => {
       toast({
-        title: 'Webhook deleted',
+        title: t('deletedTitle'),
         description: webhookLabel
-          ? `"${webhookLabel}" has been removed.`
-          : 'The webhook has been removed.',
+          ? t('deletedNamed', { label: webhookLabel })
+          : t('deletedGeneric'),
       })
       queryClient.invalidateQueries({ queryKey: ['webhooks'] })
       setOpen(false)
@@ -50,9 +52,9 @@ export function DeleteWebhookButton({
     },
     onError: (error: any) => {
       toast({
-        title: 'Error',
+        title: t('errorTitle'),
         description:
-          error?.response?.data?.message || 'Failed to delete webhook',
+          error?.response?.data?.message || t('deleteFailed'),
         variant: 'destructive',
       })
     },
@@ -67,17 +69,16 @@ export function DeleteWebhookButton({
       </AlertDialogTrigger>
       <AlertDialogContent>
         <AlertDialogHeader>
-          <AlertDialogTitle>Delete Webhook</AlertDialogTitle>
+          <AlertDialogTitle>{t('deleteTitle')}</AlertDialogTitle>
           <AlertDialogDescription>
             {webhookLabel
-              ? `Are you sure you want to delete "${webhookLabel}"? `
-              : 'Are you sure you want to delete this webhook? '}
-            New events will no longer be delivered to this endpoint. Past
-            delivery history will be preserved.
+              ? t('deleteConfirmNamed', { label: webhookLabel })
+              : t('deleteConfirmGeneric')}{' '}
+            {t('deleteConfirmTail')}
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
-          <AlertDialogCancel disabled={isPending}>Cancel</AlertDialogCancel>
+          <AlertDialogCancel disabled={isPending}>{t('cancel')}</AlertDialogCancel>
           <AlertDialogAction
             onClick={(e) => {
               e.preventDefault()
@@ -86,7 +87,7 @@ export function DeleteWebhookButton({
             disabled={isPending}
             className='bg-destructive text-destructive-foreground hover:bg-destructive/90'
           >
-            {isPending ? 'Deleting...' : 'Delete'}
+            {isPending ? t('deleting') : t('delete')}
           </AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>

@@ -13,6 +13,7 @@ import httpBrowserClient from '@/lib/httpBrowserClient'
 import { ApiEndpoints } from '@/config/api'
 import { Skeleton } from '@/components/ui/skeleton'
 import { useRouter } from 'next/navigation'
+import { useTranslations } from 'next-intl'
 
 function WebhookRowSkeleton() {
   return (
@@ -33,6 +34,7 @@ function WebhookRowSkeleton() {
 const MAX_WEBHOOKS_PER_USER = 5
 
 export default function WebhooksSection() {
+  const t = useTranslations('webhooks')
   const [createDialogOpen, setCreateDialogOpen] = useState(false)
   const [editDialogOpen, setEditDialogOpen] = useState(false)
   const navigator = useRouter()
@@ -71,7 +73,7 @@ export default function WebhooksSection() {
         <div>
           <h1 className='text-xl sm:text-2xl font-bold flex flex-wrap items-center gap-2'>
             <Webhook className='h-5 w-5 sm:h-6 sm:w-6' />
-            Webhooks
+            {t('title')}
             {!isLoading && webhookCount > 0 && (
               <span className='text-sm font-normal text-muted-foreground'>
                 ({webhookCount}/{MAX_WEBHOOKS_PER_USER})
@@ -79,8 +81,7 @@ export default function WebhooksSection() {
             )}
           </h1>
           <p className='text-sm text-muted-foreground mt-1.5'>
-            Manage webhook notifications for your SMS events. You can configure
-            up to {MAX_WEBHOOKS_PER_USER} webhooks.
+            {t('subtitle', { max: MAX_WEBHOOKS_PER_USER })}
           </p>
         </div>
         <div className='flex gap-x-4'>
@@ -91,12 +92,12 @@ export default function WebhooksSection() {
             className='w-full sm:w-auto'
             title={
               reachedLimit
-                ? `You have reached the maximum of ${MAX_WEBHOOKS_PER_USER} webhooks. Delete one to add a new one.`
+                ? t('reachedLimit', { max: MAX_WEBHOOKS_PER_USER })
                 : undefined
             }
           >
             <PlusCircle className='mr-2 h-4 w-4' />
-            Create Webhook
+            {t('create')}
           </Button>
           <Button
             onClick={() => navigator.push('/dashboard/webhooks')}
@@ -104,7 +105,7 @@ export default function WebhooksSection() {
             className='w-full sm:w-auto'
           >
             <Bell className='mr-2 h-4 w-4' />
-            Notification Deliveries
+            {t('notificationDeliveries')}
           </Button>
         </div>
       </div>
@@ -137,16 +138,14 @@ export default function WebhooksSection() {
           ) : (
             <div className='bg-muted/50 rounded-lg p-8 text-center'>
               <h3 className='text-lg font-medium mb-2'>
-                No webhooks configured
+                {t('noneTitle')}
               </h3>
               <p className='text-muted-foreground mb-4'>
-                Add a webhook endpoint to receive real-time notifications for
-                SMS events. You can add multiple endpoints for different
-                services.
+                {t('noneDesc')}
               </p>
               <Button onClick={handleCreateClick} variant='default'>
                 <PlusCircle className='mr-2 h-4 w-4' />
-                Create Webhook
+                {t('create')}
               </Button>
             </div>
           )}

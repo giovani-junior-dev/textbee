@@ -41,8 +41,10 @@ import {
 import { Calendar } from 'lucide-react'
 import { truncate } from 'fs'
 import { formatDeviceName } from '@/lib/utils'
+import { useTranslations } from 'next-intl'
 
 const WebhooksHistory = () => {
+  const t = useTranslations('whHistory')
   const {
     data: devices,
     isLoading: isLoadingDevices,
@@ -184,15 +186,15 @@ const WebhooksHistory = () => {
             <div className="">
               <div className="flex items-center gap-2 mb-1.5">
                 <Smartphone className="h-3.5 w-3.5 text-brand-500" />
-                <h3 className="text-sm font-medium text-foreground">Device</h3>
+                <h3 className="text-sm font-medium text-foreground">{t('device')}</h3>
               </div>
               <Select value={currentDevice} onValueChange={handleDeviceChange}>
                 <SelectTrigger className="w-full bg-white/80 dark:bg-black/20 h-9 text-sm border-brand-200 dark:border-brand-800/70">
-                  <SelectValue placeholder="Select a device" />
+                  <SelectValue placeholder={t('selectDevice')} />
                 </SelectTrigger>
                 <SelectContent>
                   <SelectItem key="all" value="all">
-                    All devices
+                    {t('allDevices')}
                   </SelectItem>
                   {devices?.data?.map((device) => (
                     <SelectItem key={device._id} value={device._id}>
@@ -205,7 +207,7 @@ const WebhooksHistory = () => {
                             variant="outline"
                             className="ml-1 text-xs py-0 h-5"
                           >
-                            Disabled
+                            {t('disabled')}
                           </Badge>
                         )}
                       </div>
@@ -218,18 +220,18 @@ const WebhooksHistory = () => {
             <div className="w-full sm:w-56">
               <div className="flex items-center gap-2 mb-1.5">
                 <Webhook className="h-3.5 w-3.5 text-brand-500" />
-                <h3 className="text-sm font-medium text-foreground">Webhook</h3>
+                <h3 className="text-sm font-medium text-foreground">{t('webhook')}</h3>
               </div>
               <Select
                 value={currentWebhook}
                 onValueChange={handleWebhookChange}
               >
                 <SelectTrigger className="w-full bg-white/80 dark:bg-black/20 h-9 text-sm border-brand-200 dark:border-brand-800/70">
-                  <SelectValue placeholder="Select a webhook" />
+                  <SelectValue placeholder={t('selectWebhook')} />
                 </SelectTrigger>
                 <SelectContent>
                   <SelectItem key="all" value="all">
-                    All webhooks
+                    {t('allWebhooks')}
                   </SelectItem>
                   {webhooks?.data?.map((webhook: any) => (
                     <SelectItem key={webhook._id} value={webhook._id}>
@@ -242,7 +244,7 @@ const WebhooksHistory = () => {
                             variant="outline"
                             className="ml-1 text-xs py-0 h-5"
                           >
-                            Inactive
+                            {t('inactive')}
                           </Badge>
                         )}
                       </div>
@@ -256,18 +258,18 @@ const WebhooksHistory = () => {
               <div className="flex items-center gap-2 mb-1.5">
                 <MessageSquare className="h-3.5 w-3.5 text-brand-500" />
                 <h3 className="text-sm font-medium text-foreground">
-                  Event Type
+                  {t('eventType')}
                 </h3>
               </div>
               <Select value={eventType} onValueChange={handleMessageTypeChange}>
                 <SelectTrigger className="w-full bg-white/80 dark:bg-black/20 h-9 text-sm border-brand-200 dark:border-brand-800/70">
-                  <SelectValue placeholder="Message type" />
+                  <SelectValue placeholder={t('messageType')} />
                 </SelectTrigger>
                 <SelectContent>
                   <SelectItem value="all">
                     <div className="flex items-center gap-1.5">
                       <div className="h-1.5 w-1.5 rounded-full bg-gray-500" />
-                      All Events
+                      {t('allEvents')}
                     </div>
                   </SelectItem>
                     {message_events.map((event, index) => (
@@ -284,42 +286,42 @@ const WebhooksHistory = () => {
             <div className="w-full sm:w-44">
               <div className="flex items-center gap-2 mb-1.5">
                 <MessageSquare className="h-3.5 w-3.5 text-brand-500" />
-                <h3 className="text-sm font-medium text-foreground">Status</h3>
+                <h3 className="text-sm font-medium text-foreground">{t('status')}</h3>
               </div>
               {/* status(delivered, pending, failed, retrying) */}
               <Select value={status} onValueChange={handleStatusChange}>
                 <SelectTrigger className="w-full bg-white/80 dark:bg-black/20 h-9 text-sm border-brand-200 dark:border-brand-800/70">
-                  <SelectValue placeholder="Status" />
+                  <SelectValue placeholder={t('status')} />
                 </SelectTrigger>
                 <SelectContent>
                   <SelectItem value="all">
                     <div className="flex items-center gap-1.5">
                       <div className="h-1.5 w-1.5 rounded-full bg-gray-500" />
-                      All
+                      {t('all')}
                     </div>
                   </SelectItem>
                   <SelectItem value="delivered">
                     <div className="flex items-center gap-1.5">
                       <div className="h-1.5 w-1.5 rounded-full bg-green-500" />
-                      Delivered
+                      {t('delivered')}
                     </div>
                   </SelectItem>
                   <SelectItem value="pending">
                     <div className="flex items-center gap-1.5">
                       <div className="h-1.5 w-1.5 rounded-full bg-brand-500" />
-                      Pending
+                      {t('pending')}
                     </div>
                   </SelectItem>
                   <SelectItem value="failed">
                     <div className="flex items-center gap-1.5">
                       <div className="h-1.5 w-1.5 rounded-full bg-red-500" />
-                      Failed
+                      {t('failed')}
                     </div>
                   </SelectItem>
                   <SelectItem value="retrying">
                     <div className="flex items-center gap-1.5">
                       <div className="h-1.5 w-1.5 rounded-full bg-gray-500" />
-                      Retrying
+                      {t('retrying')}
                     </div>
                   </SelectItem>
                 </SelectContent>
@@ -329,44 +331,44 @@ const WebhooksHistory = () => {
               <div className="flex items-center gap-2 mb-1.5">
                 <MessageSquare className="h-3.5 w-3.5 text-brand-500" />
                 <h3 className="text-sm font-medium text-foreground">
-                  Date Range
+                  {t('dateRange')}
                 </h3>{' '}
               </div>
               <Select value={dateRange} onValueChange={handleDateRangeChange}>
                 <SelectTrigger className="w-full bg-white/80 dark:bg-black/20 h-9 text-sm border-brand-200 dark:border-brand-800/70">
-                  <SelectValue placeholder="Date Range" />
+                  <SelectValue placeholder={t('dateRange')} />
                 </SelectTrigger>
                 <SelectContent>
                   <SelectItem value="7">
-                    <div className="flex items-center gap-1.5">Last 7 Days</div>
+                    <div className="flex items-center gap-1.5">{t('last7')}</div>
                   </SelectItem>
                   <SelectItem value="30">
                     <div className="flex items-center gap-1.5">
-                      Last 30 Days
+                      {t('last30')}
                     </div>
                   </SelectItem>
                   <SelectItem value="90">
                     <div className="flex items-center gap-1.5">
-                      Last 90 Days
+                      {t('last90')}
                     </div>
                   </SelectItem>
                   <SelectItem value="90_months">
                     <div className="flex items-center gap-1.5">
-                      Last 3 Months
+                      {t('last3m')}
                     </div>
                   </SelectItem>
                   <SelectItem value="180">
                     <div className="flex items-center gap-1.5">
-                      Last 6 Months
+                      {t('last6m')}
                     </div>
                   </SelectItem>
                   <SelectItem value="365">
                     <div className="flex items-center gap-1.5">
-                      Last 12 Months
+                      {t('last12m')}
                     </div>
                   </SelectItem>
                   <SelectItem value="custom">
-                    <div className="flex items-center gap-1.5">Custom</div>
+                    <div className="flex items-center gap-1.5">{t('custom')}</div>
                   </SelectItem>
                 </SelectContent>
               </Select>
@@ -381,7 +383,7 @@ const WebhooksHistory = () => {
                     className="block text-xs mb-1"
                     htmlFor="start-date"
                   >
-                    Start Date
+                    {t('startDate')}
                   </label>
                   <input
                     id="start-date"
@@ -401,7 +403,7 @@ const WebhooksHistory = () => {
                     className="block text-xs mb-1"
                     htmlFor="end-date"
                   >
-                    End Date
+                    {t('endDate')}
                   </label>
                   <input
                     id="end-date"
@@ -429,7 +431,7 @@ const WebhooksHistory = () => {
                       setDateQuery({ start: start.toISOString(), end: end.toISOString() })
                     }}
                   >
-                    Cancel
+                    {t('cancel')}
                   </Button>
                   <Button
                     size="sm"
@@ -440,7 +442,7 @@ const WebhooksHistory = () => {
                     }}
                     disabled={!dateQuery.start || !dateQuery.end}
                   >
-                    Apply
+                    {t('apply')}
                   </Button>
                 </div>
               </div>
@@ -464,7 +466,7 @@ const WebhooksHistory = () => {
                   disabled={page === 1 || isLoading || isLoadingNotifications}
                   variant={page === 1 ? 'ghost' : 'default'}
                 >
-                  Previous
+                  {t('previous')}
                 </Button>
 
                 <div className="flex flex-wrap items-center gap-2 justify-center sm:justify-start">
@@ -564,7 +566,7 @@ const WebhooksHistory = () => {
                   }
                   variant={page === totalPages ? 'ghost' : 'default'}
                 >
-                  Next
+                  {t('next')}
                 </Button>
               </div>
             )}

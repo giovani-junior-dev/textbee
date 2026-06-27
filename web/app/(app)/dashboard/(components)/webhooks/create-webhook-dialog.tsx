@@ -40,17 +40,7 @@ import httpBrowserClient from '@/lib/httpBrowserClient'
 import { ApiEndpoints } from '@/config/api'
 import { useToast } from '@/hooks/use-toast'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
-
-const formSchema = z.object({
-  name: z
-    .string()
-    .max(64, { message: 'Name must be 64 characters or fewer' })
-    .optional(),
-  deliveryUrl: z.string().url({ message: 'Please enter a valid URL' }),
-  events: z.array(z.string()).min(1, { message: 'Select at least one event' }),
-  isActive: z.boolean().default(true),
-  signingSecret: z.string().min(1, { message: 'Signing secret is required' }),
-})
+import { useTranslations } from 'next-intl'
 
 interface CreateWebhookDialogProps {
   open: boolean
@@ -63,6 +53,15 @@ export function CreateWebhookDialog({
 }: CreateWebhookDialogProps) {
   const { toast } = useToast()
   const queryClient = useQueryClient()
+  const t = useTranslations('webhooks')
+
+  const formSchema = z.object({
+    name: z.string().max(64, { message: t('formNameMax') }).optional(),
+    deliveryUrl: z.string().url({ message: t('formUrlInvalid') }),
+    events: z.array(z.string()).min(1, { message: t('formEventsMin') }),
+    isActive: z.boolean().default(true),
+    signingSecret: z.string().min(1, { message: t('formSecretRequired') }),
+  })
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -88,8 +87,8 @@ export function CreateWebhookDialog({
     },
     onSuccess: () => {
       toast({
-        title: 'Success',
-        description: 'Webhook created successfully',
+        title: t('successTitle'),
+        description: t('createdSuccess'),
       })
       queryClient.invalidateQueries({ queryKey: ['webhooks'] })
       onOpenChange(false)
@@ -97,9 +96,9 @@ export function CreateWebhookDialog({
     },
     onError: (error: any) => {
       toast({
-        title: 'Error',
+        title: t('errorTitle'),
         description:
-          error?.response?.data?.message || 'Failed to create webhook',
+          error?.response?.data?.message || t('createFailed'),
         variant: 'destructive',
       })
     },
@@ -124,10 +123,9 @@ export function CreateWebhookDialog({
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className='sm:max-w-[500px]'>
         <DialogHeader>
-          <DialogTitle>Create Webhook</DialogTitle>
+          <DialogTitle>{t('create')}</DialogTitle>
           <DialogDescription>
-            Configure your webhook endpoint to receive real-time SMS
-            notifications.
+            {t('createDialogDesc')}
           </DialogDescription>
         </DialogHeader>
         <Form {...form}>
@@ -137,16 +135,16 @@ export function CreateWebhookDialog({
               name='name'
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Name (optional)</FormLabel>
+                  <FormLabel>{t('nameOptional')}</FormLabel>
                   <FormControl>
                     <Input
-                      placeholder='e.g. Production CRM'
+                      placeholder={t('namePlaceholder')}
                       {...field}
                       value={field.value ?? ''}
                     />
                   </FormControl>
                   <FormDescription>
-                    A short label to help you tell your webhooks apart
+                    {t('nameDesc')}
                   </FormDescription>
                   <FormMessage />
                 </FormItem>
@@ -157,7 +155,7 @@ export function CreateWebhookDialog({
               name='deliveryUrl'
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Delivery URL</FormLabel>
+                  <FormLabel>{t('deliveryUrl')}</FormLabel>
                   <FormControl>
                     <Input
                       placeholder='https://api.example.com/webhooks'
@@ -165,8 +163,7 @@ export function CreateWebhookDialog({
                     />
                   </FormControl>
                   <FormDescription>
-                    The URL where webhook notifications will be sent via POST
-                    requests
+                    {t('urlDesc')}
                   </FormDescription>
                   <FormMessage />
                 </FormItem>
@@ -177,7 +174,7 @@ export function CreateWebhookDialog({
               name='signingSecret'
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Signing Secret</FormLabel>
+                  <FormLabel>{t('signingSecret')}</FormLabel>
                   <FormControl>
                     <div className='flex space-x-2'>
                       <Input {...field} type='text' />
@@ -186,12 +183,12 @@ export function CreateWebhookDialog({
                         variant='outline'
                         onClick={() => field.onChange(uuidv4())}
                       >
-                        Generate
+                        {t('generate')}
                       </Button>
                     </div>
                   </FormControl>
                   <FormDescription>
-                    Used to verify webhook payload authenticity
+                    {t('secretDesc')}
                   </FormDescription>
                   <FormMessage />
                 </FormItem>
@@ -202,7 +199,7 @@ export function CreateWebhookDialog({
               name='events'
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Events</FormLabel>
+                  <FormLabel>{t('events')}</FormLabel>
                   <DropdownMenu>
                     <DropdownMenuTrigger asChild>
                       <FormControl>
@@ -211,8 +208,8 @@ export function CreateWebhookDialog({
                           className='w-full justify-between'
                         >
                           {field.value && field.value.length > 0
-                            ? `${field.value.length} events selected`
-                            : 'Select events to subscribe to'}
+                            ? t('eventsSelected', { count: field.value.length })
+                            : t('selectEvents')}
                         </Button>
                       </FormControl>
                     </DropdownMenuTrigger>
@@ -237,7 +234,7 @@ export function CreateWebhookDialog({
                     </DropdownMenuContent>
                   </DropdownMenu>
                   <FormDescription>
-                    Choose the events you want to receive notifications for
+                    {t('eventsDesc')}
                   </FormDescription>
                   <FormMessage />
                 </FormItem>
@@ -249,13 +246,13 @@ export function CreateWebhookDialog({
                 variant='outline'
                 onClick={() => onOpenChange(false)}
               >
-                Cancel
+                {t('cancel')}
               </Button>
               <Button
                type='submit'
                 disabled={createWebhookMutation.isPending}
                 >
-                {createWebhookMutation.isPending ? 'Creating...' : 'Create'}
+                {createWebhookMutation.isPending ? t('creating') : t('create')}
               </Button>
             </div>
           </form>

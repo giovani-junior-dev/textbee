@@ -18,6 +18,7 @@ import {
   CollapsibleTrigger,
 } from '@/components/ui/collapsible'
 import { cn } from '@/lib/utils'
+import { useTranslations } from 'next-intl'
 
 interface WebhookCardProps {
   webhook: WebhookData
@@ -32,6 +33,7 @@ export function WebhookCard({
   onDeleted,
   defaultOpen = false,
 }: WebhookCardProps) {
+  const t = useTranslations('webhooks')
   const { toast } = useToast()
   const [isLoading, setIsLoading] = useState(false)
   const queryClient = useQueryClient()
@@ -51,15 +53,13 @@ export function WebhookCard({
       })
 
       toast({
-        title: `Webhook ${checked ? 'enabled' : 'disabled'}`,
-        description: `Webhook notifications are now ${
-          checked ? 'enabled' : 'disabled'
-        }.`,
+        title: checked ? t('toggledOnTitle') : t('toggledOffTitle'),
+        description: checked ? t('toggledOnDesc') : t('toggledOffDesc'),
       })
     } catch (error) {
       toast({
-        title: 'Error',
-        description: `Failed to ${checked ? 'enable' : 'disable'} webhook`,
+        title: t('errorTitle'),
+        description: checked ? t('enableFailed') : t('disableFailed'),
         variant: 'destructive',
       })
     } finally {
@@ -75,7 +75,7 @@ export function WebhookCard({
     return secret.slice(0, 18) + '*'.repeat(Math.max(6, secret.length - 24))
   }
 
-  const title = webhook.name?.trim() || 'Webhook Endpoint'
+  const title = webhook.name?.trim() || t('endpointFallback')
   const eventCount = webhook.events?.length ?? 0
 
   // Stop the trigger from toggling when interacting with inline actions.
@@ -113,7 +113,7 @@ export function WebhookCard({
               variant={webhook.isActive ? 'default' : 'secondary'}
               className='h-5 shrink-0 px-1.5 text-[10px] uppercase tracking-wide'
             >
-              {webhook.isActive ? 'Active' : 'Inactive'}
+              {webhook.isActive ? t('active') : t('inactive')}
             </Badge>
             <span
               className='hidden md:inline truncate text-xs font-mono text-muted-foreground'
@@ -122,7 +122,7 @@ export function WebhookCard({
               {webhook.deliveryUrl}
             </span>
             <span className='ml-auto hidden sm:inline shrink-0 text-xs text-muted-foreground whitespace-nowrap'>
-              {eventCount} {eventCount === 1 ? 'event' : 'events'}
+              {t('eventCount', { count: eventCount })}
             </span>
           </div>
 
@@ -136,7 +136,7 @@ export function WebhookCard({
               checked={webhook.isActive}
               onCheckedChange={handleToggle}
               disabled={isLoading}
-              aria-label={webhook.isActive ? 'Disable webhook' : 'Enable webhook'}
+              aria-label={webhook.isActive ? t('disableAria') : t('enableAria')}
             />
             <Button
               variant='ghost'
@@ -146,7 +146,7 @@ export function WebhookCard({
                 e.stopPropagation()
                 onEdit()
               }}
-              aria-label='Edit webhook'
+              aria-label={t('editAria')}
             >
               <Edit2 className='h-4 w-4' />
             </Button>
@@ -163,17 +163,17 @@ export function WebhookCard({
         <div className='border-t bg-muted/20 px-3 py-3'>
           <dl className='grid gap-x-4 gap-y-3 text-sm sm:grid-cols-[120px_minmax(0,1fr)]'>
             <dt className='pt-2 text-xs font-medium uppercase tracking-wide text-muted-foreground'>
-              Delivery URL
+              {t('deliveryUrl')}
             </dt>
             <dd className='flex items-center gap-1 min-w-0'>
               <code className='flex-1 min-w-0 truncate rounded-md bg-background px-2 py-1.5 font-mono text-xs'>
                 {webhook.deliveryUrl}
               </code>
-              <CopyButton value={webhook.deliveryUrl} label='Copy URL' />
+              <CopyButton value={webhook.deliveryUrl} label={t('copyUrl')} />
             </dd>
 
             <dt className='pt-2 text-xs font-medium uppercase tracking-wide text-muted-foreground'>
-              Signing Secret
+              {t('signingSecret')}
             </dt>
             <dd className='flex items-center gap-1 min-w-0'>
               <code className='flex-1 min-w-0 truncate rounded-md bg-background px-2 py-1.5 font-mono text-xs'>
@@ -184,7 +184,7 @@ export function WebhookCard({
                 size='icon'
                 className='h-8 w-8 shrink-0'
                 onClick={() => setShowSecret((v) => !v)}
-                aria-label={showSecret ? 'Hide signing secret' : 'Show signing secret'}
+                aria-label={showSecret ? t('hideSecret') : t('showSecret')}
               >
                 {showSecret ? (
                   <EyeOff className='h-4 w-4' />
@@ -192,11 +192,11 @@ export function WebhookCard({
                   <Eye className='h-4 w-4' />
                 )}
               </Button>
-              <CopyButton value={webhook.signingSecret} label='Copy Secret' />
+              <CopyButton value={webhook.signingSecret} label={t('copySecret')} />
             </dd>
 
             <dt className='pt-1 text-xs font-medium uppercase tracking-wide text-muted-foreground'>
-              Events
+              {t('events')}
             </dt>
             <dd className='flex flex-wrap gap-1.5'>
               {webhook.events.map((event) => (
