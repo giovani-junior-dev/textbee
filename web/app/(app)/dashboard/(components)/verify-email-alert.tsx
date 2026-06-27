@@ -6,8 +6,10 @@ import { useQuery } from '@tanstack/react-query'
 import Link from 'next/link'
 import { useMemo } from 'react'
 import { Mail, ShieldAlert } from 'lucide-react'
+import { useTranslations } from 'next-intl'
 
 export default function VerifyEmailAlert() {
+  const t = useTranslations('verifyEmailAlert')
   const {
     data: userData,
     isLoading: isLoadingUserData,
@@ -65,7 +67,7 @@ export default function VerifyEmailAlert() {
       <AlertDescription className='flex flex-col sm:flex-row flex-wrap items-center gap-2 md:gap-4'>
         <span className='w-full sm:flex-1 text-center sm:text-left text-sm md:text-base font-medium flex items-center justify-center sm:justify-start gap-2'>
           <ShieldAlert className='h-5 w-5' />
-          {randomCta}
+          {t('cta')}
         </span>
         <div className='w-full sm:w-auto mt-2 sm:mt-0 flex justify-center sm:justify-end flex-wrap gap-1 md:gap-2'>
           <Button
@@ -76,7 +78,7 @@ export default function VerifyEmailAlert() {
           >
             <Link href={'/verify-email'}>
               <Mail className='mr-2 h-4 w-4' />
-              {randomButtonText}
+              {t('button')}
             </Link>
           </Button>
         </div>

@@ -3,8 +3,10 @@ import { ApiEndpoints } from '@/config/api'
 import httpBrowserClient from '@/lib/httpBrowserClient'
 import { useQuery } from '@tanstack/react-query'
 import { AlertTriangle } from 'lucide-react'
+import { useTranslations } from 'next-intl'
 
 export default function AccountDeletionAlert() {
+  const t = useTranslations('accountDeletion')
   const {
     data: userData,
     isLoading: isLoadingUserData,
@@ -41,12 +43,12 @@ export default function AccountDeletionAlert() {
       <AlertDescription className='flex items-center gap-2'>
         <AlertTriangle className='h-5 w-5 flex-shrink-0' />
         <div className='text-sm md:text-base'>
-          <span className='font-medium'>Your account is pending deletion.</span>{' '}
-          Your data will be permanently deleted{' '}
+          <span className='font-medium'>{t('pendingTitle')}</span>{' '}
+          {t('dataDeleted')}{' '}
           {daysRemaining > 0
-            ? `in ${daysRemaining} day${daysRemaining !== 1 ? 's' : ''}.`
-            : 'very soon.'}{' '}
-          If you would like to cancel this request, please email{' '}
+            ? t('inDays', { days: daysRemaining })
+            : t('verySoon')}{' '}
+          {t('cancelHint')}{' '}
           <span className='font-medium'>support@textbee.dev</span>.
         </div>
       </AlertDescription>

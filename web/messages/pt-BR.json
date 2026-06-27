@@ -20,6 +20,12 @@
     "getStarted": "Começar",
     "contribute": "Contribuir"
   },
+  "theme": {
+    "toggle": "Alternar tema",
+    "light": "Claro",
+    "dark": "Escuro",
+    "system": "Sistema"
+  },
   "nav": {
     "dashboard": "Painel",
     "messaging": "Mensagens",
@@ -292,6 +298,31 @@
     "updateFailed": "Falha ao atualizar o webhook",
     "updating": "Atualizando...",
     "update": "Atualizar"
+  },
+  "community": {
+    "title": "Comunidade",
+    "subtitle": "Conecte-se com outros usuários e encontre suporte"
+  },
+  "rateLimit": {
+    "reached": "Você atingiu seu limite de uso.",
+    "limitReached": "Limite atingido",
+    "upgradePlan": "Fazer upgrade",
+    "orWait": "ou aguarde o limite resetar"
+  },
+  "accountDeletion": {
+    "pendingTitle": "Sua conta está pendente de exclusão.",
+    "dataDeleted": "Seus dados serão excluídos permanentemente",
+    "inDays": "em {days, plural, one {# dia} other {# dias}}.",
+    "verySoon": "em breve.",
+    "cancelHint": "Se quiser cancelar esta solicitação, envie um email para"
+  },
+  "pastDue": {
+    "message": "O pagamento da sua assinatura falhou e sua conta está em atraso. Atualize sua forma de pagamento para não perder o acesso.",
+    "updatePayment": "Atualizar pagamento"
+  },
+  "verifyEmailAlert": {
+    "cta": "Verifique seu email para manter seu serviço funcionando sem interrupções.",
+    "button": "Verificar email"
   },
   "msgHistory": {
     "smsSent": "SMS enviado com sucesso!",

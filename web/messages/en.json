@@ -20,6 +20,12 @@
     "getStarted": "Get started",
     "contribute": "Contribute"
   },
+  "theme": {
+    "toggle": "Toggle theme",
+    "light": "Light",
+    "dark": "Dark",
+    "system": "System"
+  },
   "nav": {
     "dashboard": "Dashboard",
     "messaging": "Messaging",
@@ -292,6 +298,31 @@
     "updateFailed": "Failed to update webhook",
     "updating": "Updating...",
     "update": "Update"
+  },
+  "community": {
+    "title": "Community",
+    "subtitle": "Connect with other users and find support"
+  },
+  "rateLimit": {
+    "reached": "You have reached your usage limit.",
+    "limitReached": "Limit Reached",
+    "upgradePlan": "Upgrade Plan",
+    "orWait": "or wait for your limit to reset"
+  },
+  "accountDeletion": {
+    "pendingTitle": "Your account is pending deletion.",
+    "dataDeleted": "Your data will be permanently deleted",
+    "inDays": "in {days, plural, one {# day} other {# days}}.",
+    "verySoon": "very soon.",
+    "cancelHint": "If you would like to cancel this request, please email"
+  },
+  "pastDue": {
+    "message": "Your subscription payment failed and your account is past due. Update your payment method to avoid losing access.",
+    "updatePayment": "Update payment"
+  },
+  "verifyEmailAlert": {
+    "cta": "Verify your email to keep your service running smoothly.",
+    "button": "Verify Email"
   },
   "msgHistory": {
     "smsSent": "SMS sent successfully!",
