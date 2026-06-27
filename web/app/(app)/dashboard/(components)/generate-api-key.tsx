@@ -15,6 +15,7 @@ import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { QrCode, Copy, Smartphone, Download, AlertTriangle } from 'lucide-react'
 import React, { forwardRef, useImperativeHandle, useState } from 'react'
 import QRCode from 'react-qr-code'
+import { useTranslations } from 'next-intl'
 
 export type GenerateApiKeyHandle = {
   open: () => void
@@ -26,6 +27,7 @@ type GenerateApiKeyProps = {
 
 const GenerateApiKey = forwardRef<GenerateApiKeyHandle, GenerateApiKeyProps>(
   function GenerateApiKey({ showTrigger = true }, ref) {
+    const t = useTranslations('apiKey')
     const [isGenerateKeyModalOpen, setIsGenerateKeyModalOpen] = useState(false)
     const [isConfirmGenerateKeyModalOpen, setIsConfirmGenerateKeyModalOpen] =
       useState(false)
@@ -64,7 +66,7 @@ const GenerateApiKey = forwardRef<GenerateApiKeyHandle, GenerateApiKeyProps>(
     const handleCopyKey = () => {
       navigator.clipboard.writeText(generatedApiKey?.data)
       toast({
-        title: 'API key copied to clipboard',
+        title: t('copied'),
       })
     }
 
@@ -73,7 +75,7 @@ const GenerateApiKey = forwardRef<GenerateApiKeyHandle, GenerateApiKeyProps>(
         {showTrigger ? (
           <Button onClick={handleConfirmGenerateKey}>
             <QrCode className='mr-2 h-4 w-4' />
-            Generate API Key
+            {t('generate')}
           </Button>
         ) : null}
 
@@ -83,14 +85,10 @@ const GenerateApiKey = forwardRef<GenerateApiKeyHandle, GenerateApiKeyProps>(
         >
           <DialogContent className='sm:max-w-md'>
             <DialogHeader>
-              <DialogTitle>Create new API Key</DialogTitle>
+              <DialogTitle>{t('createTitle')}</DialogTitle>
               <DialogDescription>
                 <div className='space-y-2 text-sm text-muted-foreground'>
-                  <p>
-                    By clicking generate, you will be able to view your API key.
-                    Make sure to save it before closing the modal as you will not
-                    be able to view it again.
-                  </p>
+                  <p>{t('createDesc')}</p>
                 </div>
               </DialogDescription>
             </DialogHeader>
@@ -104,7 +102,7 @@ const GenerateApiKey = forwardRef<GenerateApiKeyHandle, GenerateApiKeyProps>(
                     <Spinner size='sm' className='text-white dark:text-black' />
                   </div>
                 ) : (
-                  'Generate API Key'
+                  t('generate')
                 )}
               </Button>
             </div>
@@ -117,10 +115,9 @@ const GenerateApiKey = forwardRef<GenerateApiKeyHandle, GenerateApiKeyProps>(
         >
           <DialogContent className='sm:max-w-lg'>
             <DialogHeader>
-              <DialogTitle>Your API Key</DialogTitle>
+              <DialogTitle>{t('yourKeyTitle')}</DialogTitle>
               <DialogDescription>
-                Use this API key to connect your device or authenticate your
-                service.
+                {t('yourKeyDesc')}
               </DialogDescription>
             </DialogHeader>
 
@@ -146,49 +143,48 @@ const GenerateApiKey = forwardRef<GenerateApiKeyHandle, GenerateApiKeyProps>(
                 <div className='space-y-2'>
                   <h4 className='font-medium flex items-center gap-2'>
                     <Smartphone className='h-4 w-4' />
-                    For Device Registration
+                    {t('forDevice')}
                   </h4>
                   <p className='text-muted-foreground'>
-                    Open the TextBee app and scan the QR code, or manually enter
-                    the API key in the app and click register/update.
+                    {t('forDeviceDesc')}
                   </p>
                 </div>
 
                 <div className='space-y-2'>
                   <h4 className='font-medium flex items-center gap-2'>
                     <Download className='h-4 w-4' />
-                    Don&apos;t have the app?
+                    {t('noApp')}
                   </h4>
                   <p className='text-muted-foreground'>
-                    Download the APK from{' '}
-                    <a
-                      href={Routes.downloadAndroidApp}
-                      target='_blank'
-                      rel='noopener noreferrer'
-                      className='text-primary hover:underline'
-                    >
-                      {Routes.downloadAndroidApp}
-                    </a>{' '}
-                    and install it.
+                    {t.rich('noAppDesc', {
+                      link: (chunks) => (
+                        <a
+                          href={Routes.downloadAndroidApp}
+                          target='_blank'
+                          rel='noopener noreferrer'
+                          className='text-primary hover:underline'
+                        >
+                          {chunks}
+                        </a>
+                      ),
+                    })}
                   </p>
                 </div>
 
                 <div className='space-y-2'>
-                  <h4 className='font-medium'>For External Services</h4>
+                  <h4 className='font-medium'>{t('forExternal')}</h4>
                   <p className='text-muted-foreground'>
-                    Copy the API key and store it securely for authenticating your
-                    external service with TextBee.
+                    {t('forExternalDesc')}
                   </p>
                 </div>
 
                 <div className='rounded-md bg-yellow-50 dark:bg-yellow-900/30 p-3 mt-4'>
                   <div className='flex items-center gap-2 text-yellow-800 dark:text-yellow-200'>
                     <AlertTriangle className='h-4 w-4' />
-                    <p className='text-sm font-medium'>Important</p>
+                    <p className='text-sm font-medium'>{t('important')}</p>
                   </div>
                   <p className='mt-2 text-sm text-yellow-700 dark:text-yellow-300'>
-                    Once you close this modal, you will not be able to view your
-                    API key again. Make sure to save it before closing.
+                    {t('importantDesc')}
                   </p>
                 </div>
               </div>

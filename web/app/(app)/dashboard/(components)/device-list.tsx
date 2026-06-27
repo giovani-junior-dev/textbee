@@ -37,6 +37,7 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
 import { formatDeviceName } from '@/lib/utils'
+import { useTranslations } from 'next-intl'
 import GenerateApiKey, {
   type GenerateApiKeyHandle,
 } from './generate-api-key'
@@ -54,6 +55,7 @@ type DeviceRow = DeviceVersionCandidate & {
 }
 
 export default function DeviceList() {
+  const t = useTranslations('devices')
   const addDeviceKeyRef = useRef<GenerateApiKeyHandle>(null)
   const [addDeviceInstructionOpen, setAddDeviceInstructionOpen] =
     useState(false)
@@ -123,7 +125,7 @@ export default function DeviceList() {
   const handleCopyId = (id: string) => {
     navigator.clipboard.writeText(id)
     toast({
-      title: 'Device ID copied to clipboard',
+      title: t('idCopied'),
     })
   }
 
@@ -132,14 +134,14 @@ export default function DeviceList() {
       <GenerateApiKey ref={addDeviceKeyRef} showTrigger={false} />
       <Card>
         <CardHeader className='flex flex-row items-center justify-between space-y-0 pb-2'>
-          <CardTitle className='text-lg'>Registered Devices</CardTitle>
+          <CardTitle className='text-lg'>{t('registered')}</CardTitle>
           <Button
             variant='outline'
             size='sm'
             onClick={() => setAddDeviceInstructionOpen(true)}
           >
             <Plus className='mr-1 h-4 w-4' />
-            Add device
+            {t('addDevice')}
           </Button>
         </CardHeader>
       <CardContent>
@@ -162,25 +164,28 @@ export default function DeviceList() {
                 <p className='text-xs text-muted-foreground'>
                   {isDeviceLimitReached ? (
                     <>
-                      You've reached your plan's limit of{' '}
-                      <span className='font-medium text-foreground'>
-                        {deviceLimit} active device{deviceLimit === 1 ? '' : 's'}
-                      </span>
-                      . New devices can't be registered or re-enabled.
+                      {t.rich('limitReached', {
+                        count: deviceLimit,
+                        b: (chunks) => (
+                          <span className='font-medium text-foreground'>{chunks}</span>
+                        ),
+                      })}
                     </>
                   ) : (
                     <>
-                      You're using{' '}
-                      <span className='font-medium text-foreground'>
-                        {activeDeviceCount} of {deviceLimit}
-                      </span>{' '}
-                      active devices included in your plan.
+                      {t.rich('limitApproaching', {
+                        active: activeDeviceCount,
+                        limit: deviceLimit,
+                        b: (chunks) => (
+                          <span className='font-medium text-foreground'>{chunks}</span>
+                        ),
+                      })}
                     </>
                   )}
                 </p>
               </div>
               <Button variant='outline' size='sm' asChild className='shrink-0'>
-                <Link href='/pricing'>Upgrade plan</Link>
+                <Link href='/pricing'>{t('upgradePlan')}</Link>
               </Button>
             </div>
           )}
@@ -218,7 +223,7 @@ export default function DeviceList() {
 
             {!isPending && !error && devices?.data?.length === 0 && (
               <div className='flex justify-center items-center h-full'>
-                <div>No devices found</div>
+                <div>{t('noDevices')}</div>
               </div>
             )}
 
@@ -246,7 +251,7 @@ export default function DeviceList() {
                           }
                           className='text-xs'
                         >
-                          {device.enabled ? 'Enabled' : 'Disabled'}
+                          {device.enabled ? t('enabled') : t('disabled')}
                         </Badge>
                       </div>
                     </div>
@@ -328,7 +333,7 @@ export default function DeviceList() {
                           setDevicePendingDelete(device as DeviceRow)
                         }
                       >
-                        Delete
+                        {t('delete')}
                       </DropdownMenuItem>
                     </DropdownMenuContent>
                   </DropdownMenu>
@@ -345,37 +350,33 @@ export default function DeviceList() {
       >
         <DialogContent className='sm:max-w-md'>
           <DialogHeader>
-            <DialogTitle>Add a device</DialogTitle>
+            <DialogTitle>{t('addDialogTitle')}</DialogTitle>
             <DialogDescription className='text-left'>
-              Register a new device by scanning the QR code or pasting the API key.
+              {t('addDialogDesc')}
             </DialogDescription>
           </DialogHeader>
           <ol className='list-decimal space-y-3 pl-5 text-left text-sm text-muted-foreground'>
             <li>
-              Download textbee app from{' '}
-              <a
-                href={Routes.downloadAndroidApp}
-                target='_blank'
-                rel='noreferrer'
-                className='font-medium text-primary underline-offset-4 hover:underline'
-              >
-                {Routes.downloadAndroidApp}
-              </a>
-              , install it, and grant SMS permissions.
+              {t.rich('addStep1', {
+                link: (chunks) => (
+                  <a
+                    href={Routes.downloadAndroidApp}
+                    target='_blank'
+                    rel='noreferrer'
+                    className='font-medium text-primary underline-offset-4 hover:underline'
+                  >
+                    {chunks}
+                  </a>
+                ),
+              })}
             </li>
-            <li>
-              Tap Continue to create a new API key and get a QR
-              code in the next dialog. If you already have an active API key, you can paste it in the
-              app instead
-            </li>
-            <li>
-              Open the textbee.dev app and scan the QR code or paste the key manually. Your device should appear in the list when the link succeeds.
-            </li>
+            <li>{t('addStep2')}</li>
+            <li>{t('addStep3')}</li>
           </ol>
           <DialogFooter className='flex-col gap-2 sm:flex-row sm:justify-between'>
             <Button variant='outline' size='sm' asChild>
               <a href={Routes.quickstart} target='_blank' rel='noreferrer'>
-                Full guide
+                {t('fullGuide')}
                 <ExternalLink className='ml-1 h-3 w-3' />
               </a>
             </Button>
@@ -386,7 +387,7 @@ export default function DeviceList() {
                 className='flex-1 sm:flex-none'
                 onClick={() => setAddDeviceInstructionOpen(false)}
               >
-                Cancel
+                {t('cancel')}
               </Button>
               <Button
                 size='sm'
@@ -396,7 +397,7 @@ export default function DeviceList() {
                   addDeviceKeyRef.current?.open()
                 }}
               >
-                Continue
+                {t('continue')}
               </Button>
             </div>
           </DialogFooter>
@@ -411,11 +412,11 @@ export default function DeviceList() {
       >
         <DialogContent>
           <DialogHeader>
-            <DialogTitle>Remove this device?</DialogTitle>
+            <DialogTitle>{t('removeTitle')}</DialogTitle>
             <DialogDescription>
               {devicePendingDelete
-                ? `This removes ${formatDeviceName(devicePendingDelete)} from your account. You will not be able to send or receive SMS through it until you register the app again.`
-                : 'This removes the device from your account. You will not be able to send or receive SMS through it until you register the app again.'}
+                ? t('removeDescNamed', { name: formatDeviceName(devicePendingDelete) })
+                : t('removeDesc')}
             </DialogDescription>
           </DialogHeader>
           <DialogFooter>
@@ -424,7 +425,7 @@ export default function DeviceList() {
               onClick={() => setDevicePendingDelete(null)}
               disabled={isDeletingDevice}
             >
-              Cancel
+              {t('cancel')}
             </Button>
             <Button
               variant='destructive'
@@ -437,7 +438,7 @@ export default function DeviceList() {
               {isDeletingDevice ? (
                 <Loader2 className='mr-2 h-4 w-4 animate-spin' />
               ) : null}
-              Remove
+              {t('remove')}
             </Button>
           </DialogFooter>
         </DialogContent>
