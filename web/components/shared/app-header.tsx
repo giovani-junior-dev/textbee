@@ -18,9 +18,12 @@ import { Menu, LogOut, LayoutDashboard, MessageSquarePlus } from 'lucide-react'
 import { signOut } from 'next-auth/react'
 import { Routes } from '@/config/routes'
 import ThemeToggle from './theme-toggle'
+import LanguageSwitcher from './language-switcher'
+import { useTranslations } from 'next-intl'
 import { Session } from 'next-auth'
 
 export default function AppHeader({ session }: { session: Session }) {
+  const t = useTranslations('common')
   const router = useRouter()
 
   const handleLogout = () => {
@@ -166,13 +169,14 @@ export default function AppHeader({ session }: { session: Session }) {
         </div>
         <div className='flex flex-1 items-center justify-end space-x-2'>
           <nav className='flex items-center space-x-6'>
+            <LanguageSwitcher />
             <ThemeToggle />
             <Link
               href={Routes.contribute}
               className='items-center gap-2 pr-8 hidden md:block'
             >
               <Button variant='outline' className='px-4 py-2 text-sm'>
-                Contribute
+                {t('contribute')}
               </Button>
             </Link>
 
@@ -181,13 +185,13 @@ export default function AppHeader({ session }: { session: Session }) {
             ) : (
               <div className='hidden md:flex md:items-center md:gap-2'>
                 <Button asChild variant='ghost'>
-                  <Link href={Routes.login}>Log in</Link>
+                  <Link href={Routes.login}>{t('logIn')}</Link>
                 </Button>
                 <Button
                   asChild
                   className='bg-primary hover:bg-primary/90 text-white rounded-full'
                 >
-                  <Link href={Routes.register}>Get started</Link>
+                  <Link href={Routes.register}>{t('getStarted')}</Link>
                 </Button>
               </div>
             )}

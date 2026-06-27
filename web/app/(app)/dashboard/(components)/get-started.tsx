@@ -411,7 +411,7 @@ export default function GetStartedCard() {
                             updateOnboarding({ currentStepId: step.id })
                           }}
                         >
-                          {t(`steps.${step.id}.label`)}
+                          {t(`steps.${step.id}.label` as any)}
                         </button>
                       ) : (
                         <p
@@ -422,7 +422,7 @@ export default function GetStartedCard() {
                               : 'text-muted-foreground',
                           )}
                         >
-                          {t(`steps.${step.id}.label`)}
+                          {t(`steps.${step.id}.label` as any)}
                         </p>
                       )}
                       {/* {step.optional && (
@@ -434,7 +434,7 @@ export default function GetStartedCard() {
                     {isActive && (
                       <>
                         <p className='mt-1 text-sm text-muted-foreground'>
-                          {t(`steps.${step.id}.description`)}
+                          {t(`steps.${step.id}.description` as any)}
                         </p>
                         <div className='mt-3 flex flex-wrap items-center gap-2'>
                           {step.id === 'verify_email' && (
