@@ -29,21 +29,20 @@ import { ApiEndpoints } from '@/config/api'
 import { useRouter } from 'next/navigation'
 import { useSession } from 'next-auth/react'
 import { useTurnstile } from '@/lib/turnstile'
-
-const SupportFormSchema = z.object({
-  name: z.string().min(1, { message: 'Name is required' }),
-  email: z.string().email({ message: 'Invalid email address' }),
-  phone: z.string().optional(),
-  category: z.enum(['general', 'technical', 'billing-and-payments', 'other'], {
-    message: 'Support category is required',
-  }),
-  message: z.string().min(1, { message: 'Message is required' }),
-  turnstileToken: z
-    .string()
-    .min(1, { message: 'Please complete the bot verification' }),
-})
+import { useTranslations } from 'next-intl'
 
 export default function SupportForm() {
+  const t = useTranslations('support')
+  const SupportFormSchema = z.object({
+    name: z.string().min(1, { message: t('nameRequired') }),
+    email: z.string().email({ message: t('invalidEmail') }),
+    phone: z.string().optional(),
+    category: z.enum(['general', 'technical', 'billing-and-payments', 'other'], {
+      message: t('categoryRequired'),
+    }),
+    message: z.string().min(1, { message: t('messageRequired') }),
+    turnstileToken: z.string().min(1, { message: t('botVerification') }),
+  })
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [isSubmitSuccessful, setIsSubmitSuccessful] = useState(false)
   const [errorMessage, setErrorMessage] = useState<string | null>(null)
@@ -96,7 +95,7 @@ export default function SupportForm() {
     if (!data.turnstileToken) {
       form.setError('turnstileToken', {
         type: 'manual',
-        message: 'Please complete the bot verification',
+        message: t('botVerification'),
       })
       setIsSubmitting(false)
       return
@@ -112,19 +111,17 @@ export default function SupportForm() {
       setIsSubmitSuccessful(true)
 
       toast({
-        title: 'Support request submitted',
-        description: response.data.message || 'We will get back to you soon.',
+        title: t('submitted'),
+        description: response.data.message || t('willGetBack'),
       })
     } catch (error) {
       console.error('Error submitting support request:', error)
 
-      setErrorMessage(
-        'Error submitting support request. Please try again later.'
-      )
+      setErrorMessage(t('submitError'))
 
       toast({
-        title: 'Error submitting support request',
-        description: 'Please try again later',
+        title: t('submitErrorTitle'),
+        description: t('tryAgainLater'),
         variant: 'destructive',
       })
     } finally {
@@ -141,7 +138,7 @@ export default function SupportForm() {
           disabled={isSubmitting}
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Support Category</FormLabel>
+              <FormLabel>{t('category')}</FormLabel>
               <Select
                 onValueChange={field.onChange}
                 disabled={isSubmitting}
@@ -149,16 +146,16 @@ export default function SupportForm() {
               >
                 <FormControl>
                   <SelectTrigger>
-                    <SelectValue placeholder='Select support category' />
+                    <SelectValue placeholder={t('categoryPlaceholder')} />
                   </SelectTrigger>
                 </FormControl>
                 <SelectContent>
-                  <SelectItem value='general'>General Inquiry</SelectItem>
-                  <SelectItem value='technical'>Technical Support</SelectItem>
+                  <SelectItem value='general'>{t('catGeneral')}</SelectItem>
+                  <SelectItem value='technical'>{t('catTechnical')}</SelectItem>
                   <SelectItem value='billing-and-payments'>
-                    Billing and Payments
+                    {t('catBilling')}
                   </SelectItem>
-                  <SelectItem value='other'>Other</SelectItem>
+                  <SelectItem value='other'>{t('catOther')}</SelectItem>
                 </SelectContent>
               </Select>
               <FormMessage />
@@ -171,9 +168,9 @@ export default function SupportForm() {
           disabled={isSubmitting}
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Name</FormLabel>
+              <FormLabel>{t('name')}</FormLabel>
               <FormControl>
-                <Input placeholder='Your name' {...field} />
+                <Input placeholder={t('namePlaceholder')} {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -185,9 +182,9 @@ export default function SupportForm() {
           disabled={isSubmitting}
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Email</FormLabel>
+              <FormLabel>{t('email')}</FormLabel>
               <FormControl>
-                <Input placeholder='your@email.com' type='email' {...field} />
+                <Input placeholder='seu@email.com' type='email' {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -199,7 +196,7 @@ export default function SupportForm() {
           disabled={isSubmitting}
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Phone (Optional)</FormLabel>
+              <FormLabel>{t('phoneOptional')}</FormLabel>
               <FormControl>
                 <Input placeholder='+1234567890' type='tel' {...field} />
               </FormControl>
@@ -213,10 +210,10 @@ export default function SupportForm() {
           disabled={isSubmitting}
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Message</FormLabel>
+              <FormLabel>{t('message')}</FormLabel>
               <FormControl>
                 <Textarea
-                  placeholder='How can we help you?'
+                  placeholder={t('messagePlaceholder')}
                   className='min-h-[100px]'
                   {...field}
                 />
@@ -243,8 +240,7 @@ export default function SupportForm() {
         />
         {isSubmitSuccessful && (
           <div className='flex items-center gap-2 text-green-500'>
-            <Check className='h-4 w-4' /> We have received your message, we will
-            get back to you soon.
+            <Check className='h-4 w-4' /> {t('received')}
           </div>
         )}
 
@@ -256,10 +252,10 @@ export default function SupportForm() {
         <Button type='submit' disabled={isSubmitting} className='w-full'>
           {isSubmitting ? (
             <>
-              <Loader2 className='h-4 w-4 animate-spin mr-2' /> Submitting...
+              <Loader2 className='h-4 w-4 animate-spin mr-2' /> {t('submitting')}
             </>
           ) : (
-            'Submit'
+            t('submit')
           )}
         </Button>
       </form>
