@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Plan: i18n + Rebranding Wablast SMS (next-intl)</title>
+<style>
+  :root{
+    --bg:#0f1512; --surface:#151d18; --surface-2:#1b2620; --border:#26342b;
+    --fg:#e8f0ea; --muted:#9fb3a6; --primary:#22c55e; --primary-2:#16a34a;
+    --accent:#5eead4; --danger:#f87171; --warn:#fbbf24;
+    --radius:14px; --maxw:980px;
+    --mono:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+    --sans:ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Inter,sans-serif;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:linear-gradient(180deg,#0c110e,#0f1512 40%);color:var(--fg);font-family:var(--sans);line-height:1.6;font-size:16px}
+  main{max-width:var(--maxw);margin:0 auto;padding:48px 24px 96px}
+  h1{font-size:2.1rem;line-height:1.2;margin:0 0 8px;letter-spacing:-.02em}
+  h2{font-size:1.5rem;margin:48px 0 14px;letter-spacing:-.01em;border-bottom:1px solid var(--border);padding-bottom:8px}
+  h3{font-size:1.18rem;margin:22px 0 8px}
+  h4{font-size:1rem;margin:18px 0 6px;color:var(--accent)}
+  p{margin:10px 0}
+  a{color:var(--accent)}
+  code{font-family:var(--mono);font-size:.86em;background:var(--surface-2);border:1px solid var(--border);padding:1px 6px;border-radius:6px}
+  pre{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:16px;overflow:auto}
+  pre code{background:none;border:none;padding:0}
+  header{border-bottom:2px solid var(--border);padding-bottom:18px;margin-bottom:8px}
+  .lead{color:var(--muted);font-size:1.05rem}
+  .meta{margin-top:14px;font-size:.85rem}
+  .meta summary{cursor:pointer;color:var(--muted)}
+  .meta dl{display:grid;grid-template-columns:120px 1fr;gap:4px 16px;margin:12px 0 0;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:14px}
+  .meta dt{color:var(--primary);font-family:var(--mono);font-size:.8rem}
+  .meta dd{margin:0;color:var(--muted);font-family:var(--mono);font-size:.8rem;word-break:break-word}
+  section{margin-top:8px}
+  figure{margin:18px 0;text-align:center}
+  figure img{max-width:100%;border-radius:var(--radius);border:1px solid var(--border)}
+  figcaption{color:var(--muted);font-size:.85rem;margin-top:8px}
+  .imgph{background:repeating-linear-gradient(45deg,#141d17,#141d17 12px,#172019 12px,#172019 24px);border:1px dashed var(--border);border-radius:var(--radius);padding:38px 18px;color:var(--muted);font-size:.85rem}
+  ul,ol{padding-left:22px}
+  li{margin:5px 0}
+  .tag{font-family:var(--mono);font-size:.68rem;text-transform:uppercase;letter-spacing:.05em;padding:2px 7px;border-radius:999px;vertical-align:middle}
+  .tag.existing{background:#1e2a22;color:var(--accent);border:1px solid var(--border)}
+  .tag.new{background:#13301f;color:var(--primary);border:1px solid var(--primary-2)}
+  .phase{background:var(--surface);border:1px solid var(--border);border-left:4px solid var(--primary);border-radius:var(--radius);padding:18px 22px;margin:18px 0}
+  .checklist{list-style:none;padding-left:4px}
+  .checklist li{margin:6px 0}
+  .status{background:var(--surface-2);color:var(--warn);font-weight:700}
+  .loop{background:#13251b;border:1px solid var(--primary-2);border-radius:10px;padding:10px 14px;margin-top:14px;font-size:.92rem;color:var(--accent)}
+  details{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:10px 14px;margin:10px 0}
+  summary{cursor:pointer;font-weight:600}
+  .qa-answer{color:var(--muted);margin-top:8px}
+  table{width:100%;border-collapse:collapse;margin:12px 0;font-size:.92rem}
+  th,td{border:1px solid var(--border);padding:8px 10px;text-align:left;vertical-align:top}
+  th{background:var(--surface-2);color:var(--accent)}
+  .pill{display:inline-block;background:var(--surface-2);border:1px solid var(--border);border-radius:999px;padding:2px 10px;font-size:.78rem;color:var(--muted);font-family:var(--mono)}
+  .callout{background:var(--surface-2);border:1px solid var(--border);border-left:4px solid var(--warn);border-radius:10px;padding:12px 16px;margin:14px 0}
+</style>
+</head>
+<body>
+<main>
+
+  <!-- ===== HEADER + UPDATABLE METADATA ===== -->
+  <header>
+    <h1>Plan: Internacionalização (i18n) + Rebranding "Wablast SMS"</h1>
+    <p class="lead">Refatoração do painel <code>web/</code> (Next.js 14 App Router) para PT-BR via <strong>next-intl</strong>, com troca de marca textbee&nbsp;→&nbsp;Wablast SMS e tema de cores. Arquitetura incremental, type-safe e reversível.</p>
+    <details class="meta">
+      <summary>Metadata</summary>
+      <dl>
+        <dt>created</dt>      <dd>2026-06-27T18:40:00Z</dd>
+        <dt>modified</dt>     <dd>2026-06-27T18:40:00Z</dd>
+        <dt>commits</dt>      <dd>—</dd>
+        <dt>agent name</dt>   <dd>claude-opus-4-8</dd>
+        <dt>session id</dt>   <dd>7960d21f-aff7-4d5a-ac6c-1dae69a36af2</dd>
+        <dt>back refs</dt>    <dd>docs/SELF_HOSTING_LOCAL_PTBR.md, docs/API_REFERENCE.md, ai-memory:notes/textbee-self-host-setup.md</dd>
+        <dt>forward refs</dt> <dd>—</dd>
+      </dl>
+    </details>
+  </header>
+
+  <figure>
+    <img src="i18n-branding-wablast-refactor/hero.png" alt="Painel localizado de inglês para português, tema verde minimalista">
+
+    <figcaption>Painel Wablast SMS internacionalizado: uma fonte de verdade de textos, dois idiomas, marca própria.</figcaption>
+  </figure>
+
+  <!-- ===== PURPOSE / PROBLEM / SOLUTION ===== -->
+  <section id="purpose">
+    <h2>Purpose</h2>
+    <p>Transformar o painel (fork self-hosted do TextBee) em produto de marca própria <strong>Wablast SMS</strong>, com interface em <strong>português (PT-BR)</strong> por padrão e capacidade de alternar idioma, sem quebrar a base de código nem dificultar futuros <code>git pull</code> do upstream. A i18n precisa ser <em>arquitetura</em>, não gambiarra de strings traduzidas no meio do JSX.</p>
+  </section>
+
+  <section id="problem">
+    <h2>Problem</h2>
+    <p>Hoje os textos estão <strong>hardcoded em inglês</strong> espalhados por ~105 componentes (79 client). Não há camada de i18n. Pior: o <code>next.config.js</code> usa o bloco <code>i18n</code> <strong>legado do Pages Router</strong> (<code>locales:['en-US']</code>) — que é <strong>incompatível</strong> com i18n no App Router e precisa ser removido. Traduzir "na mão" arquivo por arquivo gera dívida: sem fonte única, sem troca de idioma, retrabalho a cada tela nova e conflitos no merge com o upstream.</p>
+    <figure>
+      <img src="i18n-branding-wablast-refactor/problem.png" alt="Strings hardcoded espalhadas versus um dicionário único">
+
+      <figcaption>Strings espalhadas em 105 componentes + config i18n legado incompatível com App Router.</figcaption>
+    </figure>
+  </section>
+
+  <section id="solution">
+    <h2>Solution</h2>
+    <p>Adotar <strong>next-intl</strong> no modo <strong>sem prefixo de locale na URL</strong> (locale resolvido por <strong>cookie</strong> <code>NEXT_LOCALE</code>, default <code>pt-BR</code>). As rotas (<code>/dashboard</code>, <code>/login</code>...) <strong>não mudam</strong> — zero refactor de roteamento, ideal para um painel interno (não-SEO). Textos viram chaves <code>t('ns.chave')</code> resolvidas de dicionários JSON (<code>messages/pt-BR.json</code>, <code>messages/en.json</code>) com <strong>namespaces por feature</strong>. Migração <strong>incremental</strong> tela por tela, com commits por bloco. Junto, o rebranding (cores + nome/logo Wablast SMS) entra como fase isolada de baixo risco.</p>
+    <figure>
+      <img src="i18n-branding-wablast-refactor/solution.png" alt="Arquitetura next-intl: cookie, request config, provider, dicionários JSON">
+
+      <figcaption>Arquitetura: cookie de locale → <code>i18n/request.ts</code> → Provider → <code>useTranslations</code>/<code>getTranslations</code> → dicionários JSON.</figcaption>
+    </figure>
+  </section>
+
+  <!-- ===== RELEVANT FILES ===== -->
+  <section id="files" class="files">
+    <h2>Relevant Files</h2>
+
+    <h3>Existing Files</h3>
+    <ul>
+      <li><span class="tag existing">existing</span> <code>web/next.config.js</code> — remover bloco <code>i18n</code> legado e envolver com <code>createNextIntlPlugin</code> (CommonJS).</li>
+      <li><span class="tag existing">existing</span> <code>web/app/layout.tsx</code> — injetar <code>NextIntlClientProvider</code> + <code>getMessages()</code>, <code>&lt;html lang&gt;</code> dinâmico, metadata Wablast.</li>
+      <li><span class="tag existing">existing</span> <code>web/styles/main.css</code> — vars de tema (<code>--primary</code> claro/escuro) → paleta Wablast.</li>
+      <li><span class="tag existing">existing</span> <code>web/components/shared/app-header.tsx</code> — logo (<code>alt='textbee Logo'</code>) + nome → Wablast SMS.</li>
+      <li><span class="tag existing">existing</span> <code>web/components/shared/footer.tsx</code> — logo/marca no rodapé.</li>
+      <li><span class="tag existing">existing</span> <code>web/app/(app)/dashboard/**</code>, <code>(auth)/**</code>, <code>messaging</code>, <code>webhooks</code>, <code>account/**</code> — telas a migrar para <code>t()</code>.</li>
+      <li><span class="tag existing">existing</span> <code>web/public/favicon.ico</code> — substituir pelo favicon Wablast.</li>
+    </ul>
+
+    <h3>New Files</h3>
+    <ul>
+      <li><span class="tag new">new</span> <code>web/i18n/request.ts</code> — config de request do next-intl (lê cookie, carrega mensagens).</li>
+      <li><span class="tag new">new</span> <code>web/i18n/locales.ts</code> — constantes (<code>['pt-BR','en']</code>, default, cookie name).</li>
+      <li><span class="tag new">new</span> <code>web/messages/pt-BR.json</code> — dicionário PT-BR (fonte primária).</li>
+      <li><span class="tag new">new</span> <code>web/messages/en.json</code> — dicionário EN (paridade de chaves).</li>
+      <li><span class="tag new">new</span> <code>web/components/shared/language-switcher.tsx</code> — seletor de idioma (grava cookie + refresh).</li>
+      <li><span class="tag new">new</span> <code>web/global.d.ts</code> — tipagem das mensagens (chaves type-safe no <code>t()</code>).</li>
+      <li><span class="tag new">new</span> <code>web/lib/api-error-messages.ts</code> — mapa de mensagens de erro da API → chaves i18n.</li>
+      <li><span class="tag new">new</span> <code>web/public/wablast-logo.svg</code> — logo da marca.</li>
+    </ul>
+  </section>
+
+  <!-- ===== IMPLEMENTATION PHASES ===== -->
+  <section id="phases">
+    <h2>Implementation Phases</h2>
+    <p><strong>IMPORTANT:</strong> Execute every phase and task step by step, in order, top to bottom.</p>
+    <p>Status markers: <code>[]</code> idle · <code>[wip]</code> in progress · <code>[x]</code> complete · <code>[f]</code> failed. All start as <code>[]</code>; the Build Plan workflow updates them as it works.</p>
+
+    <!-- PHASE 1 -->
+    <div class="phase">
+      <h3><code class="status">[]</code> Phase 1: Infra next-intl (fundação)</h3>
+      <p>Instalar e plugar o next-intl no App Router, modo cookie (sem prefixo de URL). Nenhuma tradução de tela ainda — só a tubulação funcionando com uma chave de prova.</p>
+      <figure>
+        <!-- {{PHASE_IMAGE: pipeline boot - install next-intl, remove legacy i18n, plugin, request.ts, provider; minimal green, words: setup, provider}} -->
+        <div class="imgph">[phase image — pipeline de setup next-intl]</div>
+        <figcaption>Tubulação base: plugin → request config → provider no layout.</figcaption>
+      </figure>
+
+      <h4>1. Dependência e config</h4>
+      <ul class="checklist">
+        <li><code class="status">[]</code> <code>cd web && pnpm add next-intl</code></li>
+        <li><code class="status">[]</code> Em <code>next.config.js</code>: <strong>remover</strong> o bloco <code>i18n:{locales,defaultLocale}</code> (legado/incompatível).</li>
+        <li><code class="status">[]</code> Envolver export com <code>createNextIntlPlugin('./i18n/request.ts')</code> mantendo CommonJS: <code>module.exports = withNextIntl(nextConfig)</code>.</li>
+      </ul>
+
+      <h4>2. Locales + request config</h4>
+      <ul class="checklist">
+        <li><code class="status">[]</code> Criar <code>i18n/locales.ts</code>: <code>export const locales=['pt-BR','en'] as const; export const defaultLocale='pt-BR'; export const LOCALE_COOKIE='NEXT_LOCALE'</code>.</li>
+        <li><code class="status">[]</code> Criar <code>i18n/request.ts</code> com <code>getRequestConfig</code>: ler cookie <code>NEXT_LOCALE</code> (fallback default), validar contra <code>locales</code>, <code>return { locale, messages: (await import(\`../messages/${locale}.json\`)).default }</code>.</li>
+      </ul>
+
+      <h4>3. Provider no layout + dicionários iniciais</h4>
+      <ul class="checklist">
+        <li><code class="status">[]</code> Criar <code>messages/pt-BR.json</code> e <code>messages/en.json</code> com namespace <code>common</code> (ex.: <code>{"common":{"appName":"Wablast SMS"}}</code>).</li>
+        <li><code class="status">[]</code> Em <code>app/layout.tsx</code>: <code>const locale=await getLocale(); const messages=await getMessages();</code> envolver <code>&lt;body&gt;</code> com <code>&lt;NextIntlClientProvider locale={locale} messages={messages}&gt;</code> e <code>&lt;html lang={locale}&gt;</code>.</li>
+      </ul>
+
+      <h4>4. Testing Strategy</h4>
+      <p>Validar que a tubulação resolve mensagens em server e client component, e que o app builda sem o i18n legado.</p>
+      <ul class="checklist">
+        <li><code class="status">[]</code> <code>pnpm build</code> — compila sem erro de config i18n.</li>
+        <li><code class="status">[]</code> Render de prova: um componente exibindo <code>t('common.appName')</code> mostra "Wablast SMS".</li>
+        <li><code class="status">[]</code> <code>pnpm dev -- -p 3002</code> e abrir <code>/dashboard</code> sem crash.</li>
+      </ul>
+      <div class="loop">🔁 <strong>Não sair da fase até todos os checks passarem.</strong> Se o build falhar por config i18n legado, remover e re-rodar.</div>
+    </div>
+
+    <!-- PHASE 2 -->
+    <div class="phase">
+      <h3><code class="status">[]</code> Phase 2: Rebranding Wablast SMS (cores + nome + logo)</h3>
+      <p>Baixo risco e alto impacto visual. Independente do i18n — pode rodar em paralelo.</p>
+
+      <h4>1. Paleta de cores</h4>
+      <ul class="checklist">
+        <li><code class="status">[]</code> Extrair a paleta de <code>wablastmessage.com</code> (primária + tons claro/escuro).</li>
+        <li><code class="status">[]</code> Converter para HSL e substituir <code>--primary</code> (e <code>--ring</code>/<code>--brand-foreground</code> se houver) em <code>styles/main.css</code> nos blocos <code>:root</code> (claro) e <code>.dark</code>/escuro.</li>
+      </ul>
+
+      <h4>2. Nome e logo</h4>
+      <ul class="checklist">
+        <li><code class="status">[]</code> Trocar texto da marca para <strong>"Wablast SMS"</strong> em <code>components/shared/app-header.tsx</code> e <code>footer.tsx</code> (idealmente via <code>t('common.appName')</code>).</li>
+        <li><code class="status">[]</code> Substituir o asset de logo (<code>alt='textbee Logo'</code>) por <code>wablast-logo.svg</code> em <code>public/</code> e atualizar <code>src</code>/<code>alt</code>.</li>
+        <li><code class="status">[]</code> Substituir <code>public/favicon.ico</code> + <code>metadata.title</code>/<code>metadataBase</code> em <code>app/layout.tsx</code>.</li>
+      </ul>
+
+      <h4>3. Testing Strategy</h4>
+      <p>Verificação visual em claro/escuro nas telas principais.</p>
+      <ul class="checklist">
+        <li><code class="status">[]</code> Abrir <code>/login</code> e <code>/dashboard</code> — cor primária, nome e logo Wablast aplicados.</li>
+        <li><code class="status">[]</code> Alternar tema claro/escuro (theme-toggle) — contraste ok.</li>
+      </ul>
+      <div class="loop">🔁 <strong>Não sair sem validar claro+escuro nas telas principais.</strong></div>
+    </div>
+
+    <!-- PHASE 3 -->
+    <div class="phase">
+      <h3><code class="status">[]</code> Phase 3: Migração de strings — núcleo (dashboard, auth, onboarding)</h3>
+      <p>O grosso. Converter texto hardcoded → <code>t()</code> nas telas mais usadas, populando os dicionários. Padrão por tipo de componente.</p>
+
+      <h4>1. Padrão de migração</h4>
+      <ul class="checklist">
+        <li><code class="status">[]</code> Client component (<code>'use client'</code>): <code>const t=useTranslations('dashboard')</code> → <code>{t('chave')}</code>.</li>
+        <li><code class="status">[]</code> Server component: <code>const t=await getTranslations('dashboard')</code>.</li>
+        <li><code class="status">[]</code> Cada string movida vira chave em <code>pt-BR.json</code> (texto traduzido) e <code>en.json</code> (texto original) sob o namespace da feature.</li>
+      </ul>
+
+      <h4>2. Telas do bloco</h4>
+      <ul class="checklist">
+        <li><code class="status">[]</code> <code>dashboard</code> (home, cards de stats, passos de onboarding "Get Started").</li>
+        <li><code class="status">[]</code> <code>(auth)</code>: login, register, verify-email, reset-password.</li>
+        <li><code class="status">[]</code> Componentes compartilhados visíveis: <code>app-header</code>, <code>footer</code>, toasts comuns.</li>
+      </ul>
+
+      <h4>3. Testing Strategy</h4>
+      <ul class="checklist">
+        <li><code class="status">[]</code> Abrir cada tela com cookie <code>NEXT_LOCALE=pt-BR</code> — textos em português, sem chave crua aparecendo.</li>
+        <li><code class="status">[]</code> <code>pnpm build</code> — sem erro de chave faltante (se usar tipagem da Fase 5).</li>
+      </ul>
+      <div class="loop">🔁 <strong>Commit por tela/bloco.</strong> Não acumular migração gigante sem validar.</div>
+    </div>
+
+    <!-- PHASE 4 -->
+    <div class="phase">
+      <h3><code class="status">[]</code> Phase 4: Migração de strings — restante</h3>
+      <p>Telas secundárias, mesma técnica da Fase 3.</p>
+      <h4>1. Telas</h4>
+      <ul class="checklist">
+        <li><code class="status">[]</code> <code>messaging</code> (envio de SMS).</li>
+        <li><code class="status">[]</code> <code>webhooks</code> (lista, criação, deliveries).</li>
+        <li><code class="status">[]</code> <code>account</code> (perfil, troca de senha, suporte, exclusão).</li>
+        <li><code class="status">[]</code> devices / api-keys (componentes do dashboard).</li>
+        <li><code class="status">[]</code> <code>contribute</code>, <code>checkout</code>, <code>download</code>, modais (survey, community, black-friday).</li>
+      </ul>
+      <h4>2. Testing Strategy</h4>
+      <ul class="checklist">
+        <li><code class="status">[]</code> Varredura: <code>grep</code> por strings em inglês remanescentes nos <code>.tsx</code> migrados.</li>
+        <li><code class="status">[]</code> Navegar todas as telas em PT-BR sem chave crua.</li>
+      </ul>
+      <div class="loop">🔁 <strong>Loop até nenhuma string crua/inglês sobrar nas telas-alvo.</strong></div>
+    </div>
+
+    <!-- PHASE 5 -->
+    <div class="phase">
+      <h3><code class="status">[]</code> Phase 5: Troca de idioma, formatação, erros da API e type-safety</h3>
+      <p>Fechar a arquitetura: alternar idioma, datas/números localizados, erros do backend traduzidos e chaves tipadas.</p>
+      <h4>1. Language switcher</h4>
+      <ul class="checklist">
+        <li><code class="status">[]</code> <code>language-switcher.tsx</code>: grava cookie <code>NEXT_LOCALE</code> + <code>router.refresh()</code>; colocar no header/account.</li>
+      </ul>
+      <h4>2. Formatação e erros</h4>
+      <ul class="checklist">
+        <li><code class="status">[]</code> Usar <code>useFormatter</code>/<code>format.dateTime</code> para datas/números em PT-BR.</li>
+        <li><code class="status">[]</code> <code>lib/api-error-messages.ts</code>: mapear mensagens comuns do backend (ex.: "Please verify your email") → chaves <code>errors.*</code>; fallback exibe a mensagem original.</li>
+      </ul>
+      <h4>3. Type-safety</h4>
+      <ul class="checklist">
+        <li><code class="status">[]</code> <code>global.d.ts</code>: <code>type Messages = typeof import('./messages/pt-BR.json'); interface IntlMessages extends Messages {}</code> → autocomplete e erro em chave inexistente.</li>
+      </ul>
+      <h4>4. Testing Strategy</h4>
+      <ul class="checklist">
+        <li><code class="status">[]</code> Trocar idioma no switcher EN↔PT-BR — UI atualiza sem reload manual.</li>
+        <li><code class="status">[]</code> Forçar um erro da API (ex.: login inválido) — mensagem traduzida ou fallback legível.</li>
+        <li><code class="status">[]</code> <code>pnpm build</code> com tipagem ativa — chave inexistente quebra o build (prova de type-safety).</li>
+      </ul>
+      <div class="loop">🔁 <strong>Não sair sem switch funcional + build type-safe verde.</strong></div>
+    </div>
+
+    <!-- PHASE 6 -->
+    <div class="phase">
+      <h3><code class="status">[]</code> Phase 6: QA final, docs e PR no fork</h3>
+      <p>Garantir consistência e versionar.</p>
+      <h4>1. QA + entrega</h4>
+      <ul class="checklist">
+        <li><code class="status">[]</code> Revisão tela a tela (claro/escuro, PT-BR e EN).</li>
+        <li><code class="status">[]</code> Paridade de chaves entre <code>pt-BR.json</code> e <code>en.json</code> (script simples de diff de chaves).</li>
+        <li><code class="status">[]</code> Atualizar <code>docs/</code> (seção i18n + rebranding) e a ai-memory.</li>
+        <li><code class="status">[]</code> Branch nova no fork <code>giovani-junior-dev/textbee</code> + commits por fase + PR (base = fork, nunca upstream).</li>
+      </ul>
+      <h4>2. Testing Strategy</h4>
+      <ul class="checklist">
+        <li><code class="status">[]</code> <code>pnpm build</code> final verde.</li>
+        <li><code class="status">[]</code> Smoke test: login → dashboard → enviar SMS → webhooks, tudo em PT-BR.</li>
+      </ul>
+      <div class="loop">🔁 <strong>Plano completo só quando o build passa e o smoke test em PT-BR roda fim a fim.</strong></div>
+    </div>
+  </section>
+
+  <!-- ===== GLOBAL VALIDATION ===== -->
+  <section id="validation">
+    <h2>Validation Commands</h2>
+    <p>Execute these commands to validate the entire plan is complete:</p>
+    <ul class="checklist">
+      <li><code class="status">[]</code> <code>cd web && pnpm build</code> — compila com next-intl + tipagem, sem i18n legado.</li>
+      <li><code class="status">[]</code> <code>grep -rIE "(>|\"|')[A-Z][a-z]+ [A-Z]?[a-z]+" app/(app)/dashboard | wc -l</code> — heurística: poucas/nenhuma string crua de UI remanescente.</li>
+      <li><code class="status">[]</code> Diff de chaves <code>pt-BR.json</code> vs <code>en.json</code> — conjuntos iguais (sem chave órfã).</li>
+      <li><code class="status">[]</code> Smoke manual: <code>/login → /dashboard → /messaging → /webhooks</code> em PT-BR, sem chave crua, marca Wablast aplicada.</li>
+    </ul>
+    <div class="loop">🔁 <strong>The plan is not complete until every box is checked and every command passes. Se um passo for impossível, marque <code>[f]</code> e siga.</strong></div>
+  </section>
+
+  <!-- ===== QUESTIONABLES ===== -->
+  <section id="questionables">
+    <h2>Questionables</h2>
+    <figure>
+      <!-- {{QUESTIONABLES_IMAGE: a fork in the road - cookie locale vs url locale route, minimal green, words: cookie vs URL}} -->
+      <div class="imgph">[questionables image — decisão: cookie vs URL de locale]</div>
+      <figcaption>Principais decisões em aberto a confirmar com o usuário antes de buildar.</figcaption>
+    </figure>
+
+    <details open>
+      <summary>Manter EN além de PT-BR, ou só PT-BR? <span class="pill">RESOLVIDO</span></summary>
+      <p class="qa-answer"><strong>Decidido (user 2026-06-27):</strong> manter <strong>EN + PT-BR juntos com toggle</strong>. PT-BR default, EN via switcher. Confirma a Fase 5 (language-switcher) como parte do escopo.</p>
+    </details>
+    <details open>
+      <summary>Locale por cookie (sem prefixo) vs rota <code>/[locale]/</code>?</summary>
+      <p class="qa-answer"><strong>Decisão:</strong> cookie. O painel é interno (não-SEO), e <code>/[locale]/</code> exigiria mover todas as rotas <code>app/(app)/</code> para <code>app/[locale]/(app)/</code> — refactor grande e mais conflito com upstream. Cookie entrega troca de idioma com risco mínimo.</p>
+    </details>
+    <details open>
+      <summary>Tradução das mensagens de erro vindas da API (backend EN)</summary>
+      <p class="qa-answer"><strong>Assunção:</strong> mapear apenas as mensagens mais comuns (login inválido, email não verificado, limites) para chaves <code>errors.*</code>, com <em>fallback</em> exibindo a mensagem original. Traduzir 100% exigiria mexer no backend NestJS (fora do escopo desta fase).</p>
+    </details>
+    <details open>
+      <summary>Cor exata da marca Wablast <span class="pill">RESOLVIDO</span></summary>
+      <p class="qa-answer"><strong>Extraído de wablastmessage.com (2026-06-27):</strong> teal-verde escuro. Primary <code>#00634a</code> → HSL <code>165 100% 19%</code>; hover/dark <code>~#0a8f6e</code> (<code>162 87% 30%</code>); acento mint <code>#b0efdf</code> (<code>162 60% 81%</code>); surface escura <code>#00322a</code> (<code>170 100% 10%</code>). Valores finais ajustados na Fase 2 com checagem de contraste (claro/escuro).</p>
+    </details>
+    <details>
+      <summary>Type-safety das chaves (global.d.ts) agora ou depois?</summary>
+      <p class="qa-answer"><strong>Assunção:</strong> ativar na Fase 5 (depois do grosso migrado) para não brigar com chaves incompletas durante a migração. Alternativa: ativar cedo para forçar disciplina — mais atrito inicial.</p>
+    </details>
+    <details>
+      <summary>Interação com next-auth e SSR do locale</summary>
+      <p class="qa-answer"><strong>Risco:</strong> o layout já é <code>async</code> e usa <code>getServerSession</code>; adicionar <code>getLocale()</code>/<code>getMessages()</code> é compatível. Validar que o cookie de locale é lido no server render (evitar flash de idioma errado).</p>
+    </details>
+  </section>
+
+  <!-- ===== NOTES ===== -->
+  <section id="notes">
+    <h2>Notes</h2>
+
+    <h3>Decisões de arquitetura (resumo)</h3>
+    <table>
+      <tr><th>Decisão</th><th>Escolha</th><th>Porquê</th></tr>
+      <tr><td>Lib i18n</td><td>next-intl</td><td>Padrão maduro p/ App Router, server+client, formatação ICU.</td></tr>
+      <tr><td>Roteamento de locale</td><td>Cookie (sem prefixo)</td><td>Painel interno; evita mover todas as rotas; menos conflito c/ upstream.</td></tr>
+      <tr><td>Idioma default</td><td>pt-BR</td><td>Requisito do produto Wablast SMS.</td></tr>
+      <tr><td>Organização de textos</td><td>Namespaces por feature</td><td>Dicionários menores, menos colisão, migração incremental.</td></tr>
+      <tr><td>Migração</td><td>Incremental, commit por bloco</td><td>Reversível, validável, sem big-bang.</td></tr>
+      <tr><td>Type-safety</td><td>global.d.ts (Fase 5)</td><td>Autocomplete + falha de build em chave inexistente.</td></tr>
+    </table>
+
+    <h3>Snippet — <code>i18n/request.ts</code> (referência)</h3>
+    <pre><code>import {getRequestConfig} from 'next-intl/server'
+import {cookies} from 'next/headers'
+import {locales, defaultLocale, LOCALE_COOKIE} from './locales'
+
+export default getRequestConfig(async () =&gt; {
+  const c = cookies().get(LOCALE_COOKIE)?.value
+  const locale = locales.includes(c as any) ? c! : defaultLocale
+  return {
+    locale,
+    messages: (await import(`../messages/${locale}.json`)).default,
+  }
+})</code></pre>
+
+    <div class="callout"><strong>Atenção upstream:</strong> remover o bloco <code>i18n</code> do <code>next.config.js</code> é obrigatório — no App Router ele é legado e conflita com next-intl. Documentar isso no PR para não voltar num merge futuro.</div>
+
+    <h3>Dependências novas</h3>
+    <ul>
+      <li><code>pnpm add next-intl</code> (única dependência runtime nova).</li>
+    </ul>
+
+    <h3>Riscos / trabalho futuro</h3>
+    <ul>
+      <li>Backend (NestJS) continua respondendo em inglês — i18n só do front. Internacionalizar a API seria fase própria.</li>
+      <li>Textos em libs de terceiros (Turnstile) não são traduzíveis aqui.</li>
+      <li>Manter paridade de chaves entre dicionários — adicionar checagem no CI futuramente.</li>
+    </ul>
+
+    <figure>
+      <!-- {{NOTES_IMAGE: incremental migration screen by screen with commits, minimal green, words: incremental, commit per screen}} -->
+      <div class="imgph">[notes image — migração incremental tela a tela]</div>
+      <figcaption>Migração incremental: cada tela vira um commit validável.</figcaption>
+    </figure>
+  </section>
+
+  <!-- ===== AMENDMENTS ===== -->
+  <section id="amendments">
+    <h2>Amendments</h2>
+    <details open>
+      <summary>2026-06-27 — Questionables resolvidos (idioma + paleta)</summary>
+      <p>User confirmou: (1) manter <strong>EN + PT-BR com toggle</strong> (PT-BR default); (2) paleta Wablast extraída de wablastmessage.com — primary teal <code>#00634a</code> (HSL 165 100% 19%), acento mint <code>#b0efdf</code>, surface <code>#00322a</code>. Fase 2 e Fase 5 confirmadas no escopo.</p>
+    </details>
+    <details open>
+      <summary>2026-06-27 — Execução (branch feat/i18n-rebranding-wablast no fork)</summary>
+      <p><strong>Implementado e validado (tsc 0, paridade 194/194 chaves):</strong> Fase 1 (infra next-intl cookie), Fase 2 (tema teal + marca Wablast SMS), Fase 5 (language-switcher + type-safety global.d.ts). Fase 3 (login, register, dashboard, onboarding get-started). Fase 4 (overview, send-sms, device-list, generate-api-key, api-keys, sidebar nav, footer/header). Fase 6 (paridade de chaves, tsc, docs/I18N.md). Commits por fase.</p>
+      <p><strong>Pendente (mesmo padrão, listado em docs/I18N.md):</strong> account/* (perfil, senha, suporte, exclusão), message-history, bulk-sms, subscription-info, webhooks UI, modais (survey/community/black-friday/update-app), páginas contribute/checkout/download/community, e mapeamento i18n de erros da API. Build via `output: standalone` falha no symlink do Windows (limitação SO) — validar via tsc + dev ou build em Linux/CI.</p>
+    </details>
+  </section>
+
+</main>
+</body>
+</html>
