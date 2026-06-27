@@ -10,6 +10,7 @@ import UpdateAppNotificationBar from './(components)/update-app-notification-bar
 import VerifyEmailAlert from './(components)/verify-email-alert'
 import PastDueBillingAlert from './(components)/past-due-billing-alert'
 import { SurveyModal } from '@/components/shared/survey-modal'
+import { useTranslations } from 'next-intl'
 
 export default function DashboardLayout({
   children,
@@ -17,6 +18,7 @@ export default function DashboardLayout({
   children: React.ReactNode
 }) {
   const pathname = usePathname()
+  const t = useTranslations('nav')
 
   return (
     <div className='flex min-h-screen flex-col md:flex-row'>
@@ -26,25 +28,25 @@ export default function DashboardLayout({
           <NavItem
             href='/dashboard'
             icon={<Home className='h-6 w-6 stroke-[1.5]' />}
-            label='Dashboard'
+            label={t('dashboard')}
             isActive={pathname === '/dashboard'}
           />
           <NavItem
             href='/dashboard/messaging'
             icon={<MessageSquareText className='h-6 w-6 stroke-[1.5]' />}
-            label='Messaging'
+            label={t('messaging')}
             isActive={pathname === '/dashboard/messaging'}
           />
           <NavItem
             href='/dashboard/community'
             icon={<Users className='h-6 w-6 stroke-[1.5]' />}
-            label='Community'
+            label={t('community')}
             isActive={pathname === '/dashboard/community'}
           />
           <NavItem
             href='/dashboard/account'
             icon={<UserCircle className='h-6 w-6 stroke-[1.5]' />}
-            label='Account'
+            label={t('account')}
             isActive={pathname === '/dashboard/account'}
           />
         </nav>
@@ -69,25 +71,25 @@ export default function DashboardLayout({
           <MobileNavItem
             href='/dashboard'
             icon={<Home className='h-5 w-5 stroke-[1.5]' />}
-            label='Dashboard'
+            label={t('dashboard')}
             isActive={pathname === '/dashboard'}
           />
           <MobileNavItem
             href='/dashboard/messaging'
             icon={<MessageSquareText className='h-5 w-5 stroke-[1.5]' />}
-            label='Messaging'
+            label={t('messaging')}
             isActive={pathname === '/dashboard/messaging'}
           />
           <MobileNavItem
             href='/dashboard/community'
             icon={<Users className='h-5 w-5 stroke-[1.5]' />}
-            label='Community'
+            label={t('community')}
             isActive={pathname === '/dashboard/community'}
           />
           <MobileNavItem
             href='/dashboard/account'
             icon={<UserCircle className='h-5 w-5 stroke-[1.5]' />}
-            label='Account'
+            label={t('account')}
             isActive={pathname === '/dashboard/account'}
           />
         </div>
