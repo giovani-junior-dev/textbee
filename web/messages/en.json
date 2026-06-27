@@ -381,6 +381,33 @@
     "updating": "Updating...",
     "update": "Update"
   },
+  "joinCommunity": {
+    "title": "Join Our Discord Community!",
+    "desc": "Join our Discord community to connect with other users, get help, and stay updated with the latest announcements!",
+    "remindLater": "Remind Me Later",
+    "alreadyJoined": "I've Already Joined",
+    "joinDiscord": "Join Discord"
+  },
+  "survey": {
+    "title": "Help us improve Wablast SMS",
+    "remindLater": "Remind Me Later",
+    "alreadySubmitted": "Already Submitted",
+    "scrollHint": "Please scroll down in the form and click the Submit button to complete the survey.",
+    "completeSurvey": "Complete Survey"
+  },
+  "contributeModal": {
+    "title": "Support Wablast SMS",
+    "desc": "Your contribution helps keep this project alive and growing.",
+    "financialSupport": "Financial Support",
+    "monthlyPatreon": "Monthly Support on Patreon",
+    "oneTimePolar": "One-time Donation via Polar.sh",
+    "donateCrypto": "Donate Cryptocurrency",
+    "codeContrib": "Code Contributions",
+    "starGithub": "Star on GitHub",
+    "reportIssue": "Report Issue",
+    "alreadyDonated": "I've already donated",
+    "remindLater": "Remind me later"
+  },
   "contribute": {
     "addressCopied": "{type} address copied to clipboard",
     "title": "Support Wablast SMS",

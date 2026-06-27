@@ -28,6 +28,7 @@ import Image from 'next/image'
 import { ApiEndpoints } from '@/config/api'
 import httpBrowserClient from '@/lib/httpBrowserClient'
 import { useQuery } from '@tanstack/react-query'
+import { useTranslations } from 'next-intl'
 
 // Add constants for localStorage and timing
 const STORAGE_KEYS = {
@@ -39,6 +40,7 @@ const SHOW_INTERVAL = 1 * 24 * 60 * 60 * 1000 // 1 days in milliseconds
 const RANDOM_CHANCE = 0.3 // 30% chance to show when eligible
 
 export function ContributeModal() {
+  const t = useTranslations('contributeModal')
   const [isOpen, setIsOpen] = useState(false)
   const [cryptoOpen, setCryptoOpen] = useState(false)
   const [copiedAddress, setCopiedAddress] = useState('')
@@ -135,9 +137,9 @@ export function ContributeModal() {
       <Dialog open={isOpen} onOpenChange={setIsOpen}>
         <DialogContent className='max-w-md max-h-[90vh] overflow-y-auto flex flex-col'>
           <DialogHeader>
-            <DialogTitle>Support textbee.dev</DialogTitle>
+            <DialogTitle>{t('title')}</DialogTitle>
             <DialogDescription>
-              Your contribution helps keep this project alive and growing.
+              {t('desc')}
             </DialogDescription>
           </DialogHeader>
 
@@ -146,7 +148,7 @@ export function ContributeModal() {
               <CardHeader>
                 <CardTitle className='flex items-center gap-2 text-lg'>
                   <CircleDollarSign className='h-5 w-5' />
-                  Financial Support
+                  {t('financialSupport')}
                 </CardTitle>
               </CardHeader>
               <CardContent>
@@ -154,13 +156,13 @@ export function ContributeModal() {
                   <Button className='w-full' asChild>
                     <Link href={ExternalLinks.patreon} target='_blank'>
                       <Heart className='mr-2 h-4 w-4' />
-                      Monthly Support on Patreon
+                      {t('monthlyPatreon')}
                     </Link>
                   </Button>
                   <Button variant='outline' className='w-full' asChild>
                     <Link href={ExternalLinks.polar} target='_blank'>
                       <Star className='mr-2 h-4 w-4' />
-                      One-time Donation via Polar.sh
+                      {t('oneTimePolar')}
                     </Link>
                   </Button>
                   <Button
@@ -169,7 +171,7 @@ export function ContributeModal() {
                     onClick={() => setCryptoOpen(true)}
                   >
                     <Coins className='mr-2 h-4 w-4' />
-                    Donate Cryptocurrency
+                    {t('donateCrypto')}
                   </Button>
                 </div>
               </CardContent>
@@ -178,7 +180,7 @@ export function ContributeModal() {
               <CardHeader>
                 <CardTitle className='flex items-center gap-2 text-lg'>
                   <Github className='h-5 w-5' />
-                  Code Contributions
+                  {t('codeContrib')}
                 </CardTitle>
               </CardHeader>
               <CardContent>
@@ -186,7 +188,7 @@ export function ContributeModal() {
                   <Button asChild>
                     <Link href={ExternalLinks.github} target='_blank'>
                       <Star className='mr-2 h-4 w-4' />
-                      Star on GitHub
+                      {t('starGithub')}
                     </Link>
                   </Button>
                   <Button variant='outline' asChild>
@@ -195,7 +197,7 @@ export function ContributeModal() {
                       target='_blank'
                     >
                       <MessageSquare className='mr-2 h-4 w-4' />
-                      Report Issue
+                      {t('reportIssue')}
                     </Link>
                   </Button>
                 </div>
@@ -205,10 +207,10 @@ export function ContributeModal() {
 
           <DialogFooter className='sticky bottom-0 bg-background pt-4 border-t mt-auto'>
             <Button variant='ghost' onClick={handleContributed} asChild>
-              <Link href='#'>I&apos;ve already donated</Link>
+              <Link href='#'>{t('alreadyDonated')}</Link>
             </Button>
             <Button variant='secondary' onClick={() => setIsOpen(false)}>
-              Remind me later
+              {t('remindLater')}
             </Button>
           </DialogFooter>
         </DialogContent>
@@ -217,7 +219,7 @@ export function ContributeModal() {
       <Dialog open={cryptoOpen} onOpenChange={setCryptoOpen}>
         <DialogContent className='sm:max-w-[425px]'>
           <DialogHeader>
-            <DialogTitle>Donate Cryptocurrency</DialogTitle>
+            <DialogTitle>{t('donateCrypto')}</DialogTitle>
           </DialogHeader>
           <div className='grid gap-2'>
             {CRYPTO_ADDRESSES.map((wallet, index) => (
