@@ -67,9 +67,15 @@ async function bootstrap() {
     clientC509CertUrl: process.env.FIREBASE_CLIENT_C509_CERT_URL,
   }
 
-  firebase.initializeApp({
-    credential: firebase.credential.cert(firebaseConfig),
-  })
+  if (firebaseConfig.projectId && firebaseConfig.privateKey) {
+    firebase.initializeApp({
+      credential: firebase.credential.cert(firebaseConfig),
+    })
+  } else {
+    logger.warn(
+      'Firebase credentials not set — FCM disabled. Android push commands will not work until FIREBASE_* env vars are configured.',
+    )
+  }
 
   app.use(
     '/api/v1/billing/webhook/polar',

@@ -15,7 +15,13 @@ export class SmsQueueService {
     @InjectQueue('sms') private readonly smsQueue: Queue,
     private readonly configService: ConfigService,
   ) {
-    this.useSmsQueue = this.configService.get<boolean>('USE_SMS_QUEUE', false)
+    // Env vars arrive as strings: the literal "false" is truthy, so a plain
+    // cast would enable the queue (and require Redis) even when set to false.
+    // Coerce explicitly so only "true"/"1" turn the queue on.
+    const useSmsQueueRaw = this.configService.get<string>('USE_SMS_QUEUE', '')
+    this.useSmsQueue = ['true', '1', 'yes'].includes(
+      String(useSmsQueueRaw).trim().toLowerCase(),
+    )
     this.maxSmsBatchSize = this.configService.get<number>(
       'MAX_SMS_BATCH_SIZE',
       100,
