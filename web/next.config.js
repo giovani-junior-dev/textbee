@@ -1,10 +1,12 @@
+const createNextIntlPlugin = require('next-intl/plugin')
+
+// next-intl (App Router) — locale resolvido via cookie em i18n/request.ts.
+// O bloco `i18n` legado do Pages Router foi removido (incompatível com App Router).
+const withNextIntl = createNextIntlPlugin('./i18n/request.ts')
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
-  i18n: {
-    locales: ['en-US'],
-    defaultLocale: 'en-US',
-  },
   output: 'standalone',
 
   async redirects() {
@@ -23,6 +25,4 @@ const nextConfig = {
   },
 }
 
-
-
-module.exports = nextConfig;
+module.exports = withNextIntl(nextConfig)

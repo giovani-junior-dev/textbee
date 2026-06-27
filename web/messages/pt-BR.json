@@ -1,0 +1,30 @@
+{
+  "common": {
+    "appName": "Wablast SMS",
+    "tagline": "gateway de SMS",
+    "loading": "Carregando...",
+    "save": "Salvar",
+    "cancel": "Cancelar",
+    "delete": "Excluir",
+    "edit": "Editar",
+    "close": "Fechar",
+    "confirm": "Confirmar",
+    "copy": "Copiar",
+    "copied": "Copiado!",
+    "back": "Voltar",
+    "next": "Próximo",
+    "submit": "Enviar",
+    "search": "Buscar",
+    "logIn": "Entrar",
+    "logOut": "Sair",
+    "getStarted": "Começar",
+    "contribute": "Contribuir"
+  },
+  "nav": {
+    "dashboard": "Painel",
+    "messaging": "Mensagens",
+    "community": "Comunidade",
+    "account": "Conta",
+    "webhooks": "Webhooks"
+  }
+}
