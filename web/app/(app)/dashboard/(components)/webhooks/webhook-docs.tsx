@@ -9,6 +9,7 @@ import {
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { Code } from '@/components/ui/code'
 import { AlertCircle } from 'lucide-react'
+import { useTranslations } from 'next-intl'
 
 const message_received_payload = {
   smsId: 'smsId',
@@ -108,30 +109,28 @@ def webhook():
 `
 
 export function WebhookDocs() {
+  const t = useTranslations('whDocs')
   return (
     <Accordion type='multiple' className='w-full space-y-2 sm:space-y-4'>
       <AccordionItem value='delivery' className='border rounded-lg'>
         <AccordionTrigger className='px-3 sm:px-4 hover:no-underline [&[data-state=open]>div]:bg-muted'>
           <div className='flex items-center gap-2 py-2 -my-2 px-2 rounded-md'>
             <AlertCircle className='h-4 w-4' />
-            <span className='text-sm sm:text-base'>Webhook Delivery Information</span>
+            <span className='text-sm sm:text-base'>{t('deliveryInfo')}</span>
           </div>
         </AccordionTrigger>
         <AccordionContent className='px-3 sm:px-4 pb-4'>
           <div className='space-y-2 mt-2 text-sm text-muted-foreground'>
             <p>
-              When a new SMS is received or SMS status is updated, we&apos;ll send a POST request to your
-              webhook URL with the event data. Your endpoint should:
+              {t('deliveryIntro')}
             </p>
             <ul className='list-disc pl-6 space-y-1'>
-              <li>Accept POST requests</li>
-              <li>Return a 2XX status code to acknowledge receipt</li>
-              <li>Process the request within 10 seconds</li>
+              <li>{t('reqAccept')}</li>
+              <li>{t('reqAck')}</li>
+              <li>{t('reqTimeout')}</li>
             </ul>
             <p className='mt-2'>
-              If we don&apos;t receive a successful response, we&apos;ll retry the
-              delivery at increasing intervals: 3 minutes, 5 minutes, 30 minutes,
-              1 hour, 6 hours, 1 day, 3 days, 7 days, 30 days.
+              {t('retryInfo')}
             </p>
           </div>
         </AccordionContent>
@@ -141,25 +140,25 @@ export function WebhookDocs() {
         <AccordionTrigger className='px-4 hover:no-underline [&[data-state=open]>div]:bg-muted'>
           <div className='flex items-center gap-2 py-2 -my-2 px-2 rounded-md'>
             <AlertCircle className='h-4 w-4' />
-            <span>Security & Implementation Guide</span>
+            <span>{t('securityGuide')}</span>
           </div>
         </AccordionTrigger>
         <AccordionContent className='px-4 pb-4'>
           <Tabs defaultValue='overview' className='w-full mt-4'>
             <TabsList>
-              <TabsTrigger value='overview'>Overview</TabsTrigger>
-              <TabsTrigger value='payload'>Payload</TabsTrigger>
-              <TabsTrigger value='verification'>Verification</TabsTrigger>
+              <TabsTrigger value='overview'>{t('overview')}</TabsTrigger>
+              <TabsTrigger value='payload'>{t('payload')}</TabsTrigger>
+              <TabsTrigger value='verification'>{t('verification')}</TabsTrigger>
             </TabsList>
 
             <TabsContent value='overview'>
               <div className='space-y-2 mt-4 text-sm text-muted-foreground'>
-                <p>Each webhook request includes:</p>
+                <p>{t('includes')}</p>
                 <ul className='list-disc pl-6 space-y-1'>
-                  <li>Payload in JSON format</li>
-                  <li>X-Signature header for verification</li>
+                  <li>{t('incPayload')}</li>
+                  <li>{t('incHeader')}</li>
                   <li>
-                    Signature format: HMAC_SHA256(payload, secret)
+                    {t('incFormat')}
                   </li>
                 </ul>
               </div>
@@ -167,14 +166,14 @@ export function WebhookDocs() {
 
             <TabsContent value='payload'>
               <div className='space-y-4 mt-4'>
-                <h4 className='text-sm font-medium'>Sample Payload</h4>
+                <h4 className='text-sm font-medium'>{t('samplePayload')}</h4>
                 <Tabs defaultValue='message_received'>
 
                 <TabsList>
-                  <TabsTrigger value='message_received'>Message Received</TabsTrigger>
-                  <TabsTrigger value='message_sent'>Message Sent</TabsTrigger>
-                  <TabsTrigger value='message_delivered'>Message Delivered</TabsTrigger>
-                  <TabsTrigger value='message_failed'>Message Failed</TabsTrigger>
+                  <TabsTrigger value='message_received'>{t('msgReceived')}</TabsTrigger>
+                  <TabsTrigger value='message_sent'>{t('msgSent')}</TabsTrigger>
+                  <TabsTrigger value='message_delivered'>{t('msgDelivered')}</TabsTrigger>
+                  <TabsTrigger value='message_failed'>{t('msgFailed')}</TabsTrigger>
                 </TabsList>
                 <TabsContent value='message_received'>
                   <Code>{JSON.stringify(message_received_payload, null, 2)}</Code>
