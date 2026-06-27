@@ -186,6 +186,40 @@ curl -X POST http://SEU_IP_LAN:3001/api/v1/gateway/devices/<DEVICE_ID>/send-sms 
 
 ---
 
+## Configuração do aparelho gateway (deixar funcionando 24/7)
+
+**O app NÃO precisa ficar aberto na tela.** Mas o serviço dele em background precisa
+continuar vivo — o Android, por padrão, mata/atrasa apps em segundo plano. Configure
+o celular gateway UMA vez assim:
+
+### 1. Desativar otimização de bateria (CRÍTICO)
+O ponto mais importante. Sem isso, o Android (modo *doze*) segura o push FCM e o SMS fica `pending`.
+- **Configurações → Apps → TextBee → Bateria → "Sem restrições" / "Não otimizar"**
+- (caminho varia por fabricante: pode estar em "Bateria → Otimização de bateria → TextBee → Não otimizar")
+
+### 2. Permitir início automático (autostart)
+Pro app voltar sozinho depois de reiniciar o celular.
+- Motorola/Xiaomi/Samsung/etc têm uma config separada de **"Início automático" / "Autostart"**
+  (geralmente em Configurações → Apps → TextBee, ou no app de segurança/bateria do fabricante).
+
+### 3. Permissões e SIM
+- **Permissão de SMS** concedida ao TextBee.
+- O **chip** definido como **SIM padrão de SMS** e com **plano/crédito** ativo.
+
+### 4. Rede e energia (pra um gateway estável)
+- **Wi-Fi sempre conectada**, na **mesma rede** do servidor (ele reporta status via LAN).
+- Deixe o celular **plugado na energia** (evita o sistema matar apps com bateria baixa).
+- A **tela pode apagar** — só não use "Forçar parada" no app.
+
+### Resumo
+Configure bateria (sem restrição) + autostart + Wi-Fi + chip padrão com crédito + energia.
+Feito isso, **não precisa abrir o app toda vez** — ele dispara em background normalmente.
+
+> Validação rápida: dispare um SMS e cheque o `lastSeen` do device (deve atualizar logo após
+> o envio) e o status do SMS (`sent`/`delivered`). Se atualizar com o app fechado, está OK.
+
+---
+
 ## Gotchas (lado do celular) — leia se o SMS ficar "pending"
 
 - **Mesma Wi-Fi:** o celular precisa estar na mesma rede do PC. Ele recebe o comando
