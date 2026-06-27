@@ -26,5 +26,16 @@
     "community": "Comunidade",
     "account": "Conta",
     "webhooks": "Webhooks"
+  },
+  "footer": {
+    "rights": "Todos os direitos reservados",
+    "home": "Início",
+    "dashboard": "Painel",
+    "downloadApp": "Baixar app",
+    "contribute": "Contribuir",
+    "status": "Status",
+    "privacy": "Política de Privacidade",
+    "terms": "Termos de Serviço",
+    "refund": "Política de Reembolso"
   }
 }

@@ -26,5 +26,16 @@
     "community": "Community",
     "account": "Account",
     "webhooks": "Webhooks"
+  },
+  "footer": {
+    "rights": "All rights reserved",
+    "home": "Home",
+    "dashboard": "Dashboard",
+    "downloadApp": "Download App",
+    "contribute": "Contribute",
+    "status": "Status",
+    "privacy": "Privacy Policy",
+    "terms": "Terms of Service",
+    "refund": "Refund Policy"
   }
 }

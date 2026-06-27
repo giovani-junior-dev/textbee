@@ -154,16 +154,13 @@ export default function AppHeader({ session }: { session: Session }) {
           >
             <Image
               src='/images/logo.png'
-              alt='textbee Logo'
+              alt='Wablast SMS Logo'
               width={24}
               height={24}
               className='h-6 w-6 bg-white rounded-full'
             />
             <span className='font-bold'>
-              text<span className='text-primary'>bee</span>
-              <span className='text-xs align-center text-gray-500 dark:text-gray-400'>
-                .dev
-              </span>
+              Wablast<span className='text-primary'> SMS</span>
             </span>
           </Link>
         </div>
