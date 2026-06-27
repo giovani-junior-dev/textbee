@@ -5,6 +5,7 @@ import httpBrowserClient from '@/lib/httpBrowserClient'
 import { useQuery } from '@tanstack/react-query'
 import Link from 'next/link'
 import { useMemo } from 'react'
+import { useTranslations } from 'next-intl'
 
 const DISCOUNT_CODE_FALLBACK = null
 const DISCOUNT_PERCENTAGE_FALLBACK = null
@@ -21,6 +22,7 @@ const discountPercentage = (envDiscountPercentage !== undefined && envDiscountPe
 const isDiscountEnabled = discountCode !== null && discountCode !== '' && discountPercentage !== null && discountPercentage !== ''
 
 export default function UpgradeToProAlert() {
+  const t = useTranslations('upgradePro')
   const {
     data: currentSubscription,
     isLoading: isLoadingSubscription,
@@ -41,74 +43,36 @@ export default function UpgradeToProAlert() {
     if (monthlyUsagePercentage >= 100 ) {
       return {
         bgColor: 'bg-gradient-to-r from-red-600 to-red-800',
-        message: "⚠️ Monthly limit exceeded! Your requests will be rejected until you upgrade.",
-        subMessage: `You've used ${processedSmsLastMonth} of ${monthlyLimit} SMS this month.`,
-        buttonText: "Upgrade Now!",
+        message: t('limitExceeded'),
+        subMessage: t('usedOfLimit', { used: processedSmsLastMonth, limit: monthlyLimit }),
+        buttonText: t('upgradeNow'),
         buttonColor: 'bg-white text-red-600 hover:bg-red-50 hover:text-red-700 border-red-600',
         urgency: 'critical'
       }
     } else if (monthlyUsagePercentage >= 80) {
       return {
         bgColor: 'bg-gradient-to-r from-orange-500 to-red-500',
-        message: "⚠️ Approaching limit! Upgrade to Pro to avoid service interruption.",
-        subMessage: `You've used ${monthlyUsagePercentage}% of your monthly SMS limit (${processedSmsLastMonth}/${monthlyLimit}).`,
-        buttonText: "Upgrade Before Limit!",
+        message: t('approaching'),
+        subMessage: t('usedPercent', { pct: monthlyUsagePercentage, used: processedSmsLastMonth, limit: monthlyLimit }),
+        buttonText: t('upgradeBeforeLimit'),
         buttonColor: 'bg-white text-orange-600 hover:bg-orange-50 hover:text-orange-700 border-orange-600',
         urgency: 'warning'
       }
     } else {
-      const allCtaMessages = [
-        "Upgrade to Pro for exclusive features and benefits!",
-        "Offer: You are eligible for a 30% discount when upgrading to Pro!",
-        "Unlock premium features with our Pro plan today!",
-        "Take your experience to the next level with Pro!",
-        "Pro users get priority support and advanced features!",
-        "Limited time offer: Upgrade to Pro and save 30%!",
-      ]
-      const allButtonTexts = [
-        "Get Pro Now!",
-        "Upgrade Today!",
-        "Go Pro!",
-        "Unlock Pro!",
-        "Claim Your Discount!",
-        "Upgrade & Save!",
-      ]
-      
-      // Filter out discount-related messages if discount is not enabled
-      const ctaMessages = isDiscountEnabled
-        ? allCtaMessages
-        : allCtaMessages.filter(
-            (msg) =>
-              !msg.toLowerCase().includes('discount') &&
-              !msg.toLowerCase().includes('offer') &&
-              !msg.toLowerCase().includes('save') &&
-              !msg.includes('30%')
-          )
-      
-      const buttonTexts = isDiscountEnabled
-        ? allButtonTexts
-        : allButtonTexts.filter(
-            (text) =>
-              !text.toLowerCase().includes('discount') &&
-              !text.toLowerCase().includes('save')
-          )
-      
-      const randomIndex = Math.floor(Math.random() * ctaMessages.length)
-      
       const subMessage = isDiscountEnabled
-        ? `Use discount code ${discountCode} at checkout for a ${discountPercentage}% discount!`
-        : "Unlock premium features, priority support, and advanced capabilities with Pro!"
-      
+        ? t('discountMsg', { code: discountCode ?? '', pct: discountPercentage ?? '' })
+        : t('proSubMessage')
+
       return {
         bgColor: 'bg-gradient-to-r from-purple-500 to-pink-500',
-        message: ctaMessages[randomIndex],
+        message: isDiscountEnabled ? t('proCtaDiscount') : t('proCta'),
         subMessage,
-        buttonText: buttonTexts[randomIndex],
+        buttonText: isDiscountEnabled ? t('claimDiscount') : t('getPro'),
         buttonColor: 'bg-red-500 text-white hover:bg-red-600 border-red-500',
         urgency: 'normal'
       }
     }
-  }, [monthlyUsagePercentage, monthlyLimit, processedSmsLastMonth])
+  }, [monthlyUsagePercentage, monthlyLimit, processedSmsLastMonth, t])
 
   const planName = currentSubscription?.plan?.name
 
@@ -127,16 +91,16 @@ export default function UpgradeToProAlert() {
       monthlyUsagePercentage >= 100
         ? {
             bgColor: 'bg-gradient-to-r from-red-600 to-red-800',
-            message: '⚠️ Monthly limit exceeded! Upgrade to Scale for 25,000 SMS/mo.',
-            subMessage: `You've used ${processedSmsLastMonth} of ${monthlyLimit} SMS this month.`,
-            buttonText: 'Upgrade to Scale!',
+            message: t('scaleExceeded'),
+            subMessage: t('usedOfLimit', { used: processedSmsLastMonth, limit: monthlyLimit }),
+            buttonText: t('upgradeScaleBang'),
             buttonColor: 'bg-white text-red-600 hover:bg-red-50 hover:text-red-700 border-red-600',
           }
         : {
             bgColor: 'bg-gradient-to-r from-orange-500 to-red-500',
-            message: '⚠️ Approaching Pro limit! Scale up to 25,000 SMS/mo.',
-            subMessage: `You've used ${monthlyUsagePercentage}% of your monthly SMS limit (${processedSmsLastMonth}/${monthlyLimit}).`,
-            buttonText: 'Upgrade to Scale',
+            message: t('scaleApproaching'),
+            subMessage: t('usedPercent', { pct: monthlyUsagePercentage, used: processedSmsLastMonth, limit: monthlyLimit }),
+            buttonText: t('upgradeScale'),
             buttonColor: 'bg-white text-orange-600 hover:bg-orange-50 hover:text-orange-700 border-orange-600',
           }
 
@@ -166,7 +130,7 @@ export default function UpgradeToProAlert() {
               asChild
               className='bg-orange-500 text-white hover:bg-orange-600 text-xs md:text-sm'
             >
-              <Link href={'/#pricing'}>Learn More</Link>
+              <Link href={'/#pricing'}>{t('learnMore')}</Link>
             </Button>
           </div>
         </AlertDescription>
@@ -182,7 +146,11 @@ export default function UpgradeToProAlert() {
         </span>
         <span className='w-full sm:flex-1 text-center sm:text-left text-xs md:text-sm'>
           {alertConfig.urgency === 'normal' && isDiscountEnabled ? (
-            <>Use discount code <strong className="text-yellow-200">{discountCode}</strong> at checkout for a {discountPercentage}% discount!</>
+            t.rich('discountMsgRich', {
+              code: discountCode ?? '',
+              pct: discountPercentage ?? '',
+              strong: (chunks) => <strong className="text-yellow-200">{chunks}</strong>,
+            })
           ) : (
             alertConfig.subMessage
           )}
@@ -203,7 +171,7 @@ export default function UpgradeToProAlert() {
               asChild
               className='bg-orange-500 text-white hover:bg-orange-600 text-xs md:text-sm'
             >
-              <Link href={'/#pricing'}>Learn More</Link>
+              <Link href={'/#pricing'}>{t('learnMore')}</Link>
             </Button>
           )}
         </div>
