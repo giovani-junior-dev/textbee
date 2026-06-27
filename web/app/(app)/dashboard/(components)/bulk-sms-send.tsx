@@ -30,11 +30,13 @@ import httpBrowserClient from '@/lib/httpBrowserClient'
 import { formatError } from '@/lib/utils/errorHandler'
 import { RateLimitError } from '@/components/shared/rate-limit-error'
 import { formatDeviceName } from '@/lib/utils'
+import { useTranslations } from 'next-intl'
 
 const DEFAULT_MAX_FILE_SIZE = 1024 * 1024 // 1 MB
 const DEFAULT_MAX_ROWS = 50
 
 export default function BulkSMSSend() {
+  const t = useTranslations('bulkSms')
   const [csvData, setCsvData] = useState<any[]>([])
   const [columns, setColumns] = useState<string[]>([])
   const [selectedColumn, setSelectedColumn] = useState<string>('')
@@ -65,7 +67,7 @@ export default function BulkSMSSend() {
   const onDrop = useCallback((acceptedFiles: File[]) => {
     const file = acceptedFiles[0]
     if (file.size > DEFAULT_MAX_FILE_SIZE) {
-      setError('File size exceeds 1 MB limit.')
+      setError(t('fileTooLarge'))
       return
     }
 
@@ -73,7 +75,7 @@ export default function BulkSMSSend() {
       complete: (results) => {
         if (results.data && results.data.length > 0) {
           if (results.data.length > maxRows) {
-            setError(`CSV file exceeds ${maxRows} rows limit.`)
+            setError(t('csvTooManyRows', { maxRows }))
             return
           }
           setCsvData(results.data as any[])
@@ -81,7 +83,7 @@ export default function BulkSMSSend() {
           setColumns(Object.keys(headerRow))
           setError(null)
         } else {
-          setError('CSV file is empty or invalid')
+          setError(t('csvEmpty'))
           setCsvData([])
           setColumns([])
         }
@@ -166,18 +168,16 @@ export default function BulkSMSSend() {
     <div className='space-y-8'>
       <Card>
         <CardHeader>
-          <CardTitle>Send Bulk SMS</CardTitle>
+          <CardTitle>{t('title')}</CardTitle>
           <CardDescription>
-            Upload a CSV, configure your message, and send bulk SMS in 3 simple
-            steps.
+            {t('subtitle')}
           </CardDescription>
         </CardHeader>
         <CardContent className='space-y-8'>
           <section>
-            <h2 className='text-lg font-semibold mb-2'>1. Upload CSV</h2>
+            <h2 className='text-lg font-semibold mb-2'>{t('step1')}</h2>
             <p className='text-sm text-gray-500 mb-4'>
-              Upload a CSV file (max {DEFAULT_MAX_FILE_SIZE} bytes, {maxRows}
-              rows) containing recipient information.
+              {t('step1Desc', { bytes: DEFAULT_MAX_FILE_SIZE, maxRows })}
             </p>
             <div
               {...getRootProps()}
@@ -190,23 +190,22 @@ export default function BulkSMSSend() {
               <input {...getInputProps()} accept='.csv' />
               <Upload className='mx-auto h-12 w-12 text-gray-400' />
               <p className='mt-2'>
-                Drag &amp; drop a CSV file here, or click to select one
+                {t('dropzone')}
               </p>
               <p className='text-sm text-gray-500 mt-1'>
-                Max file size: {DEFAULT_MAX_FILE_SIZE} bytes, Max rows:{' '}
-                {maxRows}
+                {t('maxInfo', { bytes: DEFAULT_MAX_FILE_SIZE, maxRows })}
               </p>
             </div>
             {error && (
               <Alert variant='destructive' className='mt-4'>
                 <AlertCircle className='h-4 w-4' />
-                <AlertTitle>Error</AlertTitle>
+                <AlertTitle>{t('errorTitle')}</AlertTitle>
                 <AlertDescription>{error}</AlertDescription>
               </Alert>
             )}
             {csvData.length > 0 && (
               <p className='mt-2 text-sm text-green-600'>
-                CSV uploaded successfully! {csvData.length} rows found.
+                {t('csvUploaded', { count: csvData.length })}
               </p>
             )}
           </section>
@@ -214,14 +213,14 @@ export default function BulkSMSSend() {
           <section
             className={isStep2Disabled ? 'opacity-50 pointer-events-none' : ''}
           >
-            <h2 className='text-lg font-semibold mb-2'>2. Configure SMS</h2>
+            <h2 className='text-lg font-semibold mb-2'>{t('step2')}</h2>
             <p className='text-sm text-gray-500 mb-4'>
-              Select the recipient column and create your message template.
+              {t('step2Desc')}
             </p>
 
             {/* select device to send SMS from   */}
             <div>
-              <Label htmlFor='device-select'>Select Device</Label>
+              <Label htmlFor='device-select'>{t('selectDevice')}</Label>
               <Select
                 onValueChange={(value) => {
                   setSelectedDeviceId(value)
@@ -230,7 +229,7 @@ export default function BulkSMSSend() {
                 value={selectedDeviceId}
               >
                 <SelectTrigger id='device-select'>
-                  <SelectValue placeholder='Select a device' />
+                  <SelectValue placeholder={t('selectDevicePh')} />
                 </SelectTrigger>
                 <SelectContent>
                   {devices?.data?.map((device) => (
@@ -240,7 +239,7 @@ export default function BulkSMSSend() {
                       disabled={!device.enabled}
                     >
                       {formatDeviceName(device)}{' '}
-                      {device.enabled ? '' : ' (disabled)'}
+                      {device.enabled ? '' : t('disabled')}
                     </SelectItem>
                   ))}
                 </SelectContent>
@@ -249,7 +248,7 @@ export default function BulkSMSSend() {
 
             {availableSims.length > 1 && (
               <div>
-                <Label htmlFor='sim-select'>Select SIM (optional)</Label>
+                <Label htmlFor='sim-select'>{t('selectSim')}</Label>
                 <Select
                   onValueChange={(value) =>
                     setSelectedSimSubscriptionId(
@@ -259,7 +258,7 @@ export default function BulkSMSSend() {
                   value={selectedSimSubscriptionId?.toString()}
                 >
                   <SelectTrigger id='sim-select'>
-                    <SelectValue placeholder='Select SIM (optional)' />
+                    <SelectValue placeholder={t('selectSim')} />
                   </SelectTrigger>
                   <SelectContent>
                     {availableSims.map((sim) => (
@@ -278,7 +277,7 @@ export default function BulkSMSSend() {
             <div className='space-y-4'>
               <div>
                 <Label htmlFor='recipient-column'>
-                  Select Recipient Column
+                  {t('recipientColumn')}
                 </Label>
                 <Select
                   onValueChange={setSelectedColumn}
@@ -286,7 +285,7 @@ export default function BulkSMSSend() {
                   disabled={isStep2Disabled}
                 >
                   <SelectTrigger id='recipient-column'>
-                    <SelectValue placeholder='Select a column' />
+                    <SelectValue placeholder={t('selectColumn')} />
                   </SelectTrigger>
                   <SelectContent>
                     {columns.map((column) => (
@@ -294,17 +293,17 @@ export default function BulkSMSSend() {
                         key={column}
                         value={column || 'undefined-column'}
                       >
-                        {column || 'Unnamed Column'}
+                        {column || t('unnamedColumn')}
                       </SelectItem>
                     ))}
                   </SelectContent>
                 </Select>
               </div>
               <div>
-                <Label htmlFor='message-template'>Message Template</Label>
+                <Label htmlFor='message-template'>{t('messageTemplate')}</Label>
                 <Textarea
                   id='message-template'
-                  placeholder='Enter your message template here. Use {{ column_name }} for dynamic content.'
+                  placeholder={t('templatePlaceholder')}
                   value={messageTemplate}
                   onChange={(e) => setMessageTemplate(e.target.value)}
                   className='h-32'
@@ -317,14 +316,14 @@ export default function BulkSMSSend() {
           <section
             className={isStep3Disabled ? 'opacity-50 pointer-events-none' : ''}
           >
-            <h2 className='text-lg font-semibold mb-2'>3. Message Preview</h2>
+            <h2 className='text-lg font-semibold mb-2'>{t('step3')}</h2>
             <p className='text-sm text-gray-500 mb-4'>
-              Preview your message for a selected recipient before sending.
+              {t('step3Desc')}
             </p>
             <div className='space-y-4'>
               <div>
                 <Label htmlFor='preview-recipient'>
-                  Select Recipient for Preview
+                  {t('selectRecipientPreview')}
                 </Label>
                 <Select
                   onValueChange={setSelectedRecipient}
@@ -332,7 +331,7 @@ export default function BulkSMSSend() {
                   disabled={isStep3Disabled}
                 >
                   <SelectTrigger id='preview-recipient'>
-                    <SelectValue placeholder='Select a recipient' />
+                    <SelectValue placeholder={t('selectRecipient')} />
                   </SelectTrigger>
                   <SelectContent>
                     {csvData
@@ -352,7 +351,7 @@ export default function BulkSMSSend() {
                 </Select>
               </div>
               <div>
-                <Label htmlFor='recipient-number'>Recipient Number</Label>
+                <Label htmlFor='recipient-number'>{t('recipientNumber')}</Label>
                 <Input
                   id='recipient-number'
                   value={selectedRecipient}
@@ -361,7 +360,7 @@ export default function BulkSMSSend() {
                 />
               </div>
               <div>
-                <Label htmlFor='message-preview'>Message Preview</Label>
+                <Label htmlFor='message-preview'>{t('messagePreview')}</Label>
                 <Textarea
                   id='message-preview'
                   value={previewMessage}
@@ -386,7 +385,7 @@ export default function BulkSMSSend() {
             return (
               <Alert variant='destructive' className='mt-4'>
                 <AlertCircle className='h-4 w-4' />
-                <AlertTitle>Error</AlertTitle>
+                <AlertTitle>{t('errorTitle')}</AlertTitle>
                 <AlertDescription>
                   {formattedError.message}
                 </AlertDescription>
@@ -397,8 +396,8 @@ export default function BulkSMSSend() {
           {isSendingBulkSMSuccess && (
             <Alert variant='default' className='mt-4'>
               <CheckCircle className='h-4 w-4' />
-              <AlertTitle>Success</AlertTitle>
-              <AlertDescription>Bulk SMS sent successfully!</AlertDescription>
+              <AlertTitle>{t('successTitle')}</AlertTitle>
+              <AlertDescription>{t('bulkSent')}</AlertDescription>
             </Alert>
           )}
 
@@ -412,7 +411,7 @@ export default function BulkSMSSend() {
             ) : (
               <Send className='mr-2 h-4 w-4' />
             )}
-            {isSendingBulkSMS ? 'Sending...' : 'Send Bulk SMS'}
+            {isSendingBulkSMS ? t('sending') : t('sendBulk')}
           </Button>
         </CardContent>
       </Card>
