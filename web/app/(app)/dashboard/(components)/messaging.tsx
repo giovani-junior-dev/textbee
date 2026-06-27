@@ -6,8 +6,10 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import SendSms from './send-sms'
 import MessageHistory from './message-history'
 import BulkSMSSend from './bulk-sms-send'
+import { useTranslations } from 'next-intl'
 
 export default function Messaging() {
+  const t = useTranslations('messaging')
   const [currentTab, setCurrentTab] = useState('send')
 
   const handleTabChange = (value: string) => {
@@ -23,13 +25,13 @@ export default function Messaging() {
       >
         <TabsList className='flex'>
           <TabsTrigger value='send' className='flex-1'>
-            Send
+            {t('tabSend')}
           </TabsTrigger>
           <TabsTrigger value='bulk-send' className='flex-1'>
-            Bulk Send{' '}
+            {t('tabBulk')}{' '}
           </TabsTrigger>
           <TabsTrigger value='history' className='flex-1'>
-            History
+            {t('tabHistory')}
           </TabsTrigger>
         </TabsList>
 
