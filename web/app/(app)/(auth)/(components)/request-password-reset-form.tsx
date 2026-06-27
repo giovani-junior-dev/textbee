@@ -30,17 +30,19 @@ import httpBrowserClient from '@/lib/httpBrowserClient'
 import { ApiEndpoints } from '@/config/api'
 import { Routes } from '@/config/routes'
 import { useTurnstile } from '@/lib/turnstile'
+import { useTranslations } from 'next-intl'
 
-const requestPasswordResetSchema = z.object({
-  email: z.string().email({ message: 'Invalid email address' }),
-  turnstileToken: z
-    .string()
-    .min(1, { message: 'Please complete the bot verification' }),
-})
-
-type RequestPasswordResetFormValues = z.infer<typeof requestPasswordResetSchema>
+type RequestPasswordResetFormValues = {
+  email: string
+  turnstileToken: string
+}
 
 export default function RequestPasswordResetForm() {
+  const t = useTranslations('auth')
+  const requestPasswordResetSchema = z.object({
+    email: z.string().email({ message: t('invalidEmail') }),
+    turnstileToken: z.string().min(1, { message: t('botVerification') }),
+  })
   const form = useForm<RequestPasswordResetFormValues>({
     resolver: zodResolver(requestPasswordResetSchema),
     defaultValues: {
@@ -83,7 +85,7 @@ export default function RequestPasswordResetForm() {
     if (!data.turnstileToken) {
       form.setError('turnstileToken', {
         type: 'manual',
-        message: 'Please complete the bot verification',
+        message: t('botVerification'),
       })
       return
     }
@@ -94,7 +96,7 @@ export default function RequestPasswordResetForm() {
         data
       )
     } catch (error) {
-      form.setError('email', { message: 'Invalid email address' })
+      form.setError('email', { message: t('invalidEmail') })
     }
   }
 
@@ -103,11 +105,10 @@ export default function RequestPasswordResetForm() {
       <Card className='w-[400px] shadow-lg'>
         <CardHeader className='space-y-1'>
           <CardTitle className='text-2xl font-bold text-center'>
-            Reset your password
+            {t('resetTitle')}
           </CardTitle>
           <CardDescription className='text-center'>
-            Enter your email address and we&apos;ll send you a link to reset
-            your password
+            {t('resetSubtitle')}
           </CardDescription>
         </CardHeader>
         <CardContent>
@@ -122,9 +123,9 @@ export default function RequestPasswordResetForm() {
                   name='email'
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Email</FormLabel>
+                      <FormLabel>{t('email')}</FormLabel>
                       <FormControl>
-                        <Input placeholder='m@example.com' {...field} />
+                        <Input placeholder='m@exemplo.com' {...field} />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -153,10 +154,10 @@ export default function RequestPasswordResetForm() {
                   {form.formState.isSubmitting ? (
                     <>
                       {/* <Icons.spinner className="mr-2 h-4 w-4 animate-spin" /> */}
-                      Sending reset link...
+                      {t('sendingResetLink')}
                     </>
                   ) : (
-                    'Send reset link'
+                    t('sendResetLink')
                   )}
                 </Button>
               </form>
@@ -164,14 +165,12 @@ export default function RequestPasswordResetForm() {
           ) : (
             <Alert>
               {/* <Icons.checkCircle className="h-4 w-4" /> */}
-              <AlertTitle>Check your email</AlertTitle>
+              <AlertTitle>{t('checkEmail')}</AlertTitle>
               <AlertDescription>
-                If an account exists for {form.getValues().email}, you will
-                receive a password reset link shortly.
+                {t('resetSent', { email: form.getValues().email })}
               </AlertDescription>
               <AlertDescription className='mt-4 text-sm text-muted-foreground italic'>
-                If you don&apos;t receive an email, please check your spam
-                folder or contact support.
+                {t('checkSpam')}
               </AlertDescription>
             </Alert>
           )}
@@ -181,7 +180,7 @@ export default function RequestPasswordResetForm() {
             href={Routes.login}
             className='text-sm text-brand-600 hover:underline'
           >
-            Back to login
+            {t('backToLogin')}
           </Link>
         </CardFooter>
       </Card>
