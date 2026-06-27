@@ -15,21 +15,27 @@ import { ApiEndpoints } from '@/config/api'
 import { useMutation, useQuery } from '@tanstack/react-query'
 import { Spinner } from '@/components/ui/spinner'
 import { useSession } from 'next-auth/react'
+import { useTranslations } from 'next-intl'
 
-const updateProfileSchema = z.object({
-  name: z.string().min(1, 'Name is required'),
-  email: z.string().email().optional(),
-  phone: z
-    .string()
-    .regex(/^\+?\d{0,14}$/, 'Invalid phone number')
-    .optional(),
-})
-
-type UpdateProfileFormData = z.infer<typeof updateProfileSchema>
+type UpdateProfileFormData = {
+  name: string
+  email?: string
+  phone?: string
+}
 
 export default function EditProfileForm() {
   const { toast } = useToast()
   const { update: updateSession } = useSession()
+  const t = useTranslations('account')
+
+  const updateProfileSchema = z.object({
+    name: z.string().min(1, t('nameRequired')),
+    email: z.string().email().optional(),
+    phone: z
+      .string()
+      .regex(/^\+?\d{0,14}$/, t('invalidPhone'))
+      .optional(),
+  })
 
   const {
     data: currentUser,
@@ -67,7 +73,7 @@ export default function EditProfileForm() {
     onSuccess: () => {
       refetchCurrentUser()
       toast({
-        title: 'Profile updated successfully!',
+        title: t('profileUpdated'),
       })
       updateSession({
         name: updateProfileForm.getValues().name,
@@ -76,7 +82,7 @@ export default function EditProfileForm() {
     },
     onError: () => {
       toast({
-        title: 'Failed to update profile',
+        title: t('profileUpdateFailed'),
       })
     },
   })
@@ -94,11 +100,11 @@ export default function EditProfileForm() {
       className='space-y-4'
     >
       <div className='space-y-2'>
-        <Label htmlFor='name'>Full Name</Label>
+        <Label htmlFor='name'>{t('fullName')}</Label>
         <Input
           id='name'
           {...updateProfileForm.register('name')}
-          placeholder='Enter your full name'
+          placeholder={t('fullNamePlaceholder')}
           defaultValue={currentUser?.name}
         />
         {updateProfileForm.formState.errors.name && (
@@ -110,11 +116,11 @@ export default function EditProfileForm() {
 
       <div className='space-y-2'>
         <Label htmlFor='email' className='flex items-center gap-2'>
-          Email Address
+          {t('emailAddress')}
           {currentUser?.emailVerifiedAt && (
             <Badge variant='secondary' className='ml-2'>
               <Shield className='h-3 w-3 mr-1' />
-              Verified
+              {t('verified')}
             </Badge>
           )}
         </Label>
@@ -123,7 +129,7 @@ export default function EditProfileForm() {
             id='email'
             type='email'
             {...updateProfileForm.register('email')}
-            placeholder='Enter your email'
+            placeholder={t('emailPlaceholder')}
             defaultValue={currentUser?.email}
             disabled
           />
@@ -139,12 +145,12 @@ export default function EditProfileForm() {
               ) : (
                 <Mail className='h-4 w-4 mr-2' />
               )}
-              Verify
+              {t('verify')}
             </Button>
           ) : (
             <Button variant='outline' disabled>
               <Check className='h-4 w-4 mr-2' />
-              Verified
+              {t('verified')}
             </Button>
           )}
         </div>
@@ -156,12 +162,12 @@ export default function EditProfileForm() {
       </div>
 
       <div className='space-y-2'>
-        <Label htmlFor='phone'>Phone Number</Label>
+        <Label htmlFor='phone'>{t('phoneNumber')}</Label>
         <Input
           id='phone'
           type='tel'
           {...updateProfileForm.register('phone')}
-          placeholder='Enter your phone number'
+          placeholder={t('phonePlaceholder')}
           defaultValue={currentUser?.phone}
         />
         {updateProfileForm.formState.errors.phone && (
@@ -173,7 +179,7 @@ export default function EditProfileForm() {
 
       {isUpdateProfileSuccess && (
         <p className='text-sm text-green-500'>
-          Profile updated successfully!
+          {t('profileUpdated')}
         </p>
       )}
 
@@ -185,7 +191,7 @@ export default function EditProfileForm() {
         {isUpdatingProfile ? (
           <Loader2 className='h-4 w-4 animate-spin mr-2' />
         ) : null}
-        Save Changes
+        {t('saveChanges')}
       </Button>
     </form>
   )

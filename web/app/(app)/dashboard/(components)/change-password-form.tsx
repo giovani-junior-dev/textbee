@@ -13,31 +13,33 @@ import { ApiEndpoints } from '@/config/api'
 import { useMutation } from '@tanstack/react-query'
 import Link from 'next/link'
 import { Routes } from '@/config/routes'
+import { useTranslations } from 'next-intl'
 
-const changePasswordSchema = z
-  .object({
-    oldPassword: z.string().min(1, 'Old password is required'),
-    newPassword: z
-      .string()
-      .min(8, { message: 'Password must be at least 8 characters long' }),
-    confirmPassword: z
-      .string()
-      .min(4, { message: 'Please confirm your password' }),
-  })
-  .superRefine((data, ctx) => {
-    if (data.newPassword !== data.confirmPassword) {
-      ctx.addIssue({
-        code: z.ZodIssueCode.custom,
-        message: 'Passwords must match',
-        path: ['confirmPassword'],
-      })
-    }
-  })
-
-type ChangePasswordFormData = z.infer<typeof changePasswordSchema>
+type ChangePasswordFormData = {
+  oldPassword: string
+  newPassword: string
+  confirmPassword: string
+}
 
 export default function ChangePasswordForm() {
   const { toast } = useToast()
+  const t = useTranslations('account')
+
+  const changePasswordSchema = z
+    .object({
+      oldPassword: z.string().min(1, t('pwOldRequired')),
+      newPassword: z.string().min(8, { message: t('pwMin') }),
+      confirmPassword: z.string().min(4, { message: t('pwConfirmRequired') }),
+    })
+    .superRefine((data, ctx) => {
+      if (data.newPassword !== data.confirmPassword) {
+        ctx.addIssue({
+          code: z.ZodIssueCode.custom,
+          message: t('pwMustMatch'),
+          path: ['confirmPassword'],
+        })
+      }
+    })
 
   const changePasswordForm = useForm<ChangePasswordFormData>({
     resolver: zodResolver(changePasswordSchema),
@@ -53,17 +55,17 @@ export default function ChangePasswordForm() {
       httpBrowserClient.post(ApiEndpoints.auth.changePassword(), data),
     onSuccess: () => {
       toast({
-        title: 'Password changed successfully!',
+        title: t('pwChanged'),
       })
       changePasswordForm.reset()
     },
     onError: (error) => {
       const errorMessage = (error as any).response?.data?.error
       changePasswordForm.setError('root.serverError', {
-        message: errorMessage || 'Failed to change password',
+        message: errorMessage || t('pwChangeFailed'),
       })
       toast({
-        title: 'Failed to change password',
+        title: t('pwChangeFailed'),
       })
     },
   })
@@ -71,11 +73,13 @@ export default function ChangePasswordForm() {
   return (
     <>
       <p className='text-sm text-muted-foreground mb-4'>
-        If you signed in with Google, you can reset your password{' '}
-        <Link href={Routes.resetPassword} className='underline'>
-          here
-        </Link>
-        .
+        {t.rich('pwResetHint', {
+          link: (chunks) => (
+            <Link href={Routes.resetPassword} className='underline'>
+              {chunks}
+            </Link>
+          ),
+        })}
       </p>
       
       <form
@@ -83,12 +87,12 @@ export default function ChangePasswordForm() {
         className='space-y-4'
       >
         <div className='space-y-2'>
-          <Label htmlFor='oldPassword'>Old Password</Label>
+          <Label htmlFor='oldPassword'>{t('oldPassword')}</Label>
           <Input
             id='oldPassword'
             type='password'
             {...changePasswordForm.register('oldPassword')}
-            placeholder='Enter your old password'
+            placeholder={t('oldPasswordPlaceholder')}
           />
           {changePasswordForm.formState.errors.oldPassword && (
             <p className='text-sm text-destructive'>
@@ -98,12 +102,12 @@ export default function ChangePasswordForm() {
         </div>
 
         <div className='space-y-2'>
-          <Label htmlFor='newPassword'>New Password</Label>
+          <Label htmlFor='newPassword'>{t('newPassword')}</Label>
           <Input
             id='newPassword'
             type='password'
             {...changePasswordForm.register('newPassword')}
-            placeholder='Enter your new password'
+            placeholder={t('newPasswordPlaceholder')}
           />
           {changePasswordForm.formState.errors.newPassword && (
             <p className='text-sm text-destructive'>
@@ -113,12 +117,12 @@ export default function ChangePasswordForm() {
         </div>
 
         <div className='space-y-2'>
-          <Label htmlFor='confirmPassword'>Confirm Password</Label>
+          <Label htmlFor='confirmPassword'>{t('confirmPassword')}</Label>
           <Input
             id='confirmPassword'
             type='password'
             {...changePasswordForm.register('confirmPassword')}
-            placeholder='Enter your confirm password'
+            placeholder={t('confirmPasswordPlaceholder')}
           />
           {changePasswordForm.formState.errors.confirmPassword && (
             <p className='text-sm text-destructive'>
@@ -135,7 +139,7 @@ export default function ChangePasswordForm() {
 
         {isChangePasswordSuccess && (
           <p className='text-sm text-green-500'>
-            Password changed successfully!
+            {t('pwChanged')}
           </p>
         )}
 
@@ -147,7 +151,7 @@ export default function ChangePasswordForm() {
           {isChangingPassword ? (
             <Loader2 className='h-4 w-4 animate-spin mr-2' />
           ) : null}
-          Change Password
+          {t('changePassword')}
         </Button>
       </form>
     </>
