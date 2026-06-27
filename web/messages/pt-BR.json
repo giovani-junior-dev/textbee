@@ -37,5 +37,73 @@
     "privacy": "Política de Privacidade",
     "terms": "Termos de Serviço",
     "refund": "Política de Reembolso"
+  },
+  "dashboard": {
+    "title": "Painel",
+    "quickStart": "Início rápido",
+    "welcome": "Bem-vindo de volta, {name}"
+  },
+  "getStarted": {
+    "title": "Comece aqui",
+    "progress": "{done} de {total} passos concluídos.",
+    "steps": {
+      "verify_email": { "label": "Verifique seu email", "description": "Obrigatório antes de enviar SMS." },
+      "download_app": { "label": "Baixe o app Android", "description": "Instale o Wablast SMS no seu Android." },
+      "api_key": { "label": "Gere uma API key", "description": "Usada para conectar seu aparelho ou autenticar chamadas de API." },
+      "register_device": { "label": "Registre seu aparelho", "description": "Vincule seu celular à conta escaneando um QR code." },
+      "choose_plan": { "label": "Escolha seu plano", "description": "Escolha o plano que cabe no seu uso." },
+      "first_message": { "label": "Envie sua primeira mensagem", "description": "Envie sua primeira mensagem pelo painel." }
+    },
+    "verifyEmail": "Verificar email",
+    "downloadApk": "Baixar APK",
+    "skip": "Pular →",
+    "howToRegister": "Como registrar",
+    "goToMessaging": "Ir para mensagens",
+    "finishSetup": "Concluir configuração",
+    "skipForNow": "Pular por enquanto →",
+    "plan": {
+      "free": { "title": "Free", "price": "R$0/mês", "d1": "1 aparelho", "d2": "50 SMS / dia, 300 / mês", "cta": "Continuar no Free" },
+      "recommended": "Recomendado",
+      "pro": { "title": "Pro", "price": "R$10/mês", "d1": "Até 5 aparelhos", "d2": "Sem limite diário", "d3": "5.000 SMS / mês", "d4": "Suporte prioritário", "cta": "Assinar o Pro" },
+      "compareAll": "Comparar planos"
+    },
+    "dialog": {
+      "title": "Registre seu aparelho",
+      "desc": "Siga estes passos para vincular seu celular à conta.",
+      "s1": "Gere uma API key no passo acima (se ainda não tiver).",
+      "s2": "Baixe o app Android Wablast SMS em <link>nosso link de download</link>.",
+      "s3": "Abra o app e conceda a permissão de SMS quando pedir.",
+      "s4": "No app, registre o aparelho escaneando o QR code mostrado ao gerar a API key, ou cole a key manualmente.",
+      "s5": "Seu celular deve aparecer em Aparelhos Registrados neste painel quando o vínculo der certo.",
+      "viewGuide": "Ver guia completo",
+      "close": "Fechar"
+    }
+  },
+  "auth": {
+    "email": "Email",
+    "password": "Senha",
+    "signIn": "Entrar",
+    "signingIn": "Entrando...",
+    "signUp": "Cadastre-se",
+    "or": "Ou",
+    "welcomeBack": "Bem-vindo de volta",
+    "loginSubtitle": "Entre com suas credenciais para acessar sua conta",
+    "forgotPassword": "Esqueceu sua senha?",
+    "noAccount": "Não tem uma conta?",
+    "invalidEmail": "Endereço de email inválido",
+    "passwordRequired": "Senha é obrigatória",
+    "botVerification": "Complete a verificação anti-robô",
+    "invalidCredentials": "Email ou senha inválidos",
+    "unexpectedError": "Ocorreu um erro inesperado. Tente novamente.",
+    "fullName": "Nome completo",
+    "phoneOptional": "Telefone (opcional)",
+    "marketingOptIn": "Quero receber novidades sobre recursos e promoções",
+    "creatingAccount": "Criando conta...",
+    "createAccountFailed": "Falha ao criar conta",
+    "nameMin": "O nome deve ter ao menos 2 caracteres",
+    "passwordMin": "A senha deve ter ao menos 8 caracteres",
+    "createAccount": "Criar uma conta",
+    "registerSubtitle": "Preencha seus dados para começar",
+    "haveAccount": "Já tem uma conta?"
   }
 }

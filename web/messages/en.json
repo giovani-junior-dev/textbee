@@ -37,5 +37,73 @@
     "privacy": "Privacy Policy",
     "terms": "Terms of Service",
     "refund": "Refund Policy"
+  },
+  "dashboard": {
+    "title": "Dashboard",
+    "quickStart": "Quick Start",
+    "welcome": "Welcome back, {name}"
+  },
+  "getStarted": {
+    "title": "Get Started",
+    "progress": "{done} of {total} steps complete.",
+    "steps": {
+      "verify_email": { "label": "Verify your email", "description": "Required before you can send SMS." },
+      "download_app": { "label": "Download the Android app", "description": "Install Wablast SMS on your Android device." },
+      "api_key": { "label": "Generate an API key", "description": "Used to connect your device or authenticate API calls." },
+      "register_device": { "label": "Register your device", "description": "Link your phone to your account by scanning a QR code." },
+      "choose_plan": { "label": "Choose your plan", "description": "Pick the plan that fits your usage." },
+      "first_message": { "label": "Send your first message", "description": "Send your first message from the dashboard." }
+    },
+    "verifyEmail": "Verify email",
+    "downloadApk": "Download APK",
+    "skip": "Skip →",
+    "howToRegister": "How to register",
+    "goToMessaging": "Go to messaging",
+    "finishSetup": "Finish setup",
+    "skipForNow": "Skip for now →",
+    "plan": {
+      "free": { "title": "Free", "price": "$0/month", "d1": "1 device", "d2": "50 SMS / day, 300 / month", "cta": "Continue with Free" },
+      "recommended": "Recommended",
+      "pro": { "title": "Pro", "price": "$10/month", "d1": "Up to 5 devices", "d2": "No daily limit", "d3": "5,000 SMS / month", "d4": "Priority support", "cta": "Upgrade to Pro" },
+      "compareAll": "Compare all plans"
+    },
+    "dialog": {
+      "title": "Register your device",
+      "desc": "Follow these steps to link your phone to your account.",
+      "s1": "Generate an API key in the step above (if you have not already).",
+      "s2": "Download the Wablast SMS Android app from <link>our download link</link>.",
+      "s3": "Open the app and grant SMS permissions when prompted.",
+      "s4": "In the app, register your device by scanning the QR code shown when you generate an API key, or paste the key manually.",
+      "s5": "Your phone should appear under Registered Devices on this dashboard when the link succeeds.",
+      "viewGuide": "View full guide",
+      "close": "Close"
+    }
+  },
+  "auth": {
+    "email": "Email",
+    "password": "Password",
+    "signIn": "Sign In",
+    "signingIn": "Signing in...",
+    "signUp": "Sign up",
+    "or": "Or",
+    "welcomeBack": "Welcome back",
+    "loginSubtitle": "Enter your credentials to access your account",
+    "forgotPassword": "Forgot your password?",
+    "noAccount": "Don't have an account?",
+    "invalidEmail": "Invalid email address",
+    "passwordRequired": "Password is required",
+    "botVerification": "Please complete the bot verification",
+    "invalidCredentials": "Invalid email or password",
+    "unexpectedError": "An unexpected error occurred. Please try again.",
+    "fullName": "Full Name",
+    "phoneOptional": "Phone (optional)",
+    "marketingOptIn": "I want to receive updates about new features and promotions",
+    "creatingAccount": "Creating account...",
+    "createAccountFailed": "Failed to create account",
+    "nameMin": "Name must be at least 2 characters long",
+    "passwordMin": "Password must be at least 8 characters long",
+    "createAccount": "Create an account",
+    "registerSubtitle": "Enter your details to get started",
+    "haveAccount": "Already have an account?"
   }
 }

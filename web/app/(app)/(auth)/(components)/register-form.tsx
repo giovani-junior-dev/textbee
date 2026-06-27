@@ -20,26 +20,29 @@ import { signIn } from 'next-auth/react'
 import { Checkbox } from '@/components/ui/checkbox'
 import { Routes } from '@/config/routes'
 import { useTurnstile } from '@/lib/turnstile'
+import { useTranslations } from 'next-intl'
 
-const registerSchema = z.object({
-  name: z
-    .string()
-    .min(2, { message: 'Name must be at least 2 characters long' }),
-  email: z.string().email({ message: 'Invalid email address' }),
-  password: z
-    .string()
-    .min(8, { message: 'Password must be at least 8 characters long' }),
-  phone: z.string().optional(),
-  marketingOptIn: z.boolean().optional().default(true),
-  turnstileToken: z
-    .string()
-    .min(1, { message: 'Please complete the bot verification' }),
-})
-
-type RegisterFormValues = z.infer<typeof registerSchema>
+type RegisterFormValues = {
+  name: string
+  email: string
+  password: string
+  phone?: string
+  marketingOptIn?: boolean
+  turnstileToken: string
+}
 
 export default function RegisterForm() {
   const router = useRouter()
+  const t = useTranslations('auth')
+
+  const registerSchema = z.object({
+    name: z.string().min(2, { message: t('nameMin') }),
+    email: z.string().email({ message: t('invalidEmail') }),
+    password: z.string().min(8, { message: t('passwordMin') }),
+    phone: z.string().optional(),
+    marketingOptIn: z.boolean().optional().default(true),
+    turnstileToken: z.string().min(1, { message: t('botVerification') }),
+  })
 
   const form = useForm<RegisterFormValues>({
     resolver: zodResolver(registerSchema),
@@ -85,7 +88,7 @@ export default function RegisterForm() {
     if (!data.turnstileToken) {
       form.setError('turnstileToken', {
         type: 'manual',
-        message: 'Please complete the bot verification',
+        message: t('botVerification'),
       })
       return
     }
@@ -105,7 +108,7 @@ export default function RegisterForm() {
         console.log(result.error)
         form.setError('root', {
           type: 'manual',
-          message: 'Failed to create account',
+          message: t('createAccountFailed'),
         })
       } else {
         router.push(`${Routes.verifyEmail}?verificationEmailSent=1`)
@@ -114,7 +117,7 @@ export default function RegisterForm() {
       console.error('register error:', error)
       form.setError('root', {
         type: 'manual',
-        message: 'An unexpected error occurred. Please try again.',
+        message: t('unexpectedError'),
       })
     }
   }
@@ -127,9 +130,9 @@ export default function RegisterForm() {
           name='name'
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Full Name</FormLabel>
+              <FormLabel>{t('fullName')}</FormLabel>
               <FormControl>
-                <Input placeholder='John Doe' {...field} className='dark:text-white dark:bg-gray-800' />
+                <Input placeholder='João Silva' {...field} className='dark:text-white dark:bg-gray-800' />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -140,9 +143,9 @@ export default function RegisterForm() {
           name='email'
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Email</FormLabel>
+              <FormLabel>{t('email')}</FormLabel>
               <FormControl>
-                <Input placeholder='m@example.com' {...field} className='dark:text-white dark:bg-gray-800' />
+                <Input placeholder='m@exemplo.com' {...field} className='dark:text-white dark:bg-gray-800' />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -153,7 +156,7 @@ export default function RegisterForm() {
           name='password'
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Password</FormLabel>
+              <FormLabel>{t('password')}</FormLabel>
               <FormControl>
                 <Input type='password' {...field} className='dark:text-white dark:bg-gray-800' />
               </FormControl>
@@ -166,7 +169,7 @@ export default function RegisterForm() {
           name='phone'
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Phone (optional)</FormLabel>
+              <FormLabel>{t('phoneOptional')}</FormLabel>
               <FormControl>
                 <Input placeholder='+1 (555) 000-0000' {...field} className='dark:text-white dark:bg-gray-800' />
               </FormControl>
@@ -208,7 +211,7 @@ export default function RegisterForm() {
                   />
                 </FormControl>
                 <FormLabel className='text-sm'>
-                  I want to receive updates about new features and promotions
+                  {t('marketingOptIn')}
                 </FormLabel>
               </div>
               <FormMessage />
@@ -223,10 +226,10 @@ export default function RegisterForm() {
           {form.formState.isSubmitting ? (
             <>
               {/* <Icons.spinner className="mr-2 h-4 w-4 animate-spin" /> */}
-              Creating account...
+              {t('creatingAccount')}
             </>
           ) : (
-            'Sign Up'
+            t('signUp')
           )}
         </Button>
       </form>

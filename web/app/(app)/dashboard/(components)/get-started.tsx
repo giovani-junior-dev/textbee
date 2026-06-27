@@ -28,6 +28,7 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { cn } from '@/lib/utils'
 import GenerateApiKey from './generate-api-key'
 import { Skeleton } from '@/components/ui/skeleton'
+import { useTranslations } from 'next-intl'
 
 type StatsShape = {
   totalApiKeyCount?: number
@@ -152,6 +153,7 @@ function GetStartedCardSkeleton() {
 }
 
 export default function GetStartedCard() {
+  const t = useTranslations('getStarted')
   const queryClient = useQueryClient()
   const autoCompletedRef = useRef(false)
   const legacyAutoCompletedRef = useRef(false)
@@ -340,9 +342,9 @@ export default function GetStartedCard() {
                 <Lightbulb className='h-4 w-4 text-primary' />
               </div>
               <div>
-                <CardTitle className='text-lg'>Get Started</CardTitle>
+                <CardTitle className='text-lg'>{t('title')}</CardTitle>
                 <CardDescription className='mt-1'>
-                  {doneCount} of {STEPS.length} steps complete.
+                  {t('progress', { done: doneCount, total: STEPS.length })}
                 </CardDescription>
               </div>
             </div>
@@ -409,7 +411,7 @@ export default function GetStartedCard() {
                             updateOnboarding({ currentStepId: step.id })
                           }}
                         >
-                          {step.label}
+                          {t(`steps.${step.id}.label`)}
                         </button>
                       ) : (
                         <p
@@ -420,7 +422,7 @@ export default function GetStartedCard() {
                               : 'text-muted-foreground',
                           )}
                         >
-                          {step.label}
+                          {t(`steps.${step.id}.label`)}
                         </p>
                       )}
                       {/* {step.optional && (
@@ -432,12 +434,12 @@ export default function GetStartedCard() {
                     {isActive && (
                       <>
                         <p className='mt-1 text-sm text-muted-foreground'>
-                          {step.description}
+                          {t(`steps.${step.id}.description`)}
                         </p>
                         <div className='mt-3 flex flex-wrap items-center gap-2'>
                           {step.id === 'verify_email' && (
                             <Button size='sm' asChild>
-                              <Link href={Routes.verifyEmail}>Verify email</Link>
+                              <Link href={Routes.verifyEmail}>{t('verifyEmail')}</Link>
                             </Button>
                           )}
                           {step.id === 'download_app' && (
@@ -450,7 +452,7 @@ export default function GetStartedCard() {
                                 }
                               >
                                 <Download className='h-4 w-4' />
-                                Download APK
+                                {t('downloadApk')}
                               </Button>
                               <Button
                                 variant='link'
@@ -461,7 +463,7 @@ export default function GetStartedCard() {
                                   updateOnboarding({ skipStepId: 'download_app' })
                                 }
                               >
-                                Skip →
+                                {t('skip')}
                               </Button>
                             </>
                           )}
@@ -472,7 +474,7 @@ export default function GetStartedCard() {
                               size='sm'
                               onClick={() => setRegisterHelpOpen(true)}
                             >
-                              How to register
+                              {t('howToRegister')}
                             </Button>
                           )}
                           {step.id === 'choose_plan' && (
@@ -486,17 +488,17 @@ export default function GetStartedCard() {
                                 <div className='grid w-full gap-3 md:grid-cols-2'>
                                   <Card className='border-border shadow-none'>
                                     <CardHeader className='pb-2 pt-4'>
-                                      <CardTitle className='text-base'>Free</CardTitle>
-                                      <CardDescription>$0/month</CardDescription>
+                                      <CardTitle className='text-base'>{t('plan.free.title')}</CardTitle>
+                                      <CardDescription>{t('plan.free.price')}</CardDescription>
                                     </CardHeader>
                                     <CardContent className='space-y-2 pb-4 text-sm text-muted-foreground'>
                                       <p className='flex gap-2'>
                                         <Check className='mt-0.5 h-4 w-4 shrink-0 text-muted-foreground' />
-                                        1 device
+                                        {t('plan.free.d1')}
                                       </p>
                                       <p className='flex gap-2'>
                                         <Check className='mt-0.5 h-4 w-4 shrink-0 text-muted-foreground' />
-                                        50 SMS / day, 300 / month
+                                        {t('plan.free.d2')}
                                       </p>
                                     </CardContent>
                                     <CardFooter className='flex-col gap-2 pb-4 pt-0'>
@@ -508,39 +510,39 @@ export default function GetStartedCard() {
                                           updateOnboarding({ skipStepId: 'choose_plan' })
                                         }
                                       >
-                                        Continue with Free
+                                        {t('plan.free.cta')}
                                       </Button>
                                     </CardFooter>
                                   </Card>
                                   <Card className='relative border-2 border-primary shadow-md'>
                                     <Badge className='absolute right-3 top-3 text-[10px]'>
-                                      Recommended
+                                      {t('plan.recommended')}
                                     </Badge>
                                     <CardHeader className='pb-2 pt-4 pr-14'>
-                                      <CardTitle className='text-base'>Pro</CardTitle>
-                                      <CardDescription>$10/month</CardDescription>
+                                      <CardTitle className='text-base'>{t('plan.pro.title')}</CardTitle>
+                                      <CardDescription>{t('plan.pro.price')}</CardDescription>
                                     </CardHeader>
                                     <CardContent className='space-y-2 pb-4 text-sm'>
                                       <p className='flex gap-2 text-foreground'>
                                         <Check className='mt-0.5 h-4 w-4 shrink-0 text-primary' />
-                                        Up to 5 devices
+                                        {t('plan.pro.d1')}
                                       </p>
                                       <p className='flex gap-2 text-foreground'>
                                         <Check className='mt-0.5 h-4 w-4 shrink-0 text-primary' />
-                                        No daily limit
+                                        {t('plan.pro.d2')}
                                       </p>
                                       <p className='flex gap-2 text-foreground'>
                                         <Check className='mt-0.5 h-4 w-4 shrink-0 text-primary' />
-                                        5,000 SMS / month
+                                        {t('plan.pro.d3')}
                                       </p>
                                       <p className='flex gap-2 text-foreground'>
                                         <Check className='mt-0.5 h-4 w-4 shrink-0 text-primary' />
-                                        Priority support
+                                        {t('plan.pro.d4')}
                                       </p>
                                     </CardContent>
                                     <CardFooter className='flex-col gap-2 pb-4 pt-0'>
                                       <Button className='w-full' size='sm' asChild>
-                                        <Link href='/checkout/pro'>Upgrade to Pro</Link>
+                                        <Link href='/checkout/pro'>{t('plan.pro.cta')}</Link>
                                       </Button>
                                       <Button
                                         variant='link'
@@ -553,7 +555,7 @@ export default function GetStartedCard() {
                                           target='_blank'
                                           rel='noreferrer'
                                         >
-                                          Compare all plans
+                                          {t('plan.compareAll')}
                                           <ExternalLink className='ml-1 h-3 w-3' />
                                         </a>
                                       </Button>
@@ -570,13 +572,13 @@ export default function GetStartedCard() {
                                   updateOnboarding({ skipStepId: 'choose_plan' })
                                 }
                               >
-                                Skip for now →
+                                {t('skipForNow')}
                               </Button>
                             </>
                           )}
                           {step.id === 'first_message' && (
                             <Button size='sm' asChild>
-                              <Link href='/dashboard/messaging'>Go to messaging</Link>
+                              <Link href='/dashboard/messaging'>{t('goToMessaging')}</Link>
                             </Button>
                           )}
                         </div>
@@ -595,7 +597,7 @@ export default function GetStartedCard() {
             disabled={savingOnboarding}
             onClick={finishSetup}
           >
-            Finish setup
+            {t('finishSetup')}
           </Button>
         </CardFooter>
       </Card>
@@ -603,46 +605,40 @@ export default function GetStartedCard() {
       <Dialog open={registerHelpOpen} onOpenChange={setRegisterHelpOpen}>
         <DialogContent className='sm:max-w-md'>
           <DialogHeader>
-            <DialogTitle>Register your device</DialogTitle>
+            <DialogTitle>{t('dialog.title')}</DialogTitle>
             <DialogDescription>
-              Follow these steps to link your phone to your account.
+              {t('dialog.desc')}
             </DialogDescription>
           </DialogHeader>
           <ol className='mt-2 list-decimal space-y-3 pl-5 text-sm text-muted-foreground'>
+            <li>{t('dialog.s1')}</li>
             <li>
-              Generate an API key in the step above (if you have not already).
+              {t.rich('dialog.s2', {
+                link: (chunks) => (
+                  <a
+                    href={Routes.downloadAndroidApp}
+                    target='_blank'
+                    rel='noreferrer'
+                    className='font-medium text-primary underline-offset-4 hover:underline'
+                  >
+                    {chunks}
+                  </a>
+                ),
+              })}
             </li>
-            <li>
-              Download the TextBee Android app from{' '}
-              <a
-                href={Routes.downloadAndroidApp}
-                target='_blank'
-                rel='noreferrer'
-                className='font-medium text-primary underline-offset-4 hover:underline'
-              >
-                {Routes.downloadAndroidApp}
-              </a>
-              .
-            </li>
-            <li>Open the app and grant SMS permissions when prompted.</li>
-            <li>
-              In the app, register your device by scanning the QR code shown when you
-              generate an API key, or paste the key manually.
-            </li>
-            <li>
-              Your phone should appear under Registered Devices on this dashboard when
-              the link succeeds.
-            </li>
+            <li>{t('dialog.s3')}</li>
+            <li>{t('dialog.s4')}</li>
+            <li>{t('dialog.s5')}</li>
           </ol>
           <DialogFooter className='flex flex-col gap-2 sm:flex-row sm:justify-between'>
             <Button variant='outline' size='sm' asChild>
               <a href={Routes.quickstart} target='_blank' rel='noreferrer'>
-                View full guide
+                {t('dialog.viewGuide')}
                 <ExternalLink className='ml-1 h-3 w-3' />
               </a>
             </Button>
             <Button size='sm' onClick={() => setRegisterHelpOpen(false)}>
-              Close
+              {t('dialog.close')}
             </Button>
           </DialogFooter>
         </DialogContent>
