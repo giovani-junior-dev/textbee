@@ -43,6 +43,29 @@
     "quickStart": "Quick Start",
     "welcome": "Welcome back, {name}"
   },
+  "overview": {
+    "totalSent": "Total SMS Sent",
+    "activeDevices": "Active Devices",
+    "apiKeys": "API Keys",
+    "smsReceived": "SMS Received",
+    "sinceLastYear": "Since last year",
+    "connectedNow": "Connected now",
+    "activeKeys": "Active keys"
+  },
+  "messaging": {
+    "title": "Send SMS",
+    "subtitle": "Send a message to any recipient(s)",
+    "selectDevice": "Select a device",
+    "disabled": "(disabled)",
+    "selectSim": "Select SIM (optional)",
+    "phoneNumber": "Phone Number",
+    "addRecipient": "Add Recipient",
+    "message": "Message",
+    "errorSending": "Error sending SMS:",
+    "sentSuccess": "SMS sent successfully!",
+    "sending": "Sending...",
+    "sendMessage": "Send Message"
+  },
   "getStarted": {
     "title": "Get Started",
     "progress": "{done} of {total} steps complete.",

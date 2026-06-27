@@ -7,6 +7,7 @@ import { ApiEndpoints } from '@/config/api'
 import httpBrowserClient from '@/lib/httpBrowserClient'
 import { useQuery } from '@tanstack/react-query'
 import { Skeleton } from '@/components/ui/skeleton'
+import { useTranslations } from 'next-intl'
 // import GetStartedCard from "@/components/get-started-card";
 
 export const StatCard = ({ title, value, icon: Icon, description }) => {
@@ -32,6 +33,7 @@ export const StatCard = ({ title, value, icon: Icon, description }) => {
 }
 
 export default function Overview() {
+  const t = useTranslations('overview')
   const { data: stats } = useQuery({
     queryKey: ['stats'],
     queryFn: () =>
@@ -45,28 +47,28 @@ export default function Overview() {
       <GetStartedCard />
       <div className='grid gap-4 md:grid-cols-2 lg:grid-cols-4'>
         <StatCard
-          title='Total SMS Sent'
+          title={t('totalSent')}
           value={stats?.totalSentSMSCount?.toLocaleString()}
           icon={MessageSquare}
-          description='Since last year'
+          description={t('sinceLastYear')}
         />
         <StatCard
-          title='Active Devices'
+          title={t('activeDevices')}
           value={stats?.totalDeviceCount}
           icon={Smartphone}
-          description='Connected now'
+          description={t('connectedNow')}
         />
         <StatCard
-          title='API Keys'
+          title={t('apiKeys')}
           value={stats?.totalApiKeyCount}
           icon={Key}
-          description='Active keys'
+          description={t('activeKeys')}
         />
         <StatCard
-          title='SMS Received'
+          title={t('smsReceived')}
           value={stats?.totalReceivedSMSCount?.toLocaleString()}
           icon={BarChart3}
-          description='Since last year'
+          description={t('sinceLastYear')}
         />
       </div>
     </div>

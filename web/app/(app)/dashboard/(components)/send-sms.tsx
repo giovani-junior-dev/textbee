@@ -31,8 +31,10 @@ import { Spinner } from '@/components/ui/spinner'
 import { formatError } from '@/lib/utils/errorHandler'
 import { RateLimitError } from '@/components/shared/rate-limit-error'
 import { formatDeviceName } from '@/lib/utils'
+import { useTranslations } from 'next-intl'
 
 export default function SendSms() {
+  const t = useTranslations('messaging')
   const { data: devices, isLoading: isLoadingDevices } = useQuery({
     queryKey: ['devices'],
     queryFn: () =>
@@ -103,9 +105,9 @@ export default function SendSms() {
         <CardHeader>
           <div className='flex items-center gap-2'>
             <MessageSquare className='h-5 w-5' />
-            <CardTitle>Send SMS</CardTitle>
+            <CardTitle>{t('title')}</CardTitle>
           </div>
-          <CardDescription>Send a message to any recipient(s)</CardDescription>
+          <CardDescription>{t('subtitle')}</CardDescription>
         </CardHeader>
         <CardContent>
           <form
@@ -120,7 +122,7 @@ export default function SendSms() {
                   render={({ field }) => (
                     <Select onValueChange={field.onChange} value={field.value}>
                       <SelectTrigger>
-                        <SelectValue placeholder='Select a device' />
+                        <SelectValue placeholder={t('selectDevice')} />
                       </SelectTrigger>
                       <SelectContent>
                         {devices?.data?.map((device) => (
@@ -130,7 +132,7 @@ export default function SendSms() {
                             disabled={!device.enabled}
                           >
                             {formatDeviceName(device)}{' '}
-                            {device.enabled ? '' : '(disabled)'}
+                            {device.enabled ? '' : t('disabled')}
                           </SelectItem>
                         ))}
                       </SelectContent>
@@ -157,7 +159,7 @@ export default function SendSms() {
                         value={field.value?.toString()}
                       >
                         <SelectTrigger>
-                          <SelectValue placeholder='Select SIM (optional)' />
+                          <SelectValue placeholder={t('selectSim')} />
                         </SelectTrigger>
                         <SelectContent>
                           {availableSims.map((sim) => (
@@ -186,7 +188,7 @@ export default function SendSms() {
                     <div className='flex gap-2'>
                       <Input
                         type='tel'
-                        placeholder='Phone Number'
+                        placeholder={t('phoneNumber')}
                         {...register(`recipients.${index}`)}
                       />
                       <Button
@@ -214,7 +216,7 @@ export default function SendSms() {
                   className='w-full'
                 >
                   <Plus className='h-4 w-4 mr-2' />
-                  Add Recipient
+                  {t('addRecipient')}
                 </Button>
 
                 {errors.recipients && (
@@ -232,7 +234,7 @@ export default function SendSms() {
 
               <div>
                 <Textarea
-                  placeholder='Message'
+                  placeholder={t('message')}
                   {...register('message')}
                   rows={4}
                 />
@@ -255,7 +257,7 @@ export default function SendSms() {
               }
               return (
                 <div className='flex items-center gap-2 text-destructive'>
-                  <p>Error sending SMS: {formattedError.message}</p>
+                  <p>{t('errorSending')} {formattedError.message}</p>
                   <X className='h-5 w-5' />
                 </div>
               )
@@ -263,7 +265,7 @@ export default function SendSms() {
 
             {isSendSmsSuccess && (
               <div className='flex items-center gap-2'>
-                <p>SMS sent successfully!</p>
+                <p>{t('sentSuccess')}</p>
                 <Check className='h-5 w-5' />
               </div>
             )}
@@ -272,7 +274,7 @@ export default function SendSms() {
               {isSendingSms && (
                 <Spinner size='sm' className='mr-2' color='white' />
               )}
-              {isSendingSms ? 'Sending...' : 'Send Message'}
+              {isSendingSms ? t('sending') : t('sendMessage')}
             </Button>
           </form>
         </CardContent>
