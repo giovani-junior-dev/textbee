@@ -2,7 +2,6 @@
 
 import { useMemo } from 'react'
 import Link from 'next/link'
-import Image from 'next/image'
 import { useRouter } from 'next/navigation'
 import { Button } from '@/components/ui/button'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
@@ -150,23 +149,6 @@ export default function AppHeader({ session }: { session: Session }) {
   return (
     <header className='sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60'>
       <div className='container flex h-14 items-center'>
-        <div className='mr-4 flex'>
-          <Link
-            className='flex items-center space-x-2'
-            href={Routes.landingPage}
-          >
-            <Image
-              src='/images/logo.png'
-              alt='Wablast SMS Logo'
-              width={24}
-              height={24}
-              className='h-6 w-6 bg-white rounded-full'
-            />
-            <span className='font-bold'>
-              Wablast<span className='text-primary'> SMS</span>
-            </span>
-          </Link>
-        </div>
         <div className='flex flex-1 items-center justify-end space-x-2'>
           <nav className='flex items-center space-x-6'>
             <LanguageSwitcher />
