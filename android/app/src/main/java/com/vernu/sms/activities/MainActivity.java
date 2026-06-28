@@ -139,10 +139,10 @@ public class MainActivity extends AppCompatActivity {
         String[] missingPermissions = Arrays.stream(AppConstants.requiredPermissions).filter(permission -> !TextBeeUtils.isPermissionGranted(mContext, permission)).toArray(String[]::new);
         if (missingPermissions.length == 0) {
             grantSMSPermissionBtn.setEnabled(false);
-            grantSMSPermissionBtn.setText("Permission Granted");
+            grantSMSPermissionBtn.setText("Permissão concedida");
             renderAvailableSimOptions();
         } else {
-            Snackbar.make(grantSMSPermissionBtn, "Please Grant Required Permissions to continue: " + Arrays.toString(missingPermissions), Snackbar.LENGTH_SHORT).show();
+            Snackbar.make(grantSMSPermissionBtn, "Conceda as permissões necessárias para continuar: " + Arrays.toString(missingPermissions), Snackbar.LENGTH_SHORT).show();
             grantSMSPermissionBtn.setEnabled(true);
             grantSMSPermissionBtn.setOnClickListener(this::handleRequestPermissions);
         }
@@ -153,7 +153,7 @@ public class MainActivity extends AppCompatActivity {
             ClipboardManager clipboard = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
             ClipData clip = ClipData.newPlainText("Device ID", deviceId);
             clipboard.setPrimaryClip(clip);
-            Snackbar.make(view, "Copied", Snackbar.LENGTH_LONG).show();
+            Snackbar.make(view, "Copiado", Snackbar.LENGTH_LONG).show();
         });
 
         apiKeyEditText.setText(SharedPreferenceHelper.getSharedPreferenceString(mContext, AppConstants.SHARED_PREFS_API_KEY_KEY, ""));
@@ -204,7 +204,7 @@ public class MainActivity extends AppCompatActivity {
                 }
                 @Override
                 public void onFailure(Call<RegisterDeviceResponseDTO> call, Throwable t) {
-                    Snackbar.make(view, "An error occurred :(", Snackbar.LENGTH_LONG).show();
+                    Snackbar.make(view, "Ocorreu um erro :(", Snackbar.LENGTH_LONG).show();
                     Log.e(TAG, "API_ERROR "+ t.getMessage());
                     Log.e(TAG, "API_ERROR "+ t.getLocalizedMessage());
                     TextBeeUtils.logException(t, "Error updating device");
@@ -229,10 +229,10 @@ public class MainActivity extends AppCompatActivity {
             
             if (isChecked) {
                 TextBeeUtils.startStickyNotificationService(mContext);
-                Snackbar.make(view, "Background service enabled - app will be more reliable", Snackbar.LENGTH_LONG).show();
+                Snackbar.make(view, "Serviço em segundo plano ativado - o app ficará mais confiável", Snackbar.LENGTH_LONG).show();
             } else {
                 TextBeeUtils.stopStickyNotificationService(mContext);
-                Snackbar.make(view, "Background service disabled - app may be killed when in background", Snackbar.LENGTH_LONG).show();
+                Snackbar.make(view, "Serviço em segundo plano desativado - o app pode ser encerrado em segundo plano", Snackbar.LENGTH_LONG).show();
             }
         });
 
@@ -303,7 +303,7 @@ public class MainActivity extends AppCompatActivity {
             int defaultDelay = AppConstants.DEFAULT_SMS_SEND_DELAY_SECONDS;
             smsSendDelayEditText.setText(String.valueOf(defaultDelay));
             SharedPreferenceHelper.setSharedPreferenceInt(mContext, AppConstants.SHARED_PREFS_SMS_SEND_DELAY_SECONDS_KEY, defaultDelay);
-            Snackbar.make(smsSendDelayEditText, "SMS send delay saved (" + defaultDelay + " sec)", Snackbar.LENGTH_SHORT).show();
+            Snackbar.make(smsSendDelayEditText, "Atraso de envio salvo (" + defaultDelay + " sec)", Snackbar.LENGTH_SHORT).show();
             return;
         }
         try {
@@ -312,15 +312,15 @@ public class MainActivity extends AppCompatActivity {
                 value = 0;
                 smsSendDelayEditText.setText("0");
                 SharedPreferenceHelper.setSharedPreferenceInt(mContext, AppConstants.SHARED_PREFS_SMS_SEND_DELAY_SECONDS_KEY, 0);
-                Snackbar.make(smsSendDelayEditText, "Minimum delay is 0 seconds. Saved.", Snackbar.LENGTH_SHORT).show();
+                Snackbar.make(smsSendDelayEditText, "Atraso mínimo é 0 segundos. Salvo.", Snackbar.LENGTH_SHORT).show();
             } else if (value > 3600) {
                 value = 3600;
                 smsSendDelayEditText.setText("3600");
                 SharedPreferenceHelper.setSharedPreferenceInt(mContext, AppConstants.SHARED_PREFS_SMS_SEND_DELAY_SECONDS_KEY, 3600);
-                Snackbar.make(smsSendDelayEditText, "Maximum delay is 3600 seconds. Saved.", Snackbar.LENGTH_SHORT).show();
+                Snackbar.make(smsSendDelayEditText, "Atraso máximo é 3600 segundos. Salvo.", Snackbar.LENGTH_SHORT).show();
             } else {
                 SharedPreferenceHelper.setSharedPreferenceInt(mContext, AppConstants.SHARED_PREFS_SMS_SEND_DELAY_SECONDS_KEY, value);
-                Snackbar.make(smsSendDelayEditText, "SMS send delay saved (" + value + " sec)", Snackbar.LENGTH_SHORT).show();
+                Snackbar.make(smsSendDelayEditText, "Atraso de envio salvo (" + value + " sec)", Snackbar.LENGTH_SHORT).show();
             }
         } catch (NumberFormatException e) {
             int defaultDelay = AppConstants.DEFAULT_SMS_SEND_DELAY_SECONDS;
@@ -466,12 +466,12 @@ public class MainActivity extends AppCompatActivity {
         }
         boolean allPermissionsGranted = Arrays.stream(permissions).allMatch(permission -> TextBeeUtils.isPermissionGranted(mContext, permission));
         if (allPermissionsGranted) {
-            Snackbar.make(findViewById(R.id.grantSMSPermissionBtn), "All Permissions Granted", Snackbar.LENGTH_SHORT).show();
+            Snackbar.make(findViewById(R.id.grantSMSPermissionBtn), "Todas as permissões concedidas", Snackbar.LENGTH_SHORT).show();
             grantSMSPermissionBtn.setEnabled(false);
-            grantSMSPermissionBtn.setText("Permission Granted");
+            grantSMSPermissionBtn.setText("Permissão concedida");
             renderAvailableSimOptions();
         } else {
-            Snackbar.make(findViewById(R.id.grantSMSPermissionBtn), "Please Grant Required Permissions to continue", Snackbar.LENGTH_SHORT).show();
+            Snackbar.make(findViewById(R.id.grantSMSPermissionBtn), "Conceda as permissões necessárias para continuar", Snackbar.LENGTH_SHORT).show();
         }
     }
 
@@ -480,13 +480,13 @@ public class MainActivity extends AppCompatActivity {
         String deviceIdInput = deviceIdEditText.getText().toString();
         
         registerDeviceBtn.setEnabled(false);
-        registerDeviceBtn.setText("Loading...");
+        registerDeviceBtn.setText("Carregando...");
         View view = findViewById(R.id.registerDeviceBtn);
 
         FirebaseMessaging.getInstance().getToken()
                 .addOnCompleteListener(task -> {
                     if (!task.isSuccessful()) {
-                        Snackbar.make(view, "Failed to obtain FCM Token :(", Snackbar.LENGTH_LONG).show();
+                        Snackbar.make(view, "Falha ao obter o token FCM :(", Snackbar.LENGTH_LONG).show();
                         registerDeviceBtn.setEnabled(true);
                         registerDeviceBtn.setText("Update");
                         return;
@@ -533,7 +533,7 @@ public class MainActivity extends AppCompatActivity {
                                     return;
                                 }
                                 SharedPreferenceHelper.setSharedPreferenceString(mContext, AppConstants.SHARED_PREFS_API_KEY_KEY, newKey);
-                                Snackbar.make(view, "Device Updated Successfully :)", Snackbar.LENGTH_LONG).show();
+                                Snackbar.make(view, "Aparelho atualizado com sucesso :)", Snackbar.LENGTH_LONG).show();
                                 
                                 // Update deviceId from response if available
                                 if (response.body() != null && response.body().data != null && response.body().data.get("_id") != null) {
@@ -577,7 +577,7 @@ public class MainActivity extends AppCompatActivity {
                             
                             @Override
                             public void onFailure(Call<RegisterDeviceResponseDTO> call, Throwable t) {
-                                Snackbar.make(view, "An error occurred :(", Snackbar.LENGTH_LONG).show();
+                                Snackbar.make(view, "Ocorreu um erro :(", Snackbar.LENGTH_LONG).show();
                                 Log.e(TAG, "API_ERROR "+ t.getMessage());
                                 Log.e(TAG, "API_ERROR "+ t.getLocalizedMessage());
                                 TextBeeUtils.logException(t, "Error registering device");
@@ -600,7 +600,7 @@ public class MainActivity extends AppCompatActivity {
                                     return;
                                 }
                                 SharedPreferenceHelper.setSharedPreferenceString(mContext, AppConstants.SHARED_PREFS_API_KEY_KEY, newKey);
-                                Snackbar.make(view, "Device Registration Successful :)", Snackbar.LENGTH_LONG).show();
+                                Snackbar.make(view, "Aparelho registrado com sucesso :)", Snackbar.LENGTH_LONG).show();
                             
                             if (response.body() != null && response.body().data != null && response.body().data.get("_id") != null) {
                                 deviceId = response.body().data.get("_id").toString();
@@ -642,7 +642,7 @@ public class MainActivity extends AppCompatActivity {
                         }
                         @Override
                         public void onFailure(Call<RegisterDeviceResponseDTO> call, Throwable t) {
-                            Snackbar.make(view, "An error occurred :(", Snackbar.LENGTH_LONG).show();
+                            Snackbar.make(view, "Ocorreu um erro :(", Snackbar.LENGTH_LONG).show();
                             Log.e(TAG, "API_ERROR "+ t.getMessage());
                             Log.e(TAG, "API_ERROR "+ t.getLocalizedMessage());
                             TextBeeUtils.logException(t, "Error registering device");
@@ -659,13 +659,13 @@ public class MainActivity extends AppCompatActivity {
         String deviceIdToUse = !deviceIdInput.isEmpty() ? deviceIdInput : deviceId;
         
         registerDeviceBtn.setEnabled(false);
-        registerDeviceBtn.setText("Loading...");
+        registerDeviceBtn.setText("Carregando...");
         View view = findViewById(R.id.registerDeviceBtn);
 
         FirebaseMessaging.getInstance().getToken()
                 .addOnCompleteListener(task -> {
                     if (!task.isSuccessful()) {
-                        Snackbar.make(view, "Failed to obtain FCM Token :(", Snackbar.LENGTH_LONG).show();
+                        Snackbar.make(view, "Falha ao obter o token FCM :(", Snackbar.LENGTH_LONG).show();
                         registerDeviceBtn.setEnabled(true);
                         registerDeviceBtn.setText("Update");
                         return;
@@ -744,14 +744,14 @@ public class MainActivity extends AppCompatActivity {
                             // Update stored version information
                             VersionTracker.updateStoredVersion(mContext);
                             
-                            Snackbar.make(view, "Device Updated Successfully :)", Snackbar.LENGTH_LONG).show();
+                            Snackbar.make(view, "Aparelho atualizado com sucesso :)", Snackbar.LENGTH_LONG).show();
                             registerDeviceBtn.setEnabled(true);
                             registerDeviceBtn.setText("Update");
                         }
 
                         @Override
                         public void onFailure(Call<RegisterDeviceResponseDTO> call, Throwable t) {
-                            Snackbar.make(view, "An error occurred :(", Snackbar.LENGTH_LONG).show();
+                            Snackbar.make(view, "Ocorreu um erro :(", Snackbar.LENGTH_LONG).show();
                             Log.e(TAG, "API_ERROR "+ t.getMessage());
                             Log.e(TAG, "API_ERROR "+ t.getLocalizedMessage());
                             TextBeeUtils.logException(t, "Error updating device");
@@ -765,11 +765,11 @@ public class MainActivity extends AppCompatActivity {
     private void handleRequestPermissions(View view) {
         boolean allPermissionsGranted = Arrays.stream(AppConstants.requiredPermissions).allMatch(permission -> TextBeeUtils.isPermissionGranted(mContext, permission));
         if (allPermissionsGranted) {
-            Snackbar.make(view, "Already got permissions", Snackbar.LENGTH_SHORT).show();
+            Snackbar.make(view, "Permissões já concedidas", Snackbar.LENGTH_SHORT).show();
             return;
         }
         String[] permissionsToRequest = Arrays.stream(AppConstants.requiredPermissions).filter(permission -> !TextBeeUtils.isPermissionGranted(mContext, permission)).toArray(String[]::new);
-        Snackbar.make(view, "Please Grant Required Permissions to continue", Snackbar.LENGTH_SHORT).show();
+        Snackbar.make(view, "Conceda as permissões necessárias para continuar", Snackbar.LENGTH_SHORT).show();
         ActivityCompat.requestPermissions(this, permissionsToRequest, PERMISSION_REQUEST_CODE);
     }
 

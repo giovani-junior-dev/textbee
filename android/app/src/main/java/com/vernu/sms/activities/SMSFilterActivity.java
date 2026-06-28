@@ -131,7 +131,7 @@ public class SMSFilterActivity extends AppCompatActivity {
             matchTypeSpinner.setSelection(rule.getMatchType().ordinal());
             caseSensitiveSwitch.setChecked(rule.isCaseSensitive());
             if (dialogTitle != null) {
-                dialogTitle.setText("Edit Filter Rule");
+                dialogTitle.setText("Editar regra de filtro");
             }
         } else {
             // Default to case insensitive
@@ -145,7 +145,7 @@ public class SMSFilterActivity extends AppCompatActivity {
         saveButton.setOnClickListener(v -> {
             String pattern = patternEditText.getText() != null ? patternEditText.getText().toString().trim() : "";
             if (pattern.isEmpty()) {
-                Toast.makeText(this, "Please enter a pattern", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Digite um padrão", Toast.LENGTH_SHORT).show();
                 return;
             }
 
@@ -175,8 +175,8 @@ public class SMSFilterActivity extends AppCompatActivity {
 
     private void deleteRule(int position) {
         new AlertDialog.Builder(this)
-            .setTitle("Delete Rule")
-            .setMessage("Are you sure you want to delete this filter rule?")
+            .setTitle("Excluir regra")
+            .setMessage("Tem certeza que deseja excluir esta regra de filtro?")
             .setPositiveButton("Delete", (dialog, which) -> {
                 filterConfig.getRules().remove(position);
                 adapter.notifyItemRemoved(position);

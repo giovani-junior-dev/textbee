@@ -394,7 +394,7 @@ private fun SimCardsSection(sims: List<SimInfoDTO>) {
                 IconButton(
                     onClick = {
                         clipboard.setText(AnnotatedString(sim.subscriptionId.toString()))
-                        Toast.makeText(context, "Subscription ID copied", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(context, "ID da assinatura copiado", Toast.LENGTH_SHORT).show()
                     },
                     modifier = Modifier.size(28.dp)
                 ) {
