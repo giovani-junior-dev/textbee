@@ -1,8 +1,12 @@
 'use client'
 
 import { Home, MessageSquareText, UserCircle, Users } from 'lucide-react'
+import Image from 'next/image'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
+import { useSession } from 'next-auth/react'
+import { useTranslations } from 'next-intl'
+
 import AccountDeletionAlert from './(components)/account-deletion-alert'
 import UpgradeToProAlert from './(components)/upgrade-to-pro-alert'
 import UpdateAppModal from './(components)/update-app-modal'
@@ -10,7 +14,23 @@ import UpdateAppNotificationBar from './(components)/update-app-notification-bar
 import VerifyEmailAlert from './(components)/verify-email-alert'
 import PastDueBillingAlert from './(components)/past-due-billing-alert'
 import { SurveyModal } from '@/components/shared/survey-modal'
-import { useTranslations } from 'next-intl'
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
+import {
+  Sidebar,
+  SidebarContent,
+  SidebarFooter,
+  SidebarGroup,
+  SidebarGroupContent,
+  SidebarGroupLabel,
+  SidebarHeader,
+  SidebarInset,
+  SidebarMenu,
+  SidebarMenuButton,
+  SidebarMenuItem,
+  SidebarProvider,
+  SidebarRail,
+  SidebarTrigger,
+} from '@/components/ui/sidebar'
 
 export default function DashboardLayout({
   children,
@@ -19,157 +39,117 @@ export default function DashboardLayout({
 }) {
   const pathname = usePathname()
   const t = useTranslations('nav')
+  const { data: session } = useSession()
+
+  const items = [
+    { href: '/dashboard', icon: Home, label: t('dashboard') },
+    { href: '/dashboard/messaging', icon: MessageSquareText, label: t('messaging') },
+    { href: '/dashboard/community', icon: Users, label: t('community') },
+    { href: '/dashboard/account', icon: UserCircle, label: t('account') },
+  ]
+
+  const user = session?.user
+  const initial = (user?.name || user?.email || 'U').charAt(0).toUpperCase()
 
   return (
-    <div className='flex min-h-screen flex-col md:flex-row'>
-      {/* Sidebar for desktop */}
-      <aside className='hidden md:flex flex-col fixed top-[20%] left-0 w-24 bg-white dark:bg-gray-800 border-r border-gray-200 dark:border-gray-700 shadow-lg z-10 rounded-r-lg'>
-        <nav className='flex flex-col justify-center items-center h-full py-3 space-y-4'>
-          <NavItem
-            href='/dashboard'
-            icon={<Home className='h-6 w-6 stroke-[1.5]' />}
-            label={t('dashboard')}
-            isActive={pathname === '/dashboard'}
-          />
-          <NavItem
-            href='/dashboard/messaging'
-            icon={<MessageSquareText className='h-6 w-6 stroke-[1.5]' />}
-            label={t('messaging')}
-            isActive={pathname === '/dashboard/messaging'}
-          />
-          <NavItem
-            href='/dashboard/community'
-            icon={<Users className='h-6 w-6 stroke-[1.5]' />}
-            label={t('community')}
-            isActive={pathname === '/dashboard/community'}
-          />
-          <NavItem
-            href='/dashboard/account'
-            icon={<UserCircle className='h-6 w-6 stroke-[1.5]' />}
-            label={t('account')}
-            isActive={pathname === '/dashboard/account'}
-          />
-        </nav>
-      </aside>
+    <SidebarProvider>
+      <Sidebar
+        collapsible="icon"
+        className="!top-14 !h-[calc(100svh-3.5rem)]"
+      >
+        <SidebarHeader>
+          <Link
+            href="/dashboard"
+            className="flex items-center gap-2 px-2 py-1.5"
+          >
+            <Image
+              src="/images/logo.png"
+              alt="Wablast SMS"
+              width={28}
+              height={28}
+              className="h-7 w-7 shrink-0 rounded-md bg-white"
+            />
+            <span className="font-bold leading-none group-data-[collapsible=icon]:hidden">
+              Wablast<span className="text-primary"> SMS</span>
+            </span>
+          </Link>
+        </SidebarHeader>
 
-      {/* Main content with left padding to account for fixed sidebar */}
-      <main className='flex-1 min-w-0 overflow-auto md:ml-24'>
-        <div className='space-y-2 p-4'>
+        <SidebarContent>
+          <SidebarGroup>
+            <SidebarGroupLabel>{t('menu')}</SidebarGroupLabel>
+            <SidebarGroupContent>
+              <SidebarMenu>
+                {items.map((item) => {
+                  const isActive =
+                    item.href === '/dashboard'
+                      ? pathname === '/dashboard'
+                      : pathname.startsWith(item.href)
+                  const Icon = item.icon
+                  return (
+                    <SidebarMenuItem key={item.href}>
+                      <SidebarMenuButton
+                        asChild
+                        isActive={isActive}
+                        tooltip={item.label}
+                      >
+                        <Link href={item.href} prefetch>
+                          <Icon className="stroke-[1.5]" />
+                          <span>{item.label}</span>
+                        </Link>
+                      </SidebarMenuButton>
+                    </SidebarMenuItem>
+                  )
+                })}
+              </SidebarMenu>
+            </SidebarGroupContent>
+          </SidebarGroup>
+        </SidebarContent>
+
+        <SidebarFooter>
+          <SidebarMenu>
+            <SidebarMenuItem>
+              <SidebarMenuButton asChild size="lg" tooltip={user?.name || t('account')}>
+                <Link href="/dashboard/account">
+                  <Avatar className="h-7 w-7 shrink-0">
+                    <AvatarImage src={(user as any)?.avatar} alt={user?.name || ''} />
+                    <AvatarFallback className="bg-sidebar-accent text-sidebar-accent-foreground text-xs">
+                      {initial}
+                    </AvatarFallback>
+                  </Avatar>
+                  <div className="flex min-w-0 flex-col group-data-[collapsible=icon]:hidden">
+                    <span className="truncate text-sm font-medium leading-tight">
+                      {user?.name || t('account')}
+                    </span>
+                    {user?.email && (
+                      <span className="truncate text-xs text-sidebar-foreground/60 leading-tight">
+                        {user.email}
+                      </span>
+                    )}
+                  </div>
+                </Link>
+              </SidebarMenuButton>
+            </SidebarMenuItem>
+          </SidebarMenu>
+        </SidebarFooter>
+        <SidebarRail />
+      </Sidebar>
+
+      <SidebarInset>
+        <div className="flex items-center gap-2 px-4 pt-3">
+          <SidebarTrigger className="-ml-1" />
+        </div>
+        <div className="space-y-2 p-4 pt-2">
           <UpdateAppNotificationBar />
           <VerifyEmailAlert />
           <PastDueBillingAlert />
           <AccountDeletionAlert />
           <UpgradeToProAlert />
-          {/* <BlackFridayModal /> */}
         </div>
         {children}
-      </main>
-
-      {/* Bottom navigation for mobile */}
-      <nav className='md:hidden fixed bottom-0 left-0 right-0 bg-white dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700 shadow-lg z-10'>
-        <div className='flex items-center justify-around h-16'>
-          <MobileNavItem
-            href='/dashboard'
-            icon={<Home className='h-5 w-5 stroke-[1.5]' />}
-            label={t('dashboard')}
-            isActive={pathname === '/dashboard'}
-          />
-          <MobileNavItem
-            href='/dashboard/messaging'
-            icon={<MessageSquareText className='h-5 w-5 stroke-[1.5]' />}
-            label={t('messaging')}
-            isActive={pathname === '/dashboard/messaging'}
-          />
-          <MobileNavItem
-            href='/dashboard/community'
-            icon={<Users className='h-5 w-5 stroke-[1.5]' />}
-            label={t('community')}
-            isActive={pathname === '/dashboard/community'}
-          />
-          <MobileNavItem
-            href='/dashboard/account'
-            icon={<UserCircle className='h-5 w-5 stroke-[1.5]' />}
-            label={t('account')}
-            isActive={pathname === '/dashboard/account'}
-          />
-        </div>
-      </nav>
-
-      {/* Bottom padding for mobile to account for the fixed navigation */}
-      <div className='h-16 md:hidden'></div>
-
-      <SurveyModal />
-      <UpdateAppModal />
-    </div>
-  )
-}
-
-// Desktop navigation item
-function NavItem({
-  href,
-  icon,
-  label,
-  isActive,
-}: {
-  href: string
-  icon: React.ReactNode
-  label: string
-  isActive: boolean
-}) {
-  return (
-    <Link
-      href={href}
-      prefetch={true}
-      className={`flex flex-col items-center p-2 rounded-md transition-colors w-20 ${isActive
-        ? 'border border-brand-500 dark:border-brand-400 bg-brand-100/20 dark:bg-brand-900/10 text-brand-600 dark:text-brand-400'
-        : 'text-gray-700 dark:text-gray-200 hover:bg-brand-100/20 dark:hover:bg-brand-900/10 hover:text-brand-600 dark:hover:text-brand-400'
-        }`}
-    >
-      <span
-        className={
-          isActive
-            ? 'text-brand-600 dark:text-brand-400 mb-1'
-            : 'text-gray-600 dark:text-gray-300 mb-1'
-        }
-      >
-        {icon}
-      </span>
-      <span className='font-medium text-xs'>{label}</span>
-    </Link>
-  )
-}
-
-// Mobile navigation item
-function MobileNavItem({
-  href,
-  icon,
-  label,
-  isActive,
-}: {
-  href: string
-  icon: React.ReactNode
-  label: string
-  isActive: boolean
-}) {
-  return (
-    <Link
-      href={href}
-      prefetch={true}
-      className={`flex flex-col items-center justify-center p-2 rounded-md w-[23%] ${isActive
-        ? 'border border-brand-500 dark:border-brand-400 bg-brand-100/20 dark:bg-brand-900/10 text-brand-600 dark:text-brand-400'
-        : 'text-gray-700 dark:text-gray-300 hover:text-brand-600 dark:hover:text-brand-400'
-        }`}
-    >
-      <span
-        className={
-          isActive
-            ? 'text-brand-600 dark:text-brand-400'
-            : 'text-gray-600 dark:text-gray-300'
-        }
-      >
-        {icon}
-      </span>
-      <span className='text-xs mt-1'>{label}</span>
-    </Link>
+        <SurveyModal />
+        <UpdateAppModal />
+      </SidebarInset>
+    </SidebarProvider>
   )
 }

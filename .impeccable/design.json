@@ -1,0 +1,138 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-06-28T00:00:00Z",
+  "title": "Design System: Wablast SMS",
+  "extensions": {
+    "colorMeta": {
+      "primary": {
+        "role": "primary",
+        "displayName": "Teal Wablast Profundo",
+        "canonical": "hsl(165 100% 19%)",
+        "tonalRamp": ["#02211A", "#053528", "#064A37", "#005A42", "#006B4F", "#0E9268", "#1FAE7E", "#4FC79D"]
+      },
+      "primary-dark": {
+        "role": "primary",
+        "displayName": "Teal Sinal (dark)",
+        "canonical": "hsl(162 72% 42%)",
+        "tonalRamp": ["#053528", "#064A37", "#006B4F", "#0E9268", "#1FAE7E", "#4FC79D", "#8ADCBF", "#C3EDDF"]
+      },
+      "foreground": {
+        "role": "neutral",
+        "displayName": "Quase-preto Navy",
+        "canonical": "hsl(224 71.4% 4.1%)",
+        "tonalRamp": ["#0A0E1A", "#1F2433", "#374151", "#6B7280", "#9CA3AF", "#D1D5DB", "#E5E7EB", "#F3F4F6"]
+      },
+      "sidebar-accent": {
+        "role": "neutral",
+        "displayName": "Teal Suave",
+        "canonical": "hsl(165 44% 93%)",
+        "tonalRamp": ["#00422F", "#006B4F", "#0E9268", "#1FAE7E", "#4FC79D", "#8ADCBF", "#C3EDDF", "#DDF5EC"]
+      }
+    },
+    "typographyMeta": {
+      "display": { "displayName": "Display", "purpose": "Título de página." },
+      "title": { "displayName": "Title", "purpose": "Título de card/seção." },
+      "body": { "displayName": "Body", "purpose": "Texto padrão da UI." },
+      "label": { "displayName": "Label", "purpose": "Labels, metadados, navegação, badges." },
+      "mono": { "displayName": "Mono", "purpose": "Chaves, IDs, secrets, payloads." }
+    },
+    "shadows": [
+      { "name": "shadow-sm", "value": "0 1px 2px 0 rgb(0 0 0 / 0.05)", "purpose": "Cards e botões em repouso." },
+      { "name": "shadow", "value": "0 1px 3px 0 rgb(0 0 0 / 0.1)", "purpose": "Botão primário, elevação leve." },
+      { "name": "shadow-lg", "value": "0 10px 15px -3px rgb(0 0 0 / 0.1)", "purpose": "Sidebar fixa, dialogs, sheets." }
+    ],
+    "motion": [
+      { "name": "transition-colors", "value": "color/background 150ms ease", "purpose": "Estados de botão/link/menu." },
+      { "name": "sidebar-collapse", "value": "width 200ms linear", "purpose": "Colapso da sidebar para rail de ícones." }
+    ],
+    "breakpoints": [
+      { "name": "md", "value": "768px" }
+    ]
+  },
+  "components": [
+    {
+      "name": "Primary Button",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "Ação primária. Teal, texto branco em ambos os temas.",
+      "html": "<button class=\"ds-btn-primary\">Create Webhook</button>",
+      "css": ".ds-btn-primary{display:inline-flex;align-items:center;justify-content:center;gap:.5rem;height:2.25rem;padding:0 1rem;font:500 .875rem Inter,system-ui,sans-serif;color:#fff;background:hsl(165 100% 19%);border:none;border-radius:.375rem;box-shadow:0 1px 3px 0 rgb(0 0 0/.1);cursor:pointer;transition:background .15s}.ds-btn-primary:hover{background:hsl(165 100% 17%)}.ds-btn-primary:focus-visible{outline:none;box-shadow:0 0 0 1px hsl(165 100% 19%)}"
+    },
+    {
+      "name": "Outline Button",
+      "kind": "button",
+      "refersTo": "button-outline",
+      "description": "Ação secundária.",
+      "html": "<button class=\"ds-btn-outline\">Notification Deliveries</button>",
+      "css": ".ds-btn-outline{display:inline-flex;align-items:center;gap:.5rem;height:2.25rem;padding:0 1rem;font:500 .875rem Inter,system-ui,sans-serif;color:#0A0E1A;background:#fff;border:1px solid #E5E7EB;border-radius:.375rem;box-shadow:0 1px 2px 0 rgb(0 0 0/.05);cursor:pointer;transition:background .15s}.ds-btn-outline:hover{background:#F3F4F6}"
+    },
+    {
+      "name": "Status Badge",
+      "kind": "chip",
+      "refersTo": "badge-active",
+      "description": "Estado ativo/positivo de objeto operacional.",
+      "html": "<span class=\"ds-badge\">ACTIVE</span>",
+      "css": ".ds-badge{display:inline-flex;align-items:center;padding:.125rem .5rem;font:600 .6875rem Inter,system-ui,sans-serif;letter-spacing:.02em;color:#006B4F;background:#C3EDDF;border-radius:.25rem}"
+    },
+    {
+      "name": "Sidebar Menu Button (active)",
+      "kind": "nav",
+      "refersTo": "sidebar-menu-button-active",
+      "description": "Item de navegação selecionado na sidebar shadcn.",
+      "html": "<a class=\"ds-nav-item ds-active\"><svg width=\"16\" height=\"16\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.5\"><path d=\"M3 9.5 12 3l9 6.5V20a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1Z\"/></svg><span>Dashboard</span></a>",
+      "css": ".ds-nav-item{display:flex;align-items:center;gap:.5rem;height:2rem;padding:0 .5rem;font:400 .875rem Inter,system-ui,sans-serif;color:hsl(224 20% 22%);border-radius:.375rem;text-decoration:none;transition:background .15s}.ds-nav-item:hover{background:hsl(165 44% 93%);color:hsl(165 100% 15%)}.ds-nav-item.ds-active{background:hsl(165 44% 93%);color:hsl(165 100% 15%);font-weight:500}"
+    },
+    {
+      "name": "Card",
+      "kind": "card",
+      "refersTo": "card",
+      "description": "Container de conteúdo plano com borda 1px.",
+      "html": "<div class=\"ds-card\"><h3>Total SMS Sent</h3><p>8</p></div>",
+      "css": ".ds-card{background:#fff;color:#0A0E1A;border:1px solid #E5E7EB;border-radius:.5rem;box-shadow:0 1px 2px 0 rgb(0 0 0/.05);padding:1rem}.ds-card h3{font:600 .875rem Inter,system-ui,sans-serif;margin:0 0 .5rem;color:#6B7280}.ds-card p{font:700 1.875rem Inter,system-ui,sans-serif;margin:0}"
+    },
+    {
+      "name": "Mono Token Field",
+      "kind": "input",
+      "refersTo": "card",
+      "description": "Exibição de chave/ID/secret em mono com botão copiar.",
+      "html": "<code class=\"ds-token\">89fa5c1d-1dce-41c</code>",
+      "css": ".ds-token{display:inline-block;padding:.125rem .375rem;font:.8125rem ui-monospace,SFMono-Regular,Menlo,monospace;color:#0A0E1A;background:#F3F4F6;border-radius:.25rem}"
+    }
+  ],
+  "narrative": {
+    "northStar": "The Quiet Console",
+    "overview": "Wablast SMS é uma sala de controle, não um panfleto. O usuário entra para uma tarefa operacional e a interface tem que sumir dentro dela. Construído sobre tokens shadcn/ui (HSL, claro e escuro) com um único acento de marca teal; tudo o mais é neutro. Densidade alta onde precisa, calma onde não precisa. Bilíngue PT-BR/EN de primeira classe via next-intl.",
+    "keyCharacteristics": [
+      "Console calmo: neutro por padrão, teal só para ação/seleção/estado.",
+      "Densidade controlada: tabelas e painéis densos, respiro nos títulos.",
+      "Estado sempre visível: vocabulário semântico padronizado.",
+      "Bilíngue PT-BR/EN sem string órfã.",
+      "Tema claro e escuro, ambos com teal legível."
+    ],
+    "rules": [
+      { "name": "The One Teal Rule", "body": "Teal é o único acento: ação primária, seleção/estado ativo e foco. Nunca enfeite. Acima de ~15% da área, recue para neutro.", "section": "colors" },
+      { "name": "The No-Amber Rule", "body": "Nenhum âmbar/laranja. A rampa brand.* é teal. Qualquer #D97706/#B45309 é bug do rebrand.", "section": "colors" },
+      { "name": "The Mono-for-Machines Rule", "body": "Mono só para valores gerados por máquina (chaves, IDs, secrets, payloads). Nunca em label ou prosa.", "section": "typography" },
+      { "name": "The Flat-By-Default Rule", "body": "Superfícies planas em repouso. Sombra forte só em elementos flutuantes (sidebar, popover, modal).", "section": "elevation" }
+    ],
+    "dos": [
+      "Do usar teal só para ação primária, seleção/estado ativo e foco.",
+      "Do dar texto branco a botões primários e destrutivos em ambos os temas.",
+      "Do usar a rampa brand.* teal para badges e realces de estado.",
+      "Do usar a família de tokens --sidebar-* para chrome de navegação.",
+      "Do dar badge de status a todo objeto operacional, mesmo vocabulário em todas as telas.",
+      "Do usar mono só para chaves, IDs, secrets e payloads.",
+      "Do manter paridade PT-BR/EN."
+    ],
+    "donts": [
+      "Don't usar verde neon / WhatsApp saturado como marca.",
+      "Don't deixar âmbar/laranja sobrar do rebrand.",
+      "Don't reintroduzir a sidebar flutuante destacada nem a bottom-nav mobile.",
+      "Don't usar o template hero-metric de SaaS dentro do painel.",
+      "Don't usar border-left/right > 1px como stripe de acento.",
+      "Don't usar texto em gradiente nem glassmorphism decorativo.",
+      "Don't aninhar card dentro de card.",
+      "Don't usar em dash em copy de produto."
+    ]
+  }
+}

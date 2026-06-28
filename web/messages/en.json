@@ -31,7 +31,8 @@
     "messaging": "Messaging",
     "community": "Community",
     "account": "Account",
-    "webhooks": "Webhooks"
+    "webhooks": "Webhooks",
+    "menu": "Menu"
   },
   "footer": {
     "rights": "All rights reserved",
