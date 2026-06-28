@@ -67,7 +67,7 @@ export default function DashboardLayout({
               alt="Wablast SMS"
               width={28}
               height={28}
-              className="h-7 w-7 shrink-0 rounded-md bg-white"
+              className="h-7 w-7 shrink-0 dark:invert"
             />
             <span className="font-bold leading-none group-data-[collapsible=icon]:hidden">
               Wablast<span className="text-primary"> SMS</span>
