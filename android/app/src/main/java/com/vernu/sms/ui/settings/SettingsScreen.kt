@@ -226,80 +226,6 @@ fun SettingsScreen(
                 }
             )
 
-            SettingsSectionHeader("Comunidade")
-
-            SettingsRow(
-                icon = Icons.Default.SupportAgent,
-                title = "Suporte",
-                onClick = {
-                    context.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("https://app.textbee.dev/dashboard/account/get-support")))
-                },
-                trailing = {
-                    Icon(Icons.Default.OpenInBrowser, contentDescription = null,
-                        tint = MaterialTheme.colorScheme.onSurfaceVariant, modifier = Modifier.size(18.dp))
-                }
-            )
-
-            SettingsRow(
-                icon = Icons.Default.Share,
-                title = "Compartilhar Wablast SMS",
-                subtitle = "Ajude a divulgar",
-                onClick = {
-                    val shareText = "venho usando o Wablast SMS para enviar SMS via API do meu próprio celular, " +
-                        "sem Twilio ou serviços pagos. ótimo para automações, alertas, " +
-                        "notificações, ou qualquer coisa que precise de SMS programático. open source e grátis para começar\n\n" +
-                        "https://textbee.dev"
-                    context.startActivity(
-                        Intent.createChooser(
-                            Intent(Intent.ACTION_SEND).apply {
-                                type = "text/plain"
-                                putExtra(Intent.EXTRA_TEXT, shareText)
-                            },
-                            "Compartilhar Wablast SMS"
-                        )
-                    )
-                }
-            )
-
-            SettingsSectionHeader("Jurídico")
-
-            SettingsRow(
-                icon = Icons.Default.Gavel,
-                title = "Termos de serviço",
-                onClick = {
-                    context.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("https://textbee.dev/terms-of-service")))
-                },
-                trailing = {
-                    Icon(Icons.Default.OpenInBrowser, contentDescription = null,
-                        tint = MaterialTheme.colorScheme.onSurfaceVariant, modifier = Modifier.size(18.dp))
-                }
-            )
-
-            SettingsRow(
-                icon = Icons.Default.Policy,
-                title = "Política de privacidade",
-                onClick = {
-                    context.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("https://textbee.dev/privacy-policy")))
-                },
-                trailing = {
-                    Icon(Icons.Default.OpenInBrowser, contentDescription = null,
-                        tint = MaterialTheme.colorScheme.onSurfaceVariant, modifier = Modifier.size(18.dp))
-                }
-            )
-
-            SettingsSectionHeader("UI")
-
-            SettingsRow(
-                icon = Icons.Default.SwapHoriz,
-                title = "Mudar para interface antiga",
-                subtitle = "Usar a interface original",
-                onClick = { showLegacyDialog = true },
-                trailing = {
-                    Icon(Icons.Default.ChevronRight, contentDescription = null,
-                        tint = MaterialTheme.colorScheme.onSurfaceVariant)
-                }
-            )
-
             Spacer(modifier = Modifier.height(32.dp))
         }
     }
@@ -395,17 +321,10 @@ fun SettingsScreen(
                     Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                         OutlinedButton(
                             onClick = {
-                                context.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("https://textbee.dev")))
+                                context.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("https://sms.wablastmessage.com")))
                             }
                         ) {
-                            Text("Wablast SMS")
-                        }
-                        OutlinedButton(
-                            onClick = {
-                                context.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("https://github.com/vernu/textbee")))
-                            }
-                        ) {
-                            Text("GitHub")
+                            Text("Visitar site")
                         }
                     }
                 }
