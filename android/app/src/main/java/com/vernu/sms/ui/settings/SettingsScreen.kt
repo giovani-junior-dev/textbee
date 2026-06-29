@@ -212,20 +212,6 @@ fun SettingsScreen(
                 }
             )
 
-            SettingsRow(
-                icon = Icons.Default.SystemUpdate,
-                title = "Verificar atualizações",
-                onClick = {
-                    val versionInfo = "${BuildConfig.VERSION_NAME}(${BuildConfig.VERSION_CODE})"
-                    val url = "https://textbee.dev/download?currentVersion=${Uri.encode(versionInfo)}"
-                    context.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(url)))
-                },
-                trailing = {
-                    Icon(Icons.Default.OpenInBrowser, contentDescription = null,
-                        tint = MaterialTheme.colorScheme.onSurfaceVariant, modifier = Modifier.size(18.dp))
-                }
-            )
-
             Spacer(modifier = Modifier.height(32.dp))
         }
     }

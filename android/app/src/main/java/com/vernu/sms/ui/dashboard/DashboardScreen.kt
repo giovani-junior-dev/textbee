@@ -166,7 +166,6 @@ fun DashboardScreen(
                 isLoading = state.isSubscriptionLoading,
                 unavailable = state.subscriptionUnavailable
             )
-            QuickActionsSection()
             Spacer(modifier = Modifier.height(8.dp))
         }
     }
@@ -571,47 +570,6 @@ private fun UsageRow(label: String, used: Int?, limit: Int?, pct: Int?) {
 }
 
 @Composable
-private fun QuickActionsSection() {
-    val context = LocalContext.current
-
-    Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
-        Text(
-            text = "Ações rápidas",
-            style = MaterialTheme.typography.titleMedium,
-            fontWeight = FontWeight.SemiBold
-        )
-        Row(
-            modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.spacedBy(12.dp)
-        ) {
-            OutlinedButton(
-                onClick = {
-                    context.startActivity(
-                        Intent(Intent.ACTION_VIEW, Uri.parse("https://app.textbee.dev/dashboard"))
-                    )
-                },
-                modifier = Modifier.weight(1f)
-            ) {
-                Icon(Icons.Default.OpenInBrowser, contentDescription = null, modifier = Modifier.size(16.dp))
-                Spacer(modifier = Modifier.width(6.dp))
-                Text("Painel")
-            }
-            OutlinedButton(
-                onClick = {
-                    context.startActivity(
-                        Intent(Intent.ACTION_VIEW, Uri.parse("https://textbee.dev/docs"))
-                    )
-                },
-                modifier = Modifier.weight(1f)
-            ) {
-                Icon(Icons.Default.MenuBook, contentDescription = null, modifier = Modifier.size(16.dp))
-                Spacer(modifier = Modifier.width(6.dp))
-                Text("Ver documentação")
-            }
-        }
-    }
-}
-
 private fun formatDate(isoDate: String): String? {
     return try {
         val sdf = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.getDefault())
