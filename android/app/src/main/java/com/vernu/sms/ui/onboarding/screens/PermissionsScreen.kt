@@ -156,7 +156,7 @@ fun PermissionsScreen(
             TextButton(
                 onClick = {
                     context.startActivity(
-                        Intent(Intent.ACTION_VIEW, Uri.parse("https://textbee.dev/privacy-policy"))
+                        Intent(Intent.ACTION_VIEW, Uri.parse("https://sms.wablastmessage.com/privacy-policy"))
                     )
                 },
                 contentPadding = PaddingValues(0.dp)

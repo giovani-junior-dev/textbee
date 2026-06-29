@@ -201,7 +201,7 @@ fun SetupCompleteScreen(
         OutlinedButton(
             onClick = {
                 context.startActivity(
-                    Intent(Intent.ACTION_VIEW, Uri.parse("https://app.textbee.dev/dashboard"))
+                    Intent(Intent.ACTION_VIEW, Uri.parse("https://sms.wablastmessage.com/dashboard"))
                 )
             },
             modifier = Modifier
@@ -216,7 +216,7 @@ fun SetupCompleteScreen(
         TextButton(
             onClick = {
                 context.startActivity(
-                    Intent(Intent.ACTION_VIEW, Uri.parse("https://textbee.dev/docs"))
+                    Intent(Intent.ACTION_VIEW, Uri.parse("https://sms.wablastmessage.com/docs"))
                 )
             }
         ) {

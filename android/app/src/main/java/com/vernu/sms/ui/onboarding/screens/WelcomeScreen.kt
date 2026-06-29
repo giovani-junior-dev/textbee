@@ -121,7 +121,7 @@ fun WelcomeScreen(
         TextButton(
             onClick = {
                 context.startActivity(
-                    Intent(Intent.ACTION_VIEW, Uri.parse("https://app.textbee.dev/register"))
+                    Intent(Intent.ACTION_VIEW, Uri.parse("https://sms.wablastmessage.com/register"))
                 )
             }
         ) {
@@ -136,7 +136,7 @@ fun WelcomeScreen(
         TextButton(
             onClick = {
                 context.startActivity(
-                    Intent(Intent.ACTION_VIEW, Uri.parse("https://textbee.dev"))
+                    Intent(Intent.ACTION_VIEW, Uri.parse("https://sms.wablastmessage.com"))
                 )
             }
         ) {

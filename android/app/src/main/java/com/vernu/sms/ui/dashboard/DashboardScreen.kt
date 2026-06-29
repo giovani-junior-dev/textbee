@@ -473,7 +473,7 @@ private fun SubscriptionCard(
                             OutlinedButton(
                                 onClick = {
                                     context.startActivity(
-                                        Intent(Intent.ACTION_VIEW, Uri.parse("https://textbee.dev/pricing"))
+                                        Intent(Intent.ACTION_VIEW, Uri.parse("https://sms.wablastmessage.com/pricing"))
                                     )
                                 }
                             ) {
@@ -483,7 +483,7 @@ private fun SubscriptionCard(
                             TextButton(
                                 onClick = {
                                     context.startActivity(
-                                        Intent(Intent.ACTION_VIEW, Uri.parse("https://app.textbee.dev/dashboard/account"))
+                                        Intent(Intent.ACTION_VIEW, Uri.parse("https://sms.wablastmessage.com/dashboard/account"))
                                     )
                                 }
                             ) {

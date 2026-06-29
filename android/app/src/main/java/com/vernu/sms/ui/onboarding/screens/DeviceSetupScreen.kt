@@ -76,7 +76,7 @@ fun DeviceSetupScreen(
                         onValueChange = { viewModel.setDeviceId(it) },
                         label = { Text("ID do aparelho") },
                         placeholder = { Text("Insira o ID do aparelho") },
-                        supportingText = { Text("Find it at textbee.dev/dashboard → Devices") },
+                        supportingText = { Text("Encontre em sms.wablastmessage.com/dashboard → Aparelhos") },
                         modifier = Modifier.fillMaxWidth(),
                         singleLine = true
                     )

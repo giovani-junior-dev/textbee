@@ -75,7 +75,7 @@ fun CredentialsScreen(
             TextButton(
                 onClick = {
                     context.startActivity(
-                        Intent(Intent.ACTION_VIEW, Uri.parse("https://app.textbee.dev/register"))
+                        Intent(Intent.ACTION_VIEW, Uri.parse("https://sms.wablastmessage.com/register"))
                     )
                 },
                 contentPadding = PaddingValues(0.dp)
@@ -160,7 +160,7 @@ private fun QrTab(
                 TextButton(
                     onClick = {
                         context.startActivity(
-                            Intent(Intent.ACTION_VIEW, Uri.parse("https://app.textbee.dev/dashboard"))
+                            Intent(Intent.ACTION_VIEW, Uri.parse("https://sms.wablastmessage.com/dashboard"))
                         )
                     },
                     contentPadding = PaddingValues(horizontal = 8.dp, vertical = 0.dp)
@@ -272,13 +272,13 @@ private fun ManualTab(
     TextButton(
         onClick = {
             context.startActivity(
-                Intent(Intent.ACTION_VIEW, Uri.parse("https://app.textbee.dev/dashboard"))
+                Intent(Intent.ACTION_VIEW, Uri.parse("https://sms.wablastmessage.com/dashboard"))
             )
         },
         contentPadding = PaddingValues(0.dp)
     ) {
         Text(
-            text = "Get your API key at app.textbee.dev/dashboard",
+            text = "Obtenha sua chave de API em sms.wablastmessage.com/dashboard",
             style = MaterialTheme.typography.bodySmall
         )
     }
