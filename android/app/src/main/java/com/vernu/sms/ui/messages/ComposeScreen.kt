@@ -29,7 +29,7 @@ fun ComposeScreen(
 
     LaunchedEffect(state.sendSuccess) {
         if (state.sendSuccess) {
-            snackbarHostState.showSnackbar("Message sent successfully!")
+            snackbarHostState.showSnackbar("Mensagem enviada com sucesso!")
             viewModel.clearSuccess()
         }
     }
@@ -45,11 +45,11 @@ fun ComposeScreen(
         topBar = {
             TopAppBar(
                 title = {
-                    Text("New Message", fontWeight = FontWeight.SemiBold)
+                    Text("Nova mensagem", fontWeight = FontWeight.SemiBold)
                 },
                 navigationIcon = {
                     IconButton(onClick = onNavigateBack) {
-                        Icon(Icons.Default.ArrowBack, contentDescription = "Back")
+                        Icon(Icons.Default.ArrowBack, contentDescription = "Voltar")
                     }
                 },
                 colors = TopAppBarDefaults.topAppBarColors(
@@ -68,7 +68,7 @@ fun ComposeScreen(
             verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
             Text(
-                text = "Recipients",
+                text = "Destinatários",
                 style = MaterialTheme.typography.titleSmall,
                 fontWeight = FontWeight.SemiBold
             )
@@ -82,7 +82,7 @@ fun ComposeScreen(
                     value = recipientInput,
                     onValueChange = { recipientInput = it },
                     modifier = Modifier.weight(1f),
-                    label = { Text("Phone number") },
+                    label = { Text("Número de telefone") },
                     keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Phone),
                     singleLine = true
                 )
@@ -96,7 +96,7 @@ fun ComposeScreen(
                     },
                     enabled = recipientInput.trim().isNotEmpty()
                 ) {
-                    Text("Add")
+                    Text("Adicionar")
                 }
             }
 
@@ -117,7 +117,7 @@ fun ComposeScreen(
                                 ) {
                                     Icon(
                                         Icons.Default.Close,
-                                        contentDescription = "Remove",
+                                        contentDescription = "Remover",
                                         modifier = Modifier.size(14.dp)
                                     )
                                 }
@@ -130,7 +130,7 @@ fun ComposeScreen(
             Divider()
 
             Text(
-                text = "Message",
+                text = "Mensagem",
                 style = MaterialTheme.typography.titleSmall,
                 fontWeight = FontWeight.SemiBold
             )
@@ -141,10 +141,10 @@ fun ComposeScreen(
                 modifier = Modifier
                     .fillMaxWidth()
                     .heightIn(min = 120.dp),
-                label = { Text("Type your message") },
+                label = { Text("Digite sua mensagem") },
                 maxLines = 8,
                 supportingText = {
-                    Text("${state.message.length} characters")
+                    Text("${state.message.length} caracteres")
                 }
             )
 
@@ -162,7 +162,7 @@ fun ComposeScreen(
                         strokeWidth = 2.dp
                     )
                     Spacer(modifier = Modifier.width(8.dp))
-                    Text("Sending...")
+                    Text("Enviando...")
                 } else {
                     Icon(
                         Icons.Default.Send,
@@ -170,7 +170,7 @@ fun ComposeScreen(
                         modifier = Modifier.size(18.dp)
                     )
                     Spacer(modifier = Modifier.width(8.dp))
-                    Text("Send Message")
+                    Text("Enviar mensagem")
                 }
             }
         }

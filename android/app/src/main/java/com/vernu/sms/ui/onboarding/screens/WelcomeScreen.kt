@@ -48,7 +48,7 @@ fun WelcomeScreen(
         Spacer(modifier = Modifier.height(32.dp))
 
         Text(
-            text = "textbee",
+            text = "Wablast SMS",
             style = MaterialTheme.typography.headlineLarge,
             fontWeight = FontWeight.Bold,
             color = MaterialTheme.colorScheme.primary
@@ -57,7 +57,7 @@ fun WelcomeScreen(
         Spacer(modifier = Modifier.height(12.dp))
 
         Text(
-            text = "Turn your Android into a\nprogrammatic SMS gateway",
+            text = "Transforme seu Android em um\ngateway de SMS programável",
             style = MaterialTheme.typography.bodyLarge,
             color = MaterialTheme.colorScheme.onSurfaceVariant,
             textAlign = TextAlign.Center
@@ -70,9 +70,9 @@ fun WelcomeScreen(
             verticalArrangement = Arrangement.spacedBy(6.dp)
         ) {
             listOf(
-                "Create a free account at textbee.dev",
-                "Connect this phone as your SMS gateway",
-                "Send SMS via API from any app or automation"
+                "Crie uma conta no painel Wablast SMS",
+                "Conecte este celular como seu gateway de SMS",
+                "Envie SMS via API de qualquer app ou automação"
             ).forEachIndexed { i, step ->
                 Row(
                     verticalAlignment = Alignment.Top,
@@ -102,7 +102,7 @@ fun WelcomeScreen(
                 .fillMaxWidth()
                 .height(52.dp)
         ) {
-            Text("Get Started", style = MaterialTheme.typography.labelLarge)
+            Text("Começar", style = MaterialTheme.typography.labelLarge)
         }
 
         Spacer(modifier = Modifier.height(12.dp))
@@ -113,7 +113,7 @@ fun WelcomeScreen(
                 .fillMaxWidth()
                 .height(52.dp)
         ) {
-            Text("Reconnect a device", style = MaterialTheme.typography.labelLarge)
+            Text("Reconectar um aparelho", style = MaterialTheme.typography.labelLarge)
         }
 
         Spacer(modifier = Modifier.height(16.dp))
@@ -126,7 +126,7 @@ fun WelcomeScreen(
             }
         ) {
             Text(
-                text = "Don't have an account? Sign up free",
+                text = "Não tem conta? Cadastre-se grátis",
                 style = MaterialTheme.typography.bodySmall
             )
         }
@@ -141,7 +141,7 @@ fun WelcomeScreen(
             }
         ) {
             Text(
-                text = "textbee.dev",
+                text = "Wablast SMS",
                 style = MaterialTheme.typography.bodySmall,
                 color = MaterialTheme.colorScheme.onSurfaceVariant
             )

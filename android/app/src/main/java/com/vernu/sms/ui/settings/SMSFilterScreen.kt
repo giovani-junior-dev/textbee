@@ -29,10 +29,10 @@ fun SMSFilterScreen(
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text("SMS Filters", fontWeight = FontWeight.SemiBold) },
+                title = { Text("Filtros de SMS", fontWeight = FontWeight.SemiBold) },
                 navigationIcon = {
                     IconButton(onClick = onNavigateBack) {
-                        Icon(Icons.Default.ArrowBack, contentDescription = "Back")
+                        Icon(Icons.Default.ArrowBack, contentDescription = "Voltar")
                     }
                 },
                 colors = TopAppBarDefaults.topAppBarColors(
@@ -45,7 +45,7 @@ fun SMSFilterScreen(
                 editingIndex = null
                 showDialog = true
             }) {
-                Icon(Icons.Default.Add, contentDescription = "Add rule")
+                Icon(Icons.Default.Add, contentDescription = "Adicionar regra")
             }
         }
     ) { padding ->
@@ -61,9 +61,9 @@ fun SMSFilterScreen(
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Column(modifier = Modifier.weight(1f)) {
-                    Text("Enable SMS Filtering", style = MaterialTheme.typography.bodyLarge)
+                    Text("Ativar filtragem de SMS", style = MaterialTheme.typography.bodyLarge)
                     Text(
-                        "Filter incoming SMS based on rules below",
+                        "Filtre os SMS recebidos com base nas regras abaixo",
                         style = MaterialTheme.typography.bodySmall,
                         color = MaterialTheme.colorScheme.onSurfaceVariant
                     )
@@ -86,19 +86,19 @@ fun SMSFilterScreen(
                     FilterChip(
                         selected = config.mode == SMSFilterHelper.FilterMode.ALLOW_LIST,
                         onClick = { viewModel.setMode(SMSFilterHelper.FilterMode.ALLOW_LIST) },
-                        label = { Text("Allow List") }
+                        label = { Text("Lista de permissão") }
                     )
                     FilterChip(
                         selected = config.mode == SMSFilterHelper.FilterMode.BLOCK_LIST,
                         onClick = { viewModel.setMode(SMSFilterHelper.FilterMode.BLOCK_LIST) },
-                        label = { Text("Block List") }
+                        label = { Text("Lista de bloqueio") }
                     )
                 }
                 Text(
                     text = if (config.mode == SMSFilterHelper.FilterMode.ALLOW_LIST)
-                        "Only SMS matching a rule will be forwarded"
+                        "Só SMS que casam com uma regra serão encaminhados"
                     else
-                        "SMS matching a rule will be blocked",
+                        "SMS que casam com uma regra serão bloqueados",
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                     modifier = Modifier.padding(start = 16.dp, end = 16.dp, bottom = 8.dp)
@@ -124,12 +124,12 @@ fun SMSFilterScreen(
                             tint = MaterialTheme.colorScheme.onSurfaceVariant
                         )
                         Text(
-                            "No filter rules",
+                            "Nenhuma regra de filtro",
                             style = MaterialTheme.typography.bodyMedium,
                             color = MaterialTheme.colorScheme.onSurfaceVariant
                         )
                         Text(
-                            "Tap + to add a rule",
+                            "Toque em + para adicionar uma regra",
                             style = MaterialTheme.typography.bodySmall,
                             color = MaterialTheme.colorScheme.onSurfaceVariant
                         )
@@ -211,7 +211,7 @@ private fun FilterRuleRow(
                 if (rule.caseSensitive) {
                     SuggestionChip(
                         onClick = {},
-                        label = { Text("Case sensitive", style = MaterialTheme.typography.labelSmall) }
+                        label = { Text("Diferenciar maiúsculas", style = MaterialTheme.typography.labelSmall) }
                     )
                 }
             }
@@ -219,7 +219,7 @@ private fun FilterRuleRow(
         IconButton(onClick = onDelete) {
             Icon(
                 Icons.Default.Delete,
-                contentDescription = "Delete rule",
+                contentDescription = "Excluir regra",
                 tint = MaterialTheme.colorScheme.error
             )
         }
@@ -246,13 +246,13 @@ private fun FilterRuleDialog(
 
     AlertDialog(
         onDismissRequest = onDismiss,
-        title = { Text(if (rule == null) "Add Rule" else "Edit Rule") },
+        title = { Text(if (rule == null) "Adicionar regra" else "Editar regra") },
         text = {
             Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
                 OutlinedTextField(
                     value = pattern,
                     onValueChange = { pattern = it },
-                    label = { Text("Pattern") },
+                    label = { Text("Padrão") },
                     singleLine = true,
                     modifier = Modifier.fillMaxWidth()
                 )
@@ -266,7 +266,7 @@ private fun FilterRuleDialog(
                             .replaceFirstChar { it.uppercaseChar() },
                         onValueChange = {},
                         readOnly = true,
-                        label = { Text("Filter Target") },
+                        label = { Text("Alvo do filtro") },
                         trailingIcon = {
                             ExposedDropdownMenuDefaults.TrailingIcon(expanded = filterTargetExpanded)
                         },
@@ -299,7 +299,7 @@ private fun FilterRuleDialog(
                             .replaceFirstChar { it.uppercaseChar() },
                         onValueChange = {},
                         readOnly = true,
-                        label = { Text("Match Type") },
+                        label = { Text("Tipo de correspondência") },
                         trailingIcon = {
                             ExposedDropdownMenuDefaults.TrailingIcon(expanded = matchTypeExpanded)
                         },
@@ -331,7 +331,7 @@ private fun FilterRuleDialog(
                     modifier = Modifier.fillMaxWidth()
                 ) {
                     Text(
-                        "Case sensitive",
+                        "Diferenciar maiúsculas",
                         style = MaterialTheme.typography.bodyMedium,
                         modifier = Modifier.weight(1f)
                     )
@@ -345,10 +345,10 @@ private fun FilterRuleDialog(
                     onConfirm(SMSFilterRule(pattern.trim(), matchType, filterTarget, caseSensitive))
                 },
                 enabled = pattern.isNotBlank()
-            ) { Text("Save") }
+            ) { Text("Salvar") }
         },
         dismissButton = {
-            TextButton(onClick = onDismiss) { Text("Cancel") }
+            TextButton(onClick = onDismiss) { Text("Cancelar") }
         }
     )
 }

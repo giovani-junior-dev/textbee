@@ -2,11 +2,11 @@ package com.vernu.sms.ui.theme
 
 import androidx.compose.ui.graphics.Color
 
-val Orange700 = Color(0xFFC4620A)
-val Orange800 = Color(0xFFA04405)
-val Orange600 = Color(0xFFB45309)
-val Orange900 = Color(0xFF92400E)
-val OrangeLight = Color(0xFFFFF7ED)
+val Orange700 = Color(0xFF006149)
+val Orange800 = Color(0xFF004F3B)
+val Orange600 = Color(0xFF0E9268)
+val Orange900 = Color(0xFF005A42)
+val OrangeLight = Color(0xFFE6F7F1)
 
 val Gray50  = Color(0xFFF9FAFB)
 val Gray100 = Color(0xFFF3F4F6)

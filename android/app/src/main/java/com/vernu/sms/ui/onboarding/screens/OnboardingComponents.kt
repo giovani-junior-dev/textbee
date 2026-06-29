@@ -57,7 +57,7 @@ fun StepIndicator(current: Int, total: Int) {
         }
         Spacer(modifier = Modifier.width(8.dp))
         Text(
-            text = "Step $current of $total",
+            text = "Etapa $current de $total",
             style = MaterialTheme.typography.bodySmall,
             color = MaterialTheme.colorScheme.onSurfaceVariant
         )

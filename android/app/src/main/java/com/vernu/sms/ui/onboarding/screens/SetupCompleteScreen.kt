@@ -77,7 +77,7 @@ fun SetupCompleteScreen(
         Spacer(modifier = Modifier.height(32.dp))
 
         Text(
-            text = "You're all set!",
+            text = "Tudo pronto!",
             style = MaterialTheme.typography.headlineMedium,
             fontWeight = FontWeight.Bold
         )
@@ -85,7 +85,7 @@ fun SetupCompleteScreen(
         Spacer(modifier = Modifier.height(8.dp))
 
         Text(
-            text = state.registeredDeviceName ?: "Your device",
+            text = state.registeredDeviceName ?: "Seu aparelho",
             style = MaterialTheme.typography.titleLarge,
             color = MaterialTheme.colorScheme.primary
         )
@@ -101,7 +101,7 @@ fun SetupCompleteScreen(
             ) {
                 Column(modifier = Modifier.padding(16.dp)) {
                     Text(
-                        text = "Device ID",
+                        text = "ID do aparelho",
                         style = MaterialTheme.typography.labelSmall,
                         color = MaterialTheme.colorScheme.onSurfaceVariant
                     )
@@ -123,14 +123,14 @@ fun SetupCompleteScreen(
                         ) {
                             Icon(
                                 Icons.Default.ContentCopy,
-                                contentDescription = "Copy",
+                                contentDescription = "Copiar",
                                 modifier = Modifier.size(18.dp)
                             )
                         }
                     }
                     Spacer(modifier = Modifier.height(4.dp))
                     Text(
-                        text = "Keep this handy. You will need it for API calls and managing devices in your dashboard.",
+                        text = "Guarde isto. Você vai precisar para chamadas de API e para gerenciar aparelhos no painel.",
                         style = MaterialTheme.typography.bodySmall,
                         color = MaterialTheme.colorScheme.onSurfaceVariant
                     )
@@ -150,13 +150,13 @@ fun SetupCompleteScreen(
             ) {
                 Column(modifier = Modifier.weight(1f).padding(end = 12.dp)) {
                     Text(
-                        text = "Forward received SMS",
+                        text = "Encaminhar SMS recebidos",
                         style = MaterialTheme.typography.titleSmall,
                         fontWeight = FontWeight.SemiBold
                     )
                     Spacer(modifier = Modifier.height(2.dp))
                     Text(
-                        text = "SMS you receive on this phone will appear in your textbee dashboard and be accessible via API",
+                        text = "Os SMS recebidos neste celular aparecem no painel Wablast SMS e ficam acessíveis via API",
                         style = MaterialTheme.typography.bodySmall,
                         color = MaterialTheme.colorScheme.onSurfaceVariant
                     )
@@ -179,7 +179,7 @@ fun SetupCompleteScreen(
         Spacer(modifier = Modifier.height(16.dp))
 
         Text(
-            text = "Your device is registered and ready. Head to your dashboard to send your first SMS or connect via API.",
+            text = "Seu aparelho está registrado e pronto. Vá ao painel para enviar seu primeiro SMS ou conectar via API.",
             style = MaterialTheme.typography.bodyMedium,
             color = MaterialTheme.colorScheme.onSurfaceVariant,
             textAlign = TextAlign.Center
@@ -193,7 +193,7 @@ fun SetupCompleteScreen(
                 .fillMaxWidth()
                 .height(52.dp)
         ) {
-            Text("Open App Dashboard", style = MaterialTheme.typography.labelLarge)
+            Text("Abrir painel no app", style = MaterialTheme.typography.labelLarge)
         }
 
         Spacer(modifier = Modifier.height(12.dp))
@@ -208,7 +208,7 @@ fun SetupCompleteScreen(
                 .fillMaxWidth()
                 .height(52.dp)
         ) {
-            Text("Open Web Dashboard", style = MaterialTheme.typography.labelLarge)
+            Text("Abrir painel na web", style = MaterialTheme.typography.labelLarge)
         }
 
         Spacer(modifier = Modifier.height(8.dp))
@@ -221,7 +221,7 @@ fun SetupCompleteScreen(
             }
         ) {
             Text(
-                text = "New to textbee? Read the quickstart guide",
+                text = "Novo no Wablast SMS? Leia o guia rápido",
                 style = MaterialTheme.typography.bodySmall
             )
         }

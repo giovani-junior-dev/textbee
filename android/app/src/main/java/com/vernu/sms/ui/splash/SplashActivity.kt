@@ -70,14 +70,14 @@ private fun SplashContent() {
             )
             Spacer(modifier = Modifier.height(16.dp))
             Text(
-                text = "textbee",
+                text = "Wablast SMS",
                 style = MaterialTheme.typography.headlineLarge,
                 color = Color.White,
                 fontWeight = FontWeight.Bold
             )
             Spacer(modifier = Modifier.height(4.dp))
             Text(
-                text = "SMS Gateway",
+                text = "Gateway de SMS",
                 style = MaterialTheme.typography.bodyLarge,
                 color = Color.White.copy(alpha = 0.8f)
             )

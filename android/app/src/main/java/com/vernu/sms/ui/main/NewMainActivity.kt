@@ -34,9 +34,9 @@ import com.vernu.sms.ui.settings.SettingsScreen
 import com.vernu.sms.ui.theme.TextBeeTheme
 
 enum class MainDestination(val label: String, val icon: ImageVector) {
-    DASHBOARD("Dashboard", Icons.Default.Dashboard),
-    MESSAGES("Messages", Icons.Default.Message),
-    SETTINGS("Settings", Icons.Default.Settings)
+    DASHBOARD("Painel", Icons.Default.Dashboard),
+    MESSAGES("Mensagens", Icons.Default.Message),
+    SETTINGS("Configurações", Icons.Default.Settings)
 }
 
 class NewMainActivity : ComponentActivity() {

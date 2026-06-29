@@ -45,12 +45,12 @@ fun MessagesScreen(
                             tint = MaterialTheme.colorScheme.primary
                         )
                         Spacer(modifier = Modifier.width(8.dp))
-                        Text("Messages", fontWeight = FontWeight.SemiBold)
+                        Text("Mensagens", fontWeight = FontWeight.SemiBold)
                     }
                 },
                 actions = {
                     IconButton(onClick = { viewModel.refresh() }) {
-                        Icon(Icons.Default.Refresh, contentDescription = "Refresh")
+                        Icon(Icons.Default.Refresh, contentDescription = "Atualizar")
                     }
                 },
                 colors = TopAppBarDefaults.topAppBarColors(
@@ -65,7 +65,7 @@ fun MessagesScreen(
             ) {
                 Icon(
                     Icons.Default.Create,
-                    contentDescription = "Compose",
+                    contentDescription = "Escrever",
                     tint = MaterialTheme.colorScheme.onPrimary
                 )
             }
@@ -82,7 +82,7 @@ fun MessagesScreen(
                     .padding(horizontal = 16.dp, vertical = 8.dp),
                 horizontalArrangement = Arrangement.spacedBy(8.dp)
             ) {
-                listOf("all" to "All", "sent" to "Sent", "received" to "Received").forEach { (value, label) ->
+                listOf("all" to "Todas", "sent" to "Enviado", "received" to "Recebido").forEach { (value, label) ->
                     FilterChip(
                         selected = state.filter == value,
                         onClick = { viewModel.setFilter(value) },
@@ -107,12 +107,12 @@ fun MessagesScreen(
                     ) {
                         Column(horizontalAlignment = Alignment.CenterHorizontally) {
                             Text(
-                                text = state.error ?: "Error",
+                                text = state.error ?: "Erro",
                                 color = MaterialTheme.colorScheme.error
                             )
                             Spacer(modifier = Modifier.height(8.dp))
                             Button(onClick = { viewModel.refresh() }) {
-                                Text("Retry")
+                                Text("Tentar de novo")
                             }
                         }
                     }
@@ -131,7 +131,7 @@ fun MessagesScreen(
                             )
                             Spacer(modifier = Modifier.height(8.dp))
                             Text(
-                                text = "No messages yet",
+                                text = "Nenhuma mensagem ainda",
                                 color = MaterialTheme.colorScheme.onSurfaceVariant
                             )
                         }
@@ -162,7 +162,7 @@ fun MessagesScreen(
                                         CircularProgressIndicator(modifier = Modifier.size(24.dp))
                                     } else {
                                         OutlinedButton(onClick = { viewModel.loadMore() }) {
-                                            Text("Load more")
+                                            Text("Carregar mais")
                                         }
                                     }
                                 }
@@ -255,10 +255,10 @@ private fun MessageItem(message: SmsMessage, onClick: () -> Unit) {
 @Composable
 private fun StatusBadge(status: String) {
     val (color, label) = when (status.lowercase()) {
-        "delivered" -> MaterialTheme.colorScheme.tertiary to "Delivered"
-        "sent" -> MaterialTheme.colorScheme.primary to "Sent"
-        "failed" -> MaterialTheme.colorScheme.error to "Failed"
-        else -> MaterialTheme.colorScheme.onSurfaceVariant to "Pending"
+        "delivered" -> MaterialTheme.colorScheme.tertiary to "Entregue"
+        "sent" -> MaterialTheme.colorScheme.primary to "Enviado"
+        "failed" -> MaterialTheme.colorScheme.error to "Falhou"
+        else -> MaterialTheme.colorScheme.onSurfaceVariant to "Pendente"
     }
     Surface(
         color = color.copy(alpha = 0.15f),
@@ -292,7 +292,7 @@ private fun MessageDetailDialog(message: SmsMessage, onDismiss: () -> Unit) {
                 )
                 Spacer(modifier = Modifier.width(8.dp))
                 Text(
-                    text = if (message.isReceived) "Received from" else "Sent to",
+                    text = if (message.isReceived) "Recebido de" else "Enviado para",
                     style = MaterialTheme.typography.titleMedium
                 )
             }
@@ -324,7 +324,7 @@ private fun MessageDetailDialog(message: SmsMessage, onDismiss: () -> Unit) {
             }
         },
         confirmButton = {
-            TextButton(onClick = onDismiss) { Text("Close") }
+            TextButton(onClick = onDismiss) { Text("Fechar") }
         }
     )
 }
@@ -337,7 +337,7 @@ private fun formatRelativeTime(isoDate: String?): String {
         val date = sdf.parse(isoDate.take(19)) ?: return ""
         val diffMs = System.currentTimeMillis() - date.time
         when {
-            diffMs < 60_000 -> "Just now"
+            diffMs < 60_000 -> "Agora mesmo"
             diffMs < 3_600_000 -> "${diffMs / 60_000}m ago"
             diffMs < 86_400_000 -> "${diffMs / 3_600_000}h ago"
             diffMs < 604_800_000 -> "${diffMs / 86_400_000}d ago"

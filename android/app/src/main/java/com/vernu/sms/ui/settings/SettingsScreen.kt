@@ -58,7 +58,7 @@ fun SettingsScreen(
                     Row(verticalAlignment = Alignment.CenterVertically) {
                         Icon(Icons.Default.Settings, contentDescription = null, tint = MaterialTheme.colorScheme.primary)
                         Spacer(modifier = Modifier.width(8.dp))
-                        Text("Settings", fontWeight = FontWeight.SemiBold)
+                        Text("Configurações", fontWeight = FontWeight.SemiBold)
                     }
                 },
                 colors = TopAppBarDefaults.topAppBarColors(
@@ -74,34 +74,34 @@ fun SettingsScreen(
                 .padding(padding)
                 .verticalScroll(rememberScrollState())
         ) {
-            SettingsSectionHeader("Account")
+            SettingsSectionHeader("Conta")
 
             SettingsRow(
                 icon = Icons.Default.Fingerprint,
-                title = "Device ID",
+                title = "ID do aparelho",
                 subtitle = state.deviceId.ifEmpty { "—" },
                 subtitleFont = FontFamily.Monospace,
                 trailing = {
                     IconButton(onClick = { clipboard.setText(AnnotatedString(state.deviceId)) }) {
-                        Icon(Icons.Default.ContentCopy, contentDescription = "Copy", modifier = Modifier.size(18.dp))
+                        Icon(Icons.Default.ContentCopy, contentDescription = "Copiar", modifier = Modifier.size(18.dp))
                     }
                 }
             )
 
             SettingsRow(
                 icon = Icons.Default.Key,
-                title = "API Key",
+                title = "Chave de API",
                 subtitle = if (state.apiKey.isEmpty()) "—" else "••••••••" + state.apiKey.takeLast(4),
                 trailing = {
                     IconButton(onClick = { clipboard.setText(AnnotatedString(state.apiKey)) }) {
-                        Icon(Icons.Default.ContentCopy, contentDescription = "Copy", modifier = Modifier.size(18.dp))
+                        Icon(Icons.Default.ContentCopy, contentDescription = "Copiar", modifier = Modifier.size(18.dp))
                     }
                 }
             )
 
             SettingsRow(
                 icon = Icons.Default.Edit,
-                title = "Device Name",
+                title = "Nome do aparelho",
                 subtitle = state.deviceName,
                 onClick = {
                     editedDeviceName = state.deviceName
@@ -121,7 +121,7 @@ fun SettingsScreen(
 
             SettingsRow(
                 icon = Icons.Default.LinkOff,
-                title = "Disconnect Device",
+                title = "Desconectar aparelho",
                 titleColor = MaterialTheme.colorScheme.error,
                 onClick = { showDisconnectDialog = true }
             )
@@ -130,8 +130,8 @@ fun SettingsScreen(
 
             SettingsSwitchRow(
                 icon = Icons.Default.Power,
-                title = "Gateway Enabled",
-                subtitle = "Allow sending and receiving SMS",
+                title = "Gateway ativado",
+                subtitle = "Permitir envio e recebimento de SMS",
                 checked = state.isGatewayEnabled,
                 onCheckedChange = { viewModel.setGatewayEnabled(it) }
             )
@@ -143,7 +143,7 @@ fun SettingsScreen(
                     onSelect = { viewModel.setPreferredSim(it) }
                 )
                 Text(
-                    text = "Use the simSubscriptionId field in your API requests to override this setting",
+                    text = "Use o campo simSubscriptionId nas requisições da API para sobrescrever esta configuração",
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                     modifier = Modifier.padding(start = 56.dp, end = 16.dp, bottom = 8.dp)
@@ -154,16 +154,16 @@ fun SettingsScreen(
 
             SettingsSwitchRow(
                 icon = Icons.Default.MoveToInbox,
-                title = "Receive SMS",
-                subtitle = "Forward incoming SMS to backend",
+                title = "Receber SMS",
+                subtitle = "Encaminhar SMS recebidos para o backend",
                 checked = state.isReceiveSmsEnabled,
                 onCheckedChange = { viewModel.setReceiveSms(it) }
             )
 
             SettingsRow(
                 icon = Icons.Default.Timer,
-                title = "Send Delay",
-                subtitle = "${state.smsSendDelaySeconds}s between each SMS",
+                title = "Atraso de envio",
+                subtitle = "${state.smsSendDelaySeconds}s entre cada SMS",
                 onClick = {
                     editedDelay = state.smsSendDelaySeconds.toString()
                     showDelayDialog = true
@@ -176,7 +176,7 @@ fun SettingsScreen(
 
             SettingsRow(
                 icon = Icons.Default.FilterList,
-                title = "Configure Filters",
+                title = "Configurar filtros",
                 subtitle = "Allow/block list for incoming SMS",
                 onClick = onNavigateToFilters,
                 trailing = {
@@ -185,26 +185,26 @@ fun SettingsScreen(
                 }
             )
 
-            SettingsSectionHeader("System")
+            SettingsSectionHeader("Sistema")
 
             SettingsSwitchRow(
                 icon = Icons.Default.NotificationsActive,
-                title = "Sticky Notification",
-                subtitle = "Keeps the gateway alive in the background",
+                title = "Notificação fixa",
+                subtitle = "Mantém o gateway ativo em segundo plano",
                 checked = state.isStickyNotificationEnabled,
                 onCheckedChange = { viewModel.setStickyNotification(it) }
             )
 
             SettingsRow(
                 icon = Icons.Default.Info,
-                title = "App Version",
+                title = "Versão do app",
                 subtitle = "${state.appVersionName} (Build ${state.appVersionCode})"
             )
 
             SettingsRow(
                 icon = Icons.Default.AutoAwesome,
-                title = "About",
-                subtitle = "textbee.dev",
+                title = "Sobre",
+                subtitle = "Wablast SMS",
                 onClick = { showAboutDialog = true },
                 trailing = {
                     Icon(Icons.Default.ChevronRight, contentDescription = null,
@@ -214,7 +214,7 @@ fun SettingsScreen(
 
             SettingsRow(
                 icon = Icons.Default.SystemUpdate,
-                title = "Check for Updates",
+                title = "Verificar atualizações",
                 onClick = {
                     val versionInfo = "${BuildConfig.VERSION_NAME}(${BuildConfig.VERSION_CODE})"
                     val url = "https://textbee.dev/download?currentVersion=${Uri.encode(versionInfo)}"
@@ -226,11 +226,11 @@ fun SettingsScreen(
                 }
             )
 
-            SettingsSectionHeader("Community")
+            SettingsSectionHeader("Comunidade")
 
             SettingsRow(
                 icon = Icons.Default.SupportAgent,
-                title = "Get Support",
+                title = "Suporte",
                 onClick = {
                     context.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("https://app.textbee.dev/dashboard/account/get-support")))
                 },
@@ -242,12 +242,12 @@ fun SettingsScreen(
 
             SettingsRow(
                 icon = Icons.Default.Share,
-                title = "Share textbee",
-                subtitle = "Help spread the word",
+                title = "Compartilhar Wablast SMS",
+                subtitle = "Ajude a divulgar",
                 onClick = {
-                    val shareText = "i've been using textbee.dev to send SMS via API from my own phone, " +
-                        "no Twilio or paid services needed. works great for automations, alerts, " +
-                        "notifications, or anything that needs programmatic SMS. open source and free to start\n\n" +
+                    val shareText = "venho usando o Wablast SMS para enviar SMS via API do meu próprio celular, " +
+                        "sem Twilio ou serviços pagos. ótimo para automações, alertas, " +
+                        "notificações, ou qualquer coisa que precise de SMS programático. open source e grátis para começar\n\n" +
                         "https://textbee.dev"
                     context.startActivity(
                         Intent.createChooser(
@@ -255,17 +255,17 @@ fun SettingsScreen(
                                 type = "text/plain"
                                 putExtra(Intent.EXTRA_TEXT, shareText)
                             },
-                            "Share TextBee"
+                            "Compartilhar Wablast SMS"
                         )
                     )
                 }
             )
 
-            SettingsSectionHeader("Legal")
+            SettingsSectionHeader("Jurídico")
 
             SettingsRow(
                 icon = Icons.Default.Gavel,
-                title = "Terms of Service",
+                title = "Termos de serviço",
                 onClick = {
                     context.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("https://textbee.dev/terms-of-service")))
                 },
@@ -277,7 +277,7 @@ fun SettingsScreen(
 
             SettingsRow(
                 icon = Icons.Default.Policy,
-                title = "Privacy Policy",
+                title = "Política de privacidade",
                 onClick = {
                     context.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("https://textbee.dev/privacy-policy")))
                 },
@@ -291,8 +291,8 @@ fun SettingsScreen(
 
             SettingsRow(
                 icon = Icons.Default.SwapHoriz,
-                title = "Switch to Legacy UI",
-                subtitle = "Use the original interface",
+                title = "Mudar para interface antiga",
+                subtitle = "Usar a interface original",
                 onClick = { showLegacyDialog = true },
                 trailing = {
                     Icon(Icons.Default.ChevronRight, contentDescription = null,
@@ -307,12 +307,12 @@ fun SettingsScreen(
     if (showDeviceNameDialog) {
         AlertDialog(
             onDismissRequest = { showDeviceNameDialog = false },
-            title = { Text("Edit Device Name") },
+            title = { Text("Editar nome do aparelho") },
             text = {
                 OutlinedTextField(
                     value = editedDeviceName,
                     onValueChange = { editedDeviceName = it },
-                    label = { Text("Device Name") },
+                    label = { Text("Nome do aparelho") },
                     singleLine = true
                 )
             },
@@ -320,10 +320,10 @@ fun SettingsScreen(
                 TextButton(onClick = {
                     viewModel.saveDeviceName(editedDeviceName)
                     showDeviceNameDialog = false
-                }) { Text("Save") }
+                }) { Text("Salvar") }
             },
             dismissButton = {
-                TextButton(onClick = { showDeviceNameDialog = false }) { Text("Cancel") }
+                TextButton(onClick = { showDeviceNameDialog = false }) { Text("Cancelar") }
             }
         )
     }
@@ -331,11 +331,11 @@ fun SettingsScreen(
     if (showDelayDialog) {
         AlertDialog(
             onDismissRequest = { showDelayDialog = false },
-            title = { Text("SMS Send Delay") },
+            title = { Text("Atraso no envio de SMS") },
             text = {
                 Column {
                     Text(
-                        "Delay between each SMS in seconds (0–3600)",
+                        "Atraso entre cada SMS em segundos (0–3600)",
                         style = MaterialTheme.typography.bodySmall,
                         color = MaterialTheme.colorScheme.onSurfaceVariant
                     )
@@ -343,7 +343,7 @@ fun SettingsScreen(
                     OutlinedTextField(
                         value = editedDelay,
                         onValueChange = { editedDelay = it.filter { c -> c.isDigit() } },
-                        label = { Text("Seconds") },
+                        label = { Text("Segundos") },
                         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
                         singleLine = true
                     )
@@ -353,10 +353,10 @@ fun SettingsScreen(
                 TextButton(onClick = {
                     viewModel.setSmsSendDelay(editedDelay.toIntOrNull() ?: 5)
                     showDelayDialog = false
-                }) { Text("Save") }
+                }) { Text("Salvar") }
             },
             dismissButton = {
-                TextButton(onClick = { showDelayDialog = false }) { Text("Cancel") }
+                TextButton(onClick = { showDelayDialog = false }) { Text("Cancelar") }
             }
         )
     }
@@ -364,16 +364,16 @@ fun SettingsScreen(
     if (showLegacyDialog) {
         AlertDialog(
             onDismissRequest = { showLegacyDialog = false },
-            title = { Text("Switch to Legacy UI?") },
-            text = { Text("You can switch back from the Legacy Settings screen anytime.") },
+            title = { Text("Mudar para interface antiga?") },
+            text = { Text("Você pode voltar pela tela de configurações antiga quando quiser.") },
             confirmButton = {
                 TextButton(onClick = {
                     showLegacyDialog = false
                     onSwitchToLegacy()
-                }) { Text("Switch") }
+                }) { Text("Mudar") }
             },
             dismissButton = {
-                TextButton(onClick = { showLegacyDialog = false }) { Text("Cancel") }
+                TextButton(onClick = { showLegacyDialog = false }) { Text("Cancelar") }
             }
         )
     }
@@ -382,13 +382,13 @@ fun SettingsScreen(
         AlertDialog(
             onDismissRequest = { showAboutDialog = false },
             title = {
-                Text("textbee.dev", fontWeight = FontWeight.Bold)
+                Text("Wablast SMS", fontWeight = FontWeight.Bold)
             },
             text = {
                 Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
                     Text(
-                        "An open-source SMS gateway that turns your Android into a personal SMS API. " +
-                        "Send and receive messages programmatically without relying on expensive third-party services.",
+                        "Um gateway de SMS open-source que transforma seu Android em uma API de SMS pessoal. " +
+                        "Envie e receba mensagens programaticamente sem depender de serviços terceiros caros.",
                         style = MaterialTheme.typography.bodyMedium
                     )
                     Spacer(modifier = Modifier.height(4.dp))
@@ -398,7 +398,7 @@ fun SettingsScreen(
                                 context.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("https://textbee.dev")))
                             }
                         ) {
-                            Text("textbee.dev")
+                            Text("Wablast SMS")
                         }
                         OutlinedButton(
                             onClick = {
@@ -411,7 +411,7 @@ fun SettingsScreen(
                 }
             },
             confirmButton = {
-                TextButton(onClick = { showAboutDialog = false }) { Text("Close") }
+                TextButton(onClick = { showAboutDialog = false }) { Text("Fechar") }
             }
         )
     }
@@ -419,8 +419,8 @@ fun SettingsScreen(
     if (showDisconnectDialog) {
         AlertDialog(
             onDismissRequest = { showDisconnectDialog = false },
-            title = { Text("Disconnect Device?") },
-            text = { Text("This will remove all credentials from this device. You'll need to reconnect to use the gateway.") },
+            title = { Text("Desconectar aparelho?") },
+            text = { Text("Isto vai remover todas as credenciais deste aparelho. Você precisará reconectar para usar o gateway.") },
             confirmButton = {
                 TextButton(
                     onClick = {
@@ -428,10 +428,10 @@ fun SettingsScreen(
                         onDisconnect()
                     },
                     colors = ButtonDefaults.textButtonColors(contentColor = MaterialTheme.colorScheme.error)
-                ) { Text("Disconnect") }
+                ) { Text("Desconectar") }
             },
             dismissButton = {
-                TextButton(onClick = { showDisconnectDialog = false }) { Text("Cancel") }
+                TextButton(onClick = { showDisconnectDialog = false }) { Text("Cancelar") }
             }
         )
     }
@@ -541,7 +541,7 @@ private fun SimSelectionRow(
         )
         Spacer(modifier = Modifier.width(16.dp))
         Column(modifier = Modifier.weight(1f)) {
-            Text(text = "Default SIM", style = MaterialTheme.typography.bodyLarge)
+            Text(text = "SIM padrão", style = MaterialTheme.typography.bodyLarge)
             ExposedDropdownMenuBox(
                 expanded = expanded,
                 onExpandedChange = { expanded = !expanded }

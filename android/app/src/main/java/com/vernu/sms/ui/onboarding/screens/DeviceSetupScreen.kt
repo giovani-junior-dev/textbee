@@ -35,7 +35,7 @@ fun DeviceSetupScreen(
                     title = {},
                     navigationIcon = {
                         IconButton(onClick = onBack) {
-                            Icon(Icons.Default.ArrowBack, contentDescription = "Back")
+                            Icon(Icons.Default.ArrowBack, contentDescription = "Voltar")
                         }
                     }
                 )
@@ -55,15 +55,15 @@ fun DeviceSetupScreen(
                 Spacer(modifier = Modifier.height(24.dp))
 
                 Text(
-                    text = if (state.isReturningUser) "Reconnect your device" else "Set up your device",
+                    text = if (state.isReturningUser) "Reconecte seu aparelho" else "Configure seu aparelho",
                     style = MaterialTheme.typography.headlineMedium
                 )
                 Spacer(modifier = Modifier.height(4.dp))
                 Text(
                     text = if (state.isReturningUser)
-                        "Enter your Device ID to reconnect this device to your account"
+                        "Insira o ID do aparelho para reconectá-lo à sua conta"
                     else
-                        "Give this device a name and register it to start sending SMS",
+                        "Dê um nome a este aparelho e registre-o para começar a enviar SMS",
                     style = MaterialTheme.typography.bodyMedium,
                     color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
@@ -74,8 +74,8 @@ fun DeviceSetupScreen(
                     OutlinedTextField(
                         value = state.deviceId,
                         onValueChange = { viewModel.setDeviceId(it) },
-                        label = { Text("Device ID") },
-                        placeholder = { Text("Enter your Device ID") },
+                        label = { Text("ID do aparelho") },
+                        placeholder = { Text("Insira o ID do aparelho") },
                         supportingText = { Text("Find it at textbee.dev/dashboard → Devices") },
                         modifier = Modifier.fillMaxWidth(),
                         singleLine = true
@@ -97,12 +97,12 @@ fun DeviceSetupScreen(
                         )
                         Spacer(modifier = Modifier.width(8.dp))
                         Text(
-                            text = "This device was previously registered",
+                            text = "Este aparelho já foi registrado antes",
                             style = MaterialTheme.typography.bodyMedium
                         )
                     }
                     Text(
-                        text = "Use this if you reinstalled the app and want to reconnect your existing device rather than create a new one in your dashboard",
+                        text = "Use isto se você reinstalou o app e quer reconectar seu aparelho existente em vez de criar um novo no painel",
                         style = MaterialTheme.typography.bodySmall,
                         color = MaterialTheme.colorScheme.onSurfaceVariant,
                         modifier = Modifier.padding(start = 48.dp)
@@ -113,8 +113,8 @@ fun DeviceSetupScreen(
                         OutlinedTextField(
                             value = state.deviceId,
                             onValueChange = { viewModel.setDeviceId(it) },
-                            label = { Text("Device ID") },
-                            placeholder = { Text("Enter your Device ID") },
+                            label = { Text("ID do aparelho") },
+                            placeholder = { Text("Insira o ID do aparelho") },
                             modifier = Modifier.fillMaxWidth(),
                             singleLine = true
                         )
@@ -125,8 +125,8 @@ fun DeviceSetupScreen(
                 OutlinedTextField(
                     value = state.deviceName,
                     onValueChange = { viewModel.setDeviceName(it) },
-                    label = { Text("Device Name (optional)") },
-                    placeholder = { Text("e.g. My Gateway Phone") },
+                    label = { Text("Nome do aparelho (opcional)") },
+                    placeholder = { Text("ex.: Meu celular gateway") },
                     modifier = Modifier.fillMaxWidth(),
                     singleLine = true
                 )
@@ -152,7 +152,7 @@ fun DeviceSetupScreen(
                             IconButton(onClick = { viewModel.clearError() }, modifier = Modifier.size(20.dp)) {
                                 Icon(
                                     Icons.Default.Close,
-                                    contentDescription = "Dismiss",
+                                    contentDescription = "Dispensar",
                                     tint = MaterialTheme.colorScheme.onErrorContainer,
                                     modifier = Modifier.size(16.dp)
                                 )
@@ -170,7 +170,7 @@ fun DeviceSetupScreen(
                         .fillMaxWidth()
                         .height(52.dp)
                 ) {
-                    Text(if (state.isReturningUser) "Reconnect Device" else "Register Device")
+                    Text(if (state.isReturningUser) "Reconectar aparelho" else "Registrar aparelho")
                 }
 
                 Spacer(modifier = Modifier.height(24.dp))
@@ -190,7 +190,7 @@ fun DeviceSetupScreen(
                     CircularProgressIndicator(color = MaterialTheme.colorScheme.primary)
                     Spacer(modifier = Modifier.height(16.dp))
                     Text(
-                        text = "Connecting your device…",
+                        text = "Conectando seu aparelho…",
                         style = MaterialTheme.typography.bodyMedium,
                         color = MaterialTheme.colorScheme.onBackground
                     )

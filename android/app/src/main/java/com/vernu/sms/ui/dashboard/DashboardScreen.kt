@@ -105,7 +105,7 @@ fun DashboardScreen(
                         Spacer(modifier = Modifier.width(8.dp))
                         Column {
                             Text(
-                                text = "textbee.dev",
+                                text = "Wablast SMS",
                                 style = MaterialTheme.typography.titleLarge,
                                 fontWeight = FontWeight.Bold,
                                 color = MaterialTheme.colorScheme.primary
@@ -114,7 +114,7 @@ fun DashboardScreen(
                                 ?: state.userProfile?.email?.takeIf { it.isNotBlank() }
                             if (greeting != null) {
                                 Text(
-                                    text = "Hello, $greeting",
+                                    text = "Olá, $greeting",
                                     style = MaterialTheme.typography.labelSmall,
                                     color = MaterialTheme.colorScheme.onSurfaceVariant
                                 )
@@ -124,7 +124,7 @@ fun DashboardScreen(
                 },
                 actions = {
                     IconButton(onClick = { viewModel.refresh() }) {
-                        Icon(Icons.Default.Refresh, contentDescription = "Refresh")
+                        Icon(Icons.Default.Refresh, contentDescription = "Atualizar")
                     }
                 },
                 colors = TopAppBarDefaults.topAppBarColors(
@@ -181,7 +181,7 @@ private fun DeviceStatusCard(
     val clipboard = LocalClipboardManager.current
     val statusColor = if (state.isGatewayEnabled) MaterialTheme.colorScheme.primary
                      else MaterialTheme.colorScheme.onSurfaceVariant
-    val statusText = if (state.isGatewayEnabled) "Enabled" else "Disabled"
+    val statusText = if (state.isGatewayEnabled) "Ativado" else "Desativado"
 
     Card(
         modifier = Modifier.fillMaxWidth(),
@@ -226,7 +226,7 @@ private fun DeviceStatusCard(
                             ) {
                                 Icon(
                                     Icons.Default.ContentCopy,
-                                    contentDescription = "Copy Device ID",
+                                    contentDescription = "Copiar ID do aparelho",
                                     modifier = Modifier.size(12.dp),
                                     tint = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.5f)
                                 )
@@ -270,12 +270,12 @@ private fun DeviceStatusCard(
             ) {
                 Column(modifier = Modifier.weight(1f).padding(end = 8.dp)) {
                     Text(
-                        text = "Receive SMS",
+                        text = "Receber SMS",
                         style = MaterialTheme.typography.bodySmall,
                         color = MaterialTheme.colorScheme.onSurfaceVariant
                     )
                     Text(
-                        text = "Received messages appear in your dashboard and API",
+                        text = "Mensagens recebidas aparecem no painel e na API",
                         style = MaterialTheme.typography.labelSmall,
                         color = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.6f)
                     )
@@ -315,7 +315,7 @@ private fun PermissionWarningCard(
                 )
                 Spacer(modifier = Modifier.width(8.dp))
                 Text(
-                    text = "Permissions Required",
+                    text = "Permissões necessárias",
                     style = MaterialTheme.typography.titleSmall,
                     fontWeight = FontWeight.SemiBold,
                     color = MaterialTheme.colorScheme.onErrorContainer
@@ -335,16 +335,16 @@ private fun PermissionWarningCard(
                     contentColor = MaterialTheme.colorScheme.onError
                 )
             ) {
-                Text(if (showOpenSettings) "Open App Settings" else "Grant Permissions")
+                Text(if (showOpenSettings) "Abrir configurações do app" else "Conceder permissões")
             }
         }
     }
 }
 
 private fun friendlyPermissionName(permission: String) = when (permission) {
-    Manifest.permission.SEND_SMS -> "Send SMS"
-    Manifest.permission.RECEIVE_SMS -> "Receive SMS"
-    Manifest.permission.READ_PHONE_STATE -> "Phone State"
+    Manifest.permission.SEND_SMS -> "Enviar SMS"
+    Manifest.permission.RECEIVE_SMS -> "Receber SMS"
+    Manifest.permission.READ_PHONE_STATE -> "Estado do telefone"
     else -> permission.substringAfterLast(".")
 }
 
@@ -360,7 +360,7 @@ private fun SimCardsSection(sims: List<SimInfoDTO>) {
         verticalAlignment = Alignment.CenterVertically
     ) {
         Text(
-            text = "SIM Cards",
+            text = "Chips (SIM)",
             style = MaterialTheme.typography.labelMedium,
             fontWeight = FontWeight.SemiBold,
             color = MaterialTheme.colorScheme.onSurfaceVariant
@@ -400,7 +400,7 @@ private fun SimCardsSection(sims: List<SimInfoDTO>) {
                 ) {
                     Icon(
                         Icons.Default.ContentCopy,
-                        contentDescription = "Copy subscription ID",
+                        contentDescription = "Copiar ID da assinatura",
                         modifier = Modifier.size(13.dp),
                         tint = MaterialTheme.colorScheme.onSurfaceVariant
                     )
@@ -450,7 +450,7 @@ private fun SubscriptionCard(
                     ) {
                         Column {
                             Text(
-                                text = "Subscription",
+                                text = "Assinatura",
                                 style = MaterialTheme.typography.titleMedium,
                                 fontWeight = FontWeight.SemiBold
                             )
@@ -478,7 +478,7 @@ private fun SubscriptionCard(
                                     )
                                 }
                             ) {
-                                Text("Upgrade")
+                                Text("Fazer upgrade")
                             }
                         } else {
                             TextButton(
@@ -488,7 +488,7 @@ private fun SubscriptionCard(
                                     )
                                 }
                             ) {
-                                Text("Manage")
+                                Text("Gerenciar")
                             }
                         }
                     }
@@ -496,7 +496,7 @@ private fun SubscriptionCard(
                     if (isFree) {
                         Spacer(modifier = Modifier.height(8.dp))
                         Text(
-                            text = "Unlock higher limits, more devices & priority support",
+                            text = "Desbloqueie limites maiores, mais aparelhos e suporte prioritário",
                             style = MaterialTheme.typography.bodySmall,
                             color = MaterialTheme.colorScheme.onSurfaceVariant
                         )
@@ -504,14 +504,14 @@ private fun SubscriptionCard(
                         subscription.usage?.let { usage ->
                             Spacer(modifier = Modifier.height(16.dp))
                             UsageRow(
-                                label = "Today",
+                                label = "Hoje",
                                 used = usage.processedSmsToday,
                                 limit = usage.dailyLimit,
                                 pct = usage.dailyUsagePercentage
                             )
                             Spacer(modifier = Modifier.height(10.dp))
                             UsageRow(
-                                label = "This month",
+                                label = "Este mês",
                                 used = usage.processedSmsLastMonth,
                                 limit = usage.monthlyLimit,
                                 pct = usage.monthlyUsagePercentage
@@ -522,7 +522,7 @@ private fun SubscriptionCard(
                             formatDate(dateStr)?.let { formatted ->
                                 Spacer(modifier = Modifier.height(12.dp))
                                 Text(
-                                    text = "Renews $formatted",
+                                    text = "Renova $formatted",
                                     style = MaterialTheme.typography.bodySmall,
                                     color = MaterialTheme.colorScheme.onSurfaceVariant
                                 )
@@ -576,7 +576,7 @@ private fun QuickActionsSection() {
 
     Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
         Text(
-            text = "Quick Actions",
+            text = "Ações rápidas",
             style = MaterialTheme.typography.titleMedium,
             fontWeight = FontWeight.SemiBold
         )
@@ -594,7 +594,7 @@ private fun QuickActionsSection() {
             ) {
                 Icon(Icons.Default.OpenInBrowser, contentDescription = null, modifier = Modifier.size(16.dp))
                 Spacer(modifier = Modifier.width(6.dp))
-                Text("Dashboard")
+                Text("Painel")
             }
             OutlinedButton(
                 onClick = {
@@ -606,7 +606,7 @@ private fun QuickActionsSection() {
             ) {
                 Icon(Icons.Default.MenuBook, contentDescription = null, modifier = Modifier.size(16.dp))
                 Spacer(modifier = Modifier.width(6.dp))
-                Text("Explore Docs")
+                Text("Ver documentação")
             }
         }
     }

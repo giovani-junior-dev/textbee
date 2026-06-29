@@ -37,20 +37,20 @@ fun PermissionsScreen(
         listOf(
             PermissionItem(
                 permission = Manifest.permission.SEND_SMS,
-                label = "Send SMS",
-                rationale = "Required to send messages from your device",
+                label = "Enviar SMS",
+                rationale = "Necessário para enviar mensagens do seu aparelho",
                 icon = Icons.Default.Sms
             ),
             PermissionItem(
                 permission = Manifest.permission.RECEIVE_SMS,
-                label = "Receive SMS",
-                rationale = "Required to receive and forward incoming messages",
+                label = "Receber SMS",
+                rationale = "Necessário para receber e encaminhar mensagens",
                 icon = Icons.Default.Sms
             ),
             PermissionItem(
                 permission = Manifest.permission.READ_PHONE_STATE,
-                label = "Phone State",
-                rationale = "Required to detect SIM cards for multi-SIM support",
+                label = "Estado do telefone",
+                rationale = "Necessário para detectar chips para suporte a multi-SIM",
                 icon = Icons.Default.PhoneAndroid
             )
         )
@@ -78,7 +78,7 @@ fun PermissionsScreen(
                 title = {},
                 navigationIcon = {
                     IconButton(onClick = onBack) {
-                        Icon(Icons.Default.ArrowBack, contentDescription = "Back")
+                        Icon(Icons.Default.ArrowBack, contentDescription = "Voltar")
                     }
                 }
             )
@@ -98,12 +98,12 @@ fun PermissionsScreen(
             Spacer(modifier = Modifier.height(24.dp))
 
             Text(
-                text = "Grant Permissions",
+                text = "Conceder permissões",
                 style = MaterialTheme.typography.headlineMedium
             )
             Spacer(modifier = Modifier.height(4.dp))
             Text(
-                text = "These permissions are required for the SMS gateway to work",
+                text = "Estas permissões são necessárias para o gateway de SMS funcionar",
                 style = MaterialTheme.typography.bodyMedium,
                 color = MaterialTheme.colorScheme.onSurfaceVariant
             )
@@ -123,7 +123,7 @@ fun PermissionsScreen(
                         .fillMaxWidth()
                         .height(48.dp)
                 ) {
-                    Text("Grant All Permissions")
+                    Text("Conceder todas as permissões")
                 }
                 Spacer(modifier = Modifier.height(16.dp))
             }
@@ -148,7 +148,7 @@ fun PermissionsScreen(
             Spacer(modifier = Modifier.height(16.dp))
 
             Text(
-                text = "These permissions are only used to send and receive SMS on your behalf. textbee never accesses your existing message history.",
+                text = "Estas permissões são usadas só para enviar e receber SMS por você. O Wablast SMS nunca acessa seu histórico de mensagens.",
                 style = MaterialTheme.typography.bodySmall,
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
                 textAlign = TextAlign.Center
@@ -161,7 +161,7 @@ fun PermissionsScreen(
                 },
                 contentPadding = PaddingValues(0.dp)
             ) {
-                Text("Privacy Policy", style = MaterialTheme.typography.bodySmall)
+                Text("Política de privacidade", style = MaterialTheme.typography.bodySmall)
             }
 
             Spacer(modifier = Modifier.height(16.dp))
@@ -172,13 +172,13 @@ fun PermissionsScreen(
                     .fillMaxWidth()
                     .height(52.dp)
             ) {
-                Text(if (allGranted) "Continue" else "Continue Anyway")
+                Text(if (allGranted) "Continuar" else "Continuar mesmo assim")
             }
 
             if (!allGranted) {
                 Spacer(modifier = Modifier.height(8.dp))
                 Text(
-                    text = "Some features may be limited without all permissions",
+                    text = "Alguns recursos podem ficar limitados sem todas as permissões",
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
@@ -232,12 +232,12 @@ private fun PermissionRow(
             if (isGranted) {
                 Icon(
                     Icons.Default.Check,
-                    contentDescription = "Granted",
+                    contentDescription = "Concedida",
                     tint = MaterialTheme.colorScheme.primary
                 )
             } else {
                 TextButton(onClick = onGrant) {
-                    Text("Grant")
+                    Text("Conceder")
                 }
             }
         }

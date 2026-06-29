@@ -35,7 +35,7 @@ fun CredentialsScreen(
     val context = LocalContext.current
     var selectedTab by remember { mutableStateOf(0) }
     var showApiKey by remember { mutableStateOf(false) }
-    val tabs = listOf("Scan QR Code", "Enter Manually")
+    val tabs = listOf("Ler QR code", "Inserir manualmente")
 
     Scaffold(
         topBar = {
@@ -43,7 +43,7 @@ fun CredentialsScreen(
                 title = {},
                 navigationIcon = {
                     IconButton(onClick = onBack) {
-                        Icon(Icons.Default.ArrowBack, contentDescription = "Back")
+                        Icon(Icons.Default.ArrowBack, contentDescription = "Voltar")
                     }
                 }
             )
@@ -63,12 +63,12 @@ fun CredentialsScreen(
             Spacer(modifier = Modifier.height(24.dp))
 
             Text(
-                text = "Connect your account",
+                text = "Conecte sua conta",
                 style = MaterialTheme.typography.headlineMedium
             )
             Spacer(modifier = Modifier.height(4.dp))
             Text(
-                text = "Enter your API key from your textbee.dev dashboard",
+                text = "Insira a chave de API do seu painel Wablast SMS",
                 style = MaterialTheme.typography.bodyMedium,
                 color = MaterialTheme.colorScheme.onSurfaceVariant
             )
@@ -81,7 +81,7 @@ fun CredentialsScreen(
                 contentPadding = PaddingValues(0.dp)
             ) {
                 Text(
-                    text = "Don't have an account? Sign up free",
+                    text = "Não tem conta? Cadastre-se grátis",
                     style = MaterialTheme.typography.bodySmall
                 )
             }
@@ -152,7 +152,7 @@ private fun QrTab(
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Text(
-                    text = "1. Go to your textbee.dev dashboard",
+                    text = "1. Acesse seu painel Wablast SMS",
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                     modifier = Modifier.weight(1f)
@@ -165,7 +165,7 @@ private fun QrTab(
                     },
                     contentPadding = PaddingValues(horizontal = 8.dp, vertical = 0.dp)
                 ) {
-                    Text("Open", style = MaterialTheme.typography.bodySmall)
+                    Text("Abrir", style = MaterialTheme.typography.bodySmall)
                 }
             }
             Text(
@@ -175,7 +175,7 @@ private fun QrTab(
                 modifier = Modifier.fillMaxWidth()
             )
             Text(
-                text = "3. Scan the QR code shown on screen",
+                text = "3. Leia o QR code mostrado na tela",
                 style = MaterialTheme.typography.bodySmall,
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
                 modifier = Modifier.fillMaxWidth()
@@ -203,7 +203,7 @@ private fun QrTab(
                     Spacer(modifier = Modifier.width(12.dp))
                     Column {
                         Text(
-                            text = "QR scanned successfully",
+                            text = "QR lido com sucesso",
                             style = MaterialTheme.typography.labelLarge,
                             color = MaterialTheme.colorScheme.primary
                         )
@@ -219,7 +219,7 @@ private fun QrTab(
             OutlinedButton(onClick = onScanQr) {
                 Icon(Icons.Default.QrCodeScanner, contentDescription = null)
                 Spacer(modifier = Modifier.width(8.dp))
-                Text("Scan Again")
+                Text("Ler de novo")
             }
         } else {
             Button(
@@ -230,14 +230,14 @@ private fun QrTab(
             ) {
                 Icon(Icons.Default.QrCodeScanner, contentDescription = null)
                 Spacer(modifier = Modifier.width(8.dp))
-                Text("Scan QR Code")
+                Text("Ler QR code")
             }
         }
 
         Spacer(modifier = Modifier.height(16.dp))
 
         TextButton(onClick = onSwitchToManual) {
-            Text("Enter manually instead")
+            Text("Inserir manualmente")
         }
     }
 }
@@ -254,14 +254,14 @@ private fun ManualTab(
     OutlinedTextField(
         value = apiKey,
         onValueChange = onApiKeyChange,
-        label = { Text("API Key") },
-        placeholder = { Text("Paste your API key here") },
+        label = { Text("Chave de API") },
+        placeholder = { Text("Cole sua chave de API aqui") },
         visualTransformation = if (showApiKey) VisualTransformation.None else PasswordVisualTransformation(),
         trailingIcon = {
             IconButton(onClick = onToggleVisibility) {
                 Icon(
                     imageVector = if (showApiKey) Icons.Default.VisibilityOff else Icons.Default.Visibility,
-                    contentDescription = if (showApiKey) "Hide" else "Show"
+                    contentDescription = if (showApiKey) "Ocultar" else "Mostrar"
                 )
             }
         },
