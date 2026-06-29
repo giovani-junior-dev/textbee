@@ -1,8 +1,8 @@
 export const Routes = {
-  landingPage: 'https://textbee.dev',
+  landingPage: 'https://sms.wablastmessage.com',
   contribute: '/contribute',
-  useCases: 'https://textbee.dev/use-cases',
-  quickstart: 'https://textbee.dev/quickstart',
+  useCases: 'https://sms.wablastmessage.com/use-cases',
+  quickstart: 'https://sms.wablastmessage.com/quickstart',
   login: '/login',
   register: '/register',
   logout: '/logout',
@@ -11,9 +11,9 @@ export const Routes = {
 
   dashboard: '/dashboard',
 
-  downloadAndroidApp: 'https://textbee.dev/download',
-  privacyPolicy: 'https://textbee.dev/privacy-policy',
-  refundPolicy: 'https://textbee.dev/refund-policy',
-  termsOfService: 'https://textbee.dev/terms-of-service',
+  downloadAndroidApp: 'https://sms.wablastmessage.com/download',
+  privacyPolicy: 'https://sms.wablastmessage.com/privacy-policy',
+  refundPolicy: 'https://sms.wablastmessage.com/refund-policy',
+  termsOfService: 'https://sms.wablastmessage.com/terms-of-service',
   statusPage: 'https://status.textbee.dev',
 }

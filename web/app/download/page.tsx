@@ -171,11 +171,11 @@ export default function DownloadPage() {
                     <Skeleton className='h-8 w-48' />
                   ) : error ? (
                     <h2 className='text-2xl font-bold text-gray-900 dark:text-white'>
-                      TextBee App
+                      Wablast SMS App
                     </h2>
                   ) : (
                     <h2 className='text-2xl font-bold text-gray-900 dark:text-white'>
-                      {latestRelease?.name || 'TextBee App'}
+                      {latestRelease?.name || 'Wablast SMS App'}
                     </h2>
                   )}
                 </div>

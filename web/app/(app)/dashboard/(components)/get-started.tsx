@@ -72,7 +72,7 @@ const STEPS: StepDef[] = [
   {
     id: 'download_app',
     label: 'Download the Android app',
-    description: 'Install TextBee on your Android device.',
+    description: 'Install Wablast SMS on your Android device.',
     optional: true,
     checkDone: (_u, stats, _s, skipped) =>
       (stats?.totalDeviceCount ?? 0) > 0 || skipped.includes('download_app'),

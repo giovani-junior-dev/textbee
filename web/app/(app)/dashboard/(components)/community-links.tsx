@@ -31,37 +31,37 @@ export default function CommunityLinks() {
     {
       icon: '/images/facebook.svg',
       name: 'Facebook',
-      url: 'https://www.facebook.com/sharer/sharer.php?u=https://textbee.dev',
+      url: 'https://www.facebook.com/sharer/sharer.php?u=https://sms.wablastmessage.com',
     },
     {
       icon: '/images/x.svg',
       name: 'Twitter',
-      url: 'https://twitter.com/intent/tweet?url=https://textbee.dev&text=🚀+Just+discovered+@textbeedotdev+-+an+amazing+SMS+gateway+platform!+Perfect+for+those+who+need+reliable+sms+integration.',
+      url: 'https://twitter.com/intent/tweet?url=https://sms.wablastmessage.com&text=🚀+Just+discovered+@textbeedotdev+-+an+amazing+SMS+gateway+platform!+Perfect+for+those+who+need+reliable+sms+integration.',
     },
     {
       icon: '/images/linkedin2.svg',
       name: 'LinkedIn',
-      url: 'https://www.linkedin.com/sharing/share-offsite/?url=https://textbee.dev',
+      url: 'https://www.linkedin.com/sharing/share-offsite/?url=https://sms.wablastmessage.com',
     },
     {
       icon: '/images/reddit.svg',
       name: 'Reddit',
-      url: 'https://www.reddit.com/submit?url=https://textbee.dev&title=textbee.dev+-+Developer-friendly+SMS+Gateway+Platform',
+      url: 'https://www.reddit.com/submit?url=https://sms.wablastmessage.com&title=sms.wablastmessage.com+-+Developer-friendly+SMS+Gateway+Platform',
     },
     {
       icon: '/images/whatsapp.svg',
       name: 'WhatsApp',
-      url: "https://api.whatsapp.com/send?text=Hey!+Check+out+textbee.dev+-+it's+a+fantastic+SMS+gateway+platform+perfect+for+those+who+need+reliable+sms+integration+🚀+https://textbee.dev",
+      url: "https://api.whatsapp.com/send?text=Hey!+Check+out+sms.wablastmessage.com+-+it's+a+fantastic+SMS+gateway+platform+perfect+for+those+who+need+reliable+sms+integration+🚀+https://sms.wablastmessage.com",
     },
     {
       icon: '/images/telegram.svg',
       name: 'Telegram',
-      url: 'https://t.me/share/url?url=https://textbee.dev&text=🔥+Found+an+awesome+SMS+gateway+platform+-+textbee.dev!+Great+for+those+who+need+reliable+sms+integration.',
+      url: 'https://t.me/share/url?url=https://sms.wablastmessage.com&text=🔥+Found+an+awesome+SMS+gateway+platform+-+sms.wablastmessage.com!+Great+for+those+who+need+reliable+sms+integration.',
     },
     {
       icon: '/images/gmail.svg',
       name: 'Email',
-      url: "mailto:?subject=Check+out+textbee.dev+-+SMS+Gateway+Platform&body=Hi!%0A%0AI+wanted+to+share+textbee.dev+with+you+-+it's+an+excellent+SMS+gateway+platform+that's+perfect+for+those+who+need+reliable+sms+integration.%0A%0ACheck+it+out:+https://textbee.dev%0A%0ABest+regards!",
+      url: "mailto:?subject=Check+out+sms.wablastmessage.com+-+SMS+Gateway+Platform&body=Hi!%0A%0AI+wanted+to+share+sms.wablastmessage.com+with+you+-+it's+an+excellent+SMS+gateway+platform+that's+perfect+for+those+who+need+reliable+sms+integration.%0A%0ACheck+it+out:+https://sms.wablastmessage.com%0A%0ABest+regards!",
     },
   ]
   const [currentUrl, setCurrentUrl] = useState(socials[0].url)
